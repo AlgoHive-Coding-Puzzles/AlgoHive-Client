@@ -1,54 +1,19 @@
-# React + TypeScript + Vite
+<p align="center">
+  <img width="150px" src="../images/algohive-logo.png" title="Algohive">
+</p>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<h1 align="center">AlgoHive</h1>
 
-Currently, two official plugins are available:
+## Main WebPlateform for AlgoHive
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Account types
 
-## Expanding the ESLint configuration
+> Each users under Admin will be linked to an environment. For example, a self-hosted solutions wil have two BeeAPI and one AlgoHive environment. The Algohive web instance will allow for a lightweigth management. And by this plateform the super admin will be able to associate the users with the right API.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+| Account Type | Description                                                            | Features                                       |
+| ------------ | ---------------------------------------------------------------------- | ---------------------------------------------- |
+| Admin        | Admins have access to all the environments                             |
+| Queen        | Admins have access to all features of the platform                     | CRUD operations on all resources               |
+| Architect    | Architects can manage puzzles, and reload API puzzles                  | CRUD operations on puzzles                     |
+| Host         | Hosts can manage competitions, select puzzles, and manage participants | CRUD operations on competitions                |
+| Worker       | Workers can solve puzzles, and participate in competitions             | Solve puzzles, and participate in competitions |
