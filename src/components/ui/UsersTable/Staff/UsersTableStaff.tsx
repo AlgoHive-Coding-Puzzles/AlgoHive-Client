@@ -1,4 +1,11 @@
-import { RefObject, useCallback, useEffect, useMemo, useState } from "react";
+import {
+  RefObject,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  useRef,
+} from "react";
 import { User } from "../../../../models/User";
 import {
   fetchUsersFromRoles,
@@ -7,6 +14,7 @@ import {
   toggleBlockUser,
   resetPassword,
   updateTargetUserProfile,
+  importUsersFromXLSX,
 } from "../../../../services/usersService";
 import { t } from "i18next";
 import { ProgressSpinner } from "primereact/progressspinner";
@@ -49,6 +57,7 @@ export default function UsersTableStaff({
   const [selectedGroup, setSelectedGroup] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Fetch data
   const fetchData = useCallback(async () => {
@@ -197,6 +206,54 @@ export default function UsersTableStaff({
     }
   };
 
+  // Handle file import for users
+  const handleFileUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    if (
+      !event.target.files ||
+      event.target.files.length === 0 ||
+      !selectedGroup
+    ) {
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const file = event.target.files[0];
+      await importUsersFromXLSX(selectedGroup, file);
+
+      toast?.current?.show({
+        severity: "success",
+        summary: t("common.states.success"),
+        detail: t("staffTabs.users.import.success"),
+        life: 3000,
+      });
+
+      // Reset file input
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+
+      // Reload users list
+      await fetchData();
+    } catch (err) {
+      console.error("Error importing users:", err);
+      toast?.current?.show({
+        severity: "error",
+        summary: t("common.states.error"),
+        detail: t("staffTabs.users.import.error"),
+        life: 3000,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const triggerFileInput = () => {
+    fileInputRef.current?.click();
+  };
+
   // Memoize scope options to prevent unnecessary recalculations
   const scopeOptions = useMemo(() => {
     return scopes.map((scope) => ({
@@ -289,6 +346,15 @@ export default function UsersTableStaff({
     <>
       <ConfirmDialog />
 
+      {/* Hidden file input for XLSX import */}
+      <input
+        type="file"
+        ref={fileInputRef}
+        onChange={handleFileUpload}
+        accept=".xlsx"
+        style={{ display: "none" }}
+      />
+
       {/* Scope selection dropdown */}
       <div className="mb-4">
         <label
@@ -334,12 +400,21 @@ export default function UsersTableStaff({
             <h2 className="text-xl font-bold text-white">
               {t("staffTabs.users.asStaff.title")}
             </h2>
-            <Button
-              label={t("staffTabs.users.asStaff.new")}
-              icon="pi pi-plus"
-              className="p-button-primary"
-              onClick={openNewUserDialog}
-            />
+            <div className="flex gap-2">
+              <Button
+                label={t("staffTabs.users.import.button")}
+                icon="pi pi-upload"
+                className="p-button-secondary"
+                onClick={triggerFileInput}
+                disabled={!selectedGroup}
+              />
+              <Button
+                label={t("staffTabs.users.asStaff.new")}
+                icon="pi pi-plus"
+                className="p-button-primary"
+                onClick={openNewUserDialog}
+              />
+            </div>
           </div>
 
           <DataTable

@@ -140,6 +140,13 @@
           "roleRequired": "Un rôle est requis."
         }
       },
+      "import": {
+        "button": "Importer des utilisateurs",
+        "success": "Les utilisateurs ont été importés avec succès",
+        "error": "Une erreur est survenue lors de l'importation des utilisateurs",
+        "fileType": "Seuls les fichiers XLSX sont pris en charge",
+        "selectFile": "Sélectionner un fichier XLSX"
+      },
       "messages": {
         "userBlocked": "L'utilisateur a été bloqué avec succès.",
         "userUnblocked": "L'utilisateur a été débloqué avec succès.",

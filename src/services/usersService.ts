@@ -210,3 +210,29 @@ export async function resetPassword(userId: string) {
     throw error;
   }
 }
+
+export async function importUsersFromXLSX(groupId: string, file: File) {
+  try {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const response = await ApiClient.post(
+      `/user/group/${groupId}/import`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    if (response.status !== 201) {
+      throw new Error(`Error: ${response.status}`);
+    }
+
+    return response.data;
+  } catch (error) {
+    console.error("Error importing users:", error);
+    throw error;
+  }
+}
