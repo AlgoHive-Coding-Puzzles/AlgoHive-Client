@@ -1,0 +1,408 @@
+{
+  "app": {
+    "name": "AlgoHive",
+    "description": "Plateforme de challenges algorithmiques",
+    "footer": "AlgoHive © 2025"
+  },
+  "common": {
+    "actions": {
+      "create": "Créer",
+      "edit": "Modifier",
+      "delete": "Supprimer",
+      "save": "Enregistrer",
+      "cancel": "Annuler",
+      "block": "Bloquer",
+      "unblock": "Débloquer",
+      "reset": "Réinitialiser",
+      "view": "Voir",
+      "close": "Fermer"
+    },
+    "fields": {
+      "firstName": "Prénom",
+      "lastName": "Nom",
+      "email": "E-mail",
+      "name": "Nom",
+      "description": "Description",
+      "roles": "Rôles",
+      "groups": "Groupes",
+      "status": "Statut",
+      "actions": "Actions",
+      "password": "Mot de passe",
+      "lastConnection": "Dernière connexion"
+    },
+    "selects": {
+      "scopes": "Sélectionner des périmètres",
+      "groups": "Sélectionner des groupes",
+      "roles": "Sélectionner des rôles",
+      "catalogs": "Sélectionner des catalogues",
+      "themes": "Sélectionner des thèmes"
+    },
+    "states": {
+      "none": "Aucun",
+      "loading": "Chargement des ressources...",
+      "empty": "Aucune donnée disponible",
+      "error": "Erreur",
+      "validationError": "Erreur de validation du formulaire",
+      "errorMessage": "Une erreur est survenue lors de la récupération des ressources.",
+      "success": "Succès"
+    }
+  },
+  "navigation": {
+    "staff": {
+      "terminal": "Terminal",
+      "home": "Accueil",
+      "users": "Gestion des utilisateurs",
+      "roles": "Gestion des rôles",
+      "scopes": "Gestion des périmètres",
+      "groups": "Gestion des groupes",
+      "competitions": "Gestion des compétitions",
+      "catalogs": "Catalogues d'énigmes"
+    }
+  },
+  "staffTabs": {
+    "home": {
+      "welcome": "Bienvenue",
+      "profileInfo": "Informations du profil",
+      "resetPassword": "Réinitialiser le mot de passe",
+      "oldPassword": "Ancien mot de passe",
+      "newPassword": "Nouveau mot de passe",
+      "confirmPassword": "Confirmer le mot de passe",
+      "updatePassword": "Mettre à jour le mot de passe",
+      "passwordStrength": "Force du mot de passe",
+      "passwordRequirements": "Le mot de passe doit comporter au moins 8 caractères et inclure des majuscules, des minuscules, des chiffres et des caractères spéciaux.",
+      "enterPassword": "Entrez le mot de passe",
+      "enterOldPassword": "Entrez l'ancien mot de passe",
+      "weak": "Faible",
+      "medium": "Moyen",
+      "strong": "Fort",
+      "lastLogin": "Dernière connexion",
+      "neverConnected": "Jamais connecté",
+      "logout": "Déconnexion",
+      "logoutHeader": "Confirmer la déconnexion",
+      "accountInfo": "Informations du compte",
+      "status": "Statut",
+      "activeRoles": "Rôles actifs",
+      "rolesDescription": "Ce sont les rôles attribués à votre compte qui définissent vos autorisations.",
+      "quickActions": "Actions rapides",
+      "language": "Changer la langue: ",
+      "lastActivity": "Dernière activité",
+      "viewFullActivity": "Voir l'historique complet des activités",
+      "updateProfile": "Mettre à jour le profil",
+      "saveChanges": "Enregistrer les modifications",
+      "messages": {
+        "error": "Erreur",
+        "success": "Succès",
+        "passwordMismatch": "Les mots de passe ne correspondent pas",
+        "passwordTooShort": "Le mot de passe doit comporter au moins 8 caractères",
+        "passwordResetSuccess": "Le mot de passe a été réinitialisé avec succès",
+        "passwordResetError": "Erreur lors de la réinitialisation du mot de passe",
+        "confirmLogout": "Êtes-vous sûr de vouloir vous déconnecter ?",
+        "profileUpdateSuccess": "Profil mis à jour avec succès",
+        "profileUpdateError": "Erreur lors de la mise à jour du profil"
+      }
+    },
+    "users": {
+      "views": {
+        "asAdmin": "Vue administrateur",
+        "asStaff": "Vue personnel"
+      },
+      "asRoles": "Vue par rôles",
+      "blocked": "Bloqué",
+      "active": "Actif",
+      "neverConnected": "Jamais connecté",
+      "asStaff": {
+        "title": "Gestion des utilisateurs du personnel",
+        "targetScope": "Périmètre cible",
+        "new": "Nouvel utilisateur",
+        "newUser": "Créer un nouvel utilisateur",
+        "editUser": "Modifier l'utilisateur",
+        "noUsersInGroup": "Aucun utilisateur trouvé dans ce groupe",
+        "messages": {
+          "userCreated": "L'utilisateur a été créé avec succès.",
+          "userUpdated": "L'utilisateur a été mis à jour avec succès.",
+          "errorCreating": "Une erreur est survenue lors de la création de l'utilisateur.",
+          "errorUpdating": "Une erreur est survenue lors de la mise à jour de l'utilisateur.",
+          "errorDeleting": "Une erreur est survenue lors de la suppression de l'utilisateur.",
+          "groupRequired": "Le groupe est requis."
+        }
+      },
+      "asAdmin": {
+        "title": "Gestion des membres du personnel",
+        "new": "Créer un nouveau membre du personnel",
+        "resetPassword": "Réinitialiser le mot de passe",
+        "editUser": "Modifier le membre du personnel",
+        "newStaff": "Nouveau membre du personnel",
+        "messages": {
+          "userCreated": "Le membre du personnel a été créé avec succès.",
+          "userUpdated": "Le membre du personnel a été mis à jour avec succès.",
+          "errorCreating": "Une erreur est survenue lors de la création du membre du personnel.",
+          "errorUpdating": "Une erreur est survenue lors de la mise à jour du membre du personnel.",
+          "roleRequired": "Un rôle est requis."
+        }
+      },
+      "messages": {
+        "userBlocked": "L'utilisateur a été bloqué avec succès.",
+        "userUnblocked": "L'utilisateur a été débloqué avec succès.",
+        "errorBlocking": "Une erreur est survenue lors du blocage de l'utilisateur.",
+        "firstNameRequired": "Le prénom est requis.",
+        "lastNameRequired": "Le nom est requis.",
+        "validEmailRequired": "Un email valide est requis.",
+        "confirmResetPassHeader": "Réinitialiser le mot de passe",
+        "confirmResetPass": "Êtes-vous sûr de vouloir réinitialiser le mot de passe de ce membre ?",
+        "passwordReset": "Le mot de passe a été réinitialisé avec succès.",
+        "errorResetting": "Une erreur est survenue lors de la réinitialisation du mot de passe.",
+        "confirmDeleteUser": "Êtes-vous sûr de vouloir supprimer cet utilisateur ?",
+        "confirmDeleteHeader": "Supprimer l'utilisateur",
+        "userDeleted": "Utilisateur supprimé avec succès.",
+        "errorDeleting": "Une erreur est survenue lors de la suppression de l'utilisateur."
+      }
+    },
+    "roles": {
+      "new": "Créer un nouveau rôle",
+      "name": "Nom du rôle",
+      "permissions": "Permissions",
+      "scopes": "Périmètres",
+      "details": "Plus de détails",
+      "editRole": "Modifier le rôle",
+      "deleteRole": "Supprimer le rôle",
+      "confirmDelete": "Confirmer la suppression",
+      "confirmDeleteMessage": "Êtes-vous sûr de vouloir supprimer le rôle '{{name}}' ?",
+      "warningUsersAssigned": "Ce rôle est attribué à {{count}} {{users}}. Ils perdront ce rôle si vous le supprimez.",
+      "users": "Utilisateurs",
+      "usersCount": "utilisateurs",
+      "usersWithRole": "Utilisateurs avec ce rôle",
+      "more": "plus",
+      "userCount": "Nombre d'utilisateurs avec ce rôle",
+      "search": "Rechercher des rôles...",
+      "noSearchResults": "Aucun rôle ne correspond à votre recherche",
+      "ownerRole": "Rôle Propriétaire",
+      "ownerRoleWarning": "Il s'agit du rôle de propriétaire avec toutes les permissions système et ne peut pas être modifié.",
+      "information": "Informations",
+      "id": "ID",
+      "noPermissions": "Aucune permission attribuée",
+      "noScopes": "Aucun périmètre attribué",
+      "messages": {
+        "fetchError": "Une erreur est survenue lors de la récupération des rôles.",
+        "fetchDetailError": "Une erreur est survenue lors de la récupération des détails du rôle.",
+        "deleteError": "Une erreur est survenue lors de la suppression du rôle.",
+        "deleteSuccess": "Rôle supprimé avec succès.",
+        "notFound": "Aucun rôle trouvé.",
+        "nameRequired": "Le nom du rôle est requis.",
+        "createSuccess": "Rôle créé avec succès.",
+        "createError": "Une erreur est survenue lors de la création du rôle.",
+        "updateSuccess": "Rôle mis à jour avec succès.",
+        "updateError": "Une erreur est survenue lors de la mise à jour du rôle."
+      },
+      "permissionTypes": {
+        "users": "Utilisateurs",
+        "roles": "Rôles",
+        "scopes": "Périmètres",
+        "groups": "Groupes",
+        "competitions": "Compétitions",
+        "catalogs": "Catalogues"
+      }
+    },
+    "scopes": {
+      "new": "Créer un nouveau périmètre",
+      "name": "Nom du périmètre",
+      "description": "Description du périmètre",
+      "catalogs": "Catalogues",
+      "details": "Plus de détails",
+      "editScope": "Modifier le périmètre",
+      "deleteScope": "Supprimer le périmètre",
+      "confirmDelete": "Confirmer la suppression",
+      "confirmDeleteMessage": "Êtes-vous sûr de vouloir supprimer le périmètre '{{name}}' ?",
+      "dangerGroupsAssigned": "Ce périmètre a {{count}} {{groups}} assignés. Vous ne pouvez pas supprimer ce périmètre tant qu'il y a des groupes assignés.",
+      "noDescription": "Aucune description fournie",
+      "noCatalogs": "Aucun catalogue assigné",
+      "roles": "Rôles",
+      "noRoles": "Aucun rôle assigné",
+      "groups": "Groupes",
+      "noGroups": "Aucun groupe assigné",
+      "information": "Informations",
+      "id": "ID",
+      "search": "Rechercher des périmètres...",
+      "noSearchResults": "Aucun périmètre ne correspond à votre recherche",
+      "messages": {
+        "fetchError": "Une erreur est survenue lors de la récupération des périmètres.",
+        "notFound": "Aucun périmètre trouvé.",
+        "nameRequired": "Le nom du périmètre est requis.",
+        "createSuccess": "Périmètre créé avec succès.",
+        "createError": "Une erreur est survenue lors de la création du périmètre.",
+        "updateSuccess": "Périmètre mis à jour avec succès.",
+        "updateError": "Une erreur est survenue lors de la mise à jour du périmètre.",
+        "deleteSuccess": "Périmètre supprimé avec succès.",
+        "deleteErrorInUse": "Ce périmètre a des groupes assignés. Veuillez supprimer les groupes avant de supprimer le périmètre.",
+        "deleteError": "Une erreur est survenue lors de la suppression du périmètre.",
+        "fetchDetailError": "Une erreur est survenue lors de la récupération des détails du périmètre."
+      }
+    },
+    "groups": {
+      "new": "Créer un nouveau groupe",
+      "name": "Nom du groupe",
+      "groupName": "Entrez le nom du groupe",
+      "description": "Description du groupe",
+      "groupDescription": "Entrez la description du groupe",
+      "create": "Créer le groupe",
+      "viewDetails": "Voir les détails",
+      "students": "Étudiants",
+      "noGroups": "Aucun groupe trouvé dans ce périmètre",
+      "selectScopeFirst": "Veuillez d'abord sélectionner un périmètre",
+      "nameRequired": "Le nom du groupe est requis",
+      "groupCreated": "Groupe créé avec succès",
+      "errorCreatingGroup": "Une erreur est survenue lors de la création du groupe",
+      "errorFetchingGroups": "Une erreur est survenue lors de la récupération des groupes",
+      "editGroup": "Modifier le groupe",
+      "deleteGroup": "Supprimer le groupe",
+      "confirmDelete": "Confirmer la suppression",
+      "confirmDeleteMessage": "Êtes-vous sûr de vouloir supprimer le groupe '{{name}}' ?",
+      "dangerUsersAssigned": "Ce groupe a {{count}} {{users}} assignés. Vous ne pouvez pas supprimer ce groupe tant qu'il y a des utilisateurs assignés.",
+      "information": "Informations",
+      "id": "ID",
+      "noDescription": "Aucune description fournie",
+      "noStudents": "Aucun étudiant assigné à ce groupe",
+      "groupUpdated": "Groupe mis à jour avec succès",
+      "errorUpdatingGroup": "Une erreur est survenue lors de la mise à jour du groupe",
+      "groupDeleted": "Groupe supprimé avec succès",
+      "errorDeletingGroup": "Une erreur est survenue lors de la suppression du groupe",
+      "errorFetchingGroupDetails": "Une erreur est survenue lors de la récupération des détails du groupe",
+      "searchGroups": "Rechercher des groupes...",
+      "noSearchResults": "Aucun groupe ne correspond à votre recherche",
+      "selectScopeToManageGroups": "Sélectionnez un périmètre pour gérer ses groupes",
+      "errorFetchingScopes": "Une erreur est survenue lors de la récupération des périmètres"
+    },
+    "catalogs": {
+      "details": "Plus de détails",
+      "notFound": "Aucun catalogue trouvé.",
+      "description": "Les catalogues sont une collection de bibliothèques contenant des énigmes à deux étapes."
+    },
+    "competitions": {
+      "title": "Gestion des compétitions",
+      "create": "Créer une compétition",
+      "edit": "Modifier la compétition",
+      "details": "Détails de la compétition",
+      "noCompetitions": "Aucune compétition trouvée",
+      "loading": "Chargement des compétitions...",
+      "errorLoading": "Erreur lors du chargement des compétitions",
+      "form": {
+        "title": "Titre",
+        "description": "Description",
+        "catalogTheme": "Thème API",
+        "apiEnvironment": "Environnement API",
+        "groups": "Groupes accessibles",
+        "visible": "Visible pour les utilisateurs",
+        "finished": "Marquer comme terminée"
+      },
+      "status": {
+        "active": "Active",
+        "finished": "Terminée",
+        "visible": "Visible",
+        "hidden": "Cachée"
+      },
+      "confirmDelete": "Êtes-vous sûr de vouloir supprimer cette compétition ?",
+      "confirmDeleteHeader": "Supprimer la compétition",
+      "statistics": {
+        "title": "Statistiques",
+        "totalUsers": "Utilisateurs totaux",
+        "activeUsers": "Utilisateurs actifs",
+        "completionRate": "Taux d'achèvement",
+        "averageScore": "Score moyen",
+        "highestScore": "Score le plus élevé",
+        "participants": "Participants",
+        "groups": "Groupes participants",
+        "noParticipants": "Aucun participant actif trouvé",
+        "noGroups": "Aucun groupe assigné à cette compétition",
+        "viewTriesFor": "Voir les essais de {{name}}"
+      },
+      "messages": {
+        "titleRequired": "Le titre est requis",
+        "descriptionRequired": "La description est requise",
+        "catalogThemeRequired": "Le thème API est requis",
+        "apiEnvironmentRequired": "L'environnement API est requis",
+        "createSuccess": "Compétition créée avec succès",
+        "updateSuccess": "Compétition mise à jour avec succès",
+        "deleteSuccess": "Compétition supprimée avec succès",
+        "createError": "Une erreur est survenue lors de la création de la compétition",
+        "updateError": "Une erreur est survenue lors de la mise à jour de la compétition",
+        "deleteError": "Une erreur est survenue lors de la suppression de la compétition",
+        "toggleVisibilitySuccess": "Visibilité de la compétition mise à jour",
+        "toggleVisibilityError": "Erreur lors de la mise à jour de la visibilité de la compétition",
+        "finishSuccess": "La compétition a été marquée comme terminée",
+        "finishError": "Erreur lors du marquage de la compétition comme terminée",
+        "addGroupSuccess": "Groupe ajouté à la compétition avec succès",
+        "removeGroupSuccess": "Groupe retiré de la compétition avec succès",
+        "groupError": "Erreur lors de la gestion de l'accès au groupe"
+      },
+      "actions": {
+        "finish": "Marquer comme terminée",
+        "unfinish": "Marquer comme active",
+        "show": "Afficher",
+        "hide": "Masquer",
+        "addGroup": "Ajouter un groupe",
+        "removeGroup": "Retirer un groupe"
+      },
+      "tries": {
+        "viewTries": "Voir les essais",
+        "noTries": "Aucun essai trouvé pour cet utilisateur",
+        "startTime": "Heure de début",
+        "endTime": "Heure de fin",
+        "attempts": "Tentatives",
+        "score": "Score",
+        "puzzle": "Énigme",
+        "loading": "Chargement des essais..."
+      }
+    }
+  },
+  "staff": {
+    "catalogs": {
+      "loading": "Chargement des catalogues...",
+      "errorFetchingCatalogs": "Erreur lors du chargement des catalogues",
+      "noCatalogs": "Aucun catalogue disponible",
+      "themes": "Thèmes",
+      "puzzles": "Énigmes",
+      "difficulty": "Difficulté",
+      "author": "Auteur",
+      "language": "Langue",
+      "createdAt": "Créé le",
+      "updatedAt": "Mis à jour le",
+      "back": "Retour aux catalogues",
+      "viewPuzzle": "Voir l'énigme",
+      "noThemes": "Aucun thème disponible pour ce catalogue",
+      "puzzleDetails": "Détails de l'énigme",
+      "puzzlesCount": "Énigmes",
+      "backToCatalog": "Retour au catalogue"
+    }
+  },
+  "login": {
+    "welcome": "Bienvenue sur",
+    "description": "Connectez-vous pour accéder à la plateforme",
+    "title": "Connexion",
+    "email": "Adresse e-mail",
+    "password": "Mot de passe",
+    "remember": "Se souvenir de moi",
+    "forgot": "Mot de passe oublié ?",
+    "submit": "Se connecter",
+    "noAccount": "Pas encore de compte ?",
+    "askAdmin": "Demandez à votre administrateur",
+    "tagline": "Sweeten your coding skills, but the competition stings",
+    "feature1": {
+      "title": "Plateforme de Programmation Auto-Hébergée",
+      "desc": "Une plateforme légère conçue pour créer et résoudre des énigmes de programmation"
+    },
+    "feature2": {
+      "title": "Énigmes à Double Défi",
+      "desc": "Chaque énigme contient deux parties à résoudre, testant différentes compétences de programmation"
+    },
+    "feature3": {
+      "title": "Apprentissage Compétitif",
+      "desc": "Créez des compétitions pour équipes, écoles ou organisations"
+    },
+    "feature4": {
+      "title": "Support Multilingue",
+      "desc": "Accédez à AlgoHive dans votre langue préférée : "
+    },
+    "error": "Erreur de connexion.",
+    "invalidCredentials": "Identifiants invalides.",
+    "invalidEmailOrPassword": "E-mail ou mot de passe invalide."
+  }
+}
