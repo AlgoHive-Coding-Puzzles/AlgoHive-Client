@@ -418,7 +418,7 @@ export default function GroupsPage() {
             </div>
           )}
 
-          <div className="container mx-auto px-2">
+          <div className="mx-auto px-2">
             {loading && (
               <div className="flex justify-center p-4">
                 <ProgressSpinner style={{ width: "40px", height: "40px" }} />

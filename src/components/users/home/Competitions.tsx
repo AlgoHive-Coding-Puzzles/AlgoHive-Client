@@ -21,7 +21,7 @@ const UsersHomeCompetitions = () => {
   });
 
   return (
-    <div className="container mt-24 lg:mt-80" style={{ minHeight: "100vh" }}>
+    <div className="mt-24 lg:mt-80" style={{ minHeight: "100vh" }}>
       <span className="text-xl font-semibold text-surface-950 dark:text-surface-0">
         {t("users.competitions")}
       </span>

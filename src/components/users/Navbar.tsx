@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { isStaff } from "../../utils/permissions";
@@ -29,6 +29,27 @@ const Navbar: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
   const { user } = useAuth();
   const [tagline, setTagline] = React.useState<string>(getTagLine());
   const [isMenuOpen, setIsMenuOpen] = React.useState<boolean>(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        isMenuOpen &&
+        menuRef.current &&
+        !menuRef.current.contains(event.target as Node) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target as Node)
+      ) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isMenuOpen]);
 
   const navbarData = [
     {
@@ -109,6 +130,7 @@ const Navbar: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
       </p>
       {/* Burger Menu Button */}
       <button
+        ref={buttonRef}
         className="lg:hidden text-white"
         onClick={() => setIsMenuOpen(!isMenuOpen)}
       >
@@ -144,28 +166,31 @@ const Navbar: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
         </li>
       </ul>
       {isMenuOpen && (
-        <motion.ul
+        <motion.div
+          ref={menuRef}
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
-          className="absolute top-full left-0 w-full bg-[#282828] text-white flex flex-col items-start gap-3 p-4 lg:hidden rounded-2xl shadow-lg"
+          className="absolute top-full left-0 w-full"
         >
-          {navbarData.map((item) => (
-            <li key={item.id} className="w-full">
-              <Link
-                to={`/${item.id}`}
-                className="block text-sm font-semibold text-white hover:text-white/80 transition-all duration-300 ease-in-out"
-                onClick={() => setIsMenuOpen(false)} // Close menu on click
-              >
-                {item.title}
-              </Link>
+          <ul className="bg-[#282828] text-white flex flex-col items-start gap-3 p-4 lg:hidden rounded-2xl shadow-lg">
+            {navbarData.map((item) => (
+              <li key={item.id} className="w-full">
+                <Link
+                  to={`/${item.id}`}
+                  className="block text-sm font-semibold text-white hover:text-white/80 transition-all duration-300 ease-in-out"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.title}
+                </Link>
+              </li>
+            ))}
+            <li>
+              <LanguageSwitcher />
             </li>
-          ))}
-          <li>
-            <LanguageSwitcher />
-          </li>
-        </motion.ul>
+          </ul>
+        </motion.div>
       )}
     </nav>
   );

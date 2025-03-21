@@ -302,7 +302,7 @@ export default function ScopesPage() {
 
       {/* Scopes grid */}
       {!loading && !error && (
-        <div className="container mx-auto px-2">
+        <div className="mx-auto px-2">
           <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
             {/* Create new scope card */}
             <CreateScopeForm

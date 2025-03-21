@@ -43,7 +43,7 @@ const LoginPage = () => {
   return (
     <div
       className="flex items-center justify-center min-h-screen bg-cover bg-center"
-      style={{ backgroundImage: "url('/src/assets/login.png')" }}
+      style={{ backgroundImage: `url('/public/login.png')` }}
     >
       <Toast ref={toast} />
 
