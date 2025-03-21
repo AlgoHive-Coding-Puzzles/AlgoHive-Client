@@ -16,8 +16,11 @@ const AccountPage = () => {
         <div className="container relative">
           <div className=" h-full relative ">
             <Navbar className="relative" />
-            <div className="p-6 mt-10 md:p-12 rounded-2.5xl lg:rounded-4xl bg-white/5 backdrop-blur-[48px] max-w-[calc(100%-3rem)] lg:max-w-none mx-auto shadow-[0px_2px_5px_0px_rgba(255,255,255,0.06)_inset,0px_12px_20px_0px_rgba(0,0,0,0.06)]">
-              <div className="py-10 border-b border-white/12 flex flex-col gap-10">
+            <div className="p-6 mt-10 md:p-12 rounded-2xl lg:rounded-4xl bg-white/5 backdrop-blur-[48px] md:max-w-[calc(100%-3rem)] lg:max-w-none mx-auto shadow-[0px_2px_5px_0px_rgba(255,255,255,0.06)_inset,0px_12px_20px_0px_rgba(0,0,0,0.06)]">
+              <div className="py-6 border-b border-white/12 flex flex-col gap-10">
+                <h4 className="text-3xl font-bold text-surface-0">
+                  Account Settings
+                </h4>
                 <div className="flex flex-col sm:flex-row gap-2 items-start">
                   <div className="sm:flex-[0.45] text-lg text-surface-0 font-medium">
                     <button

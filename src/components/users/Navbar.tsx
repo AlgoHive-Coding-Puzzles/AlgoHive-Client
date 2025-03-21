@@ -84,6 +84,10 @@ const Navbar: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
             onClick={() => {
               window.location.href = "/";
             }}
+            style={{
+              cursor: "pointer",
+              userSelect: "none",
+            }}
           >
             <span className="text-orange-500">Algo</span>
             <span>Hive.dev</span>
@@ -95,7 +99,7 @@ const Navbar: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
               setTagline(getTagLine());
             }}
             style={{
-              cursor: "pointer",
+              cursor: "alias",
               userSelect: "none",
             }}
           >
