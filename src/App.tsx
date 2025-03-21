@@ -1,9 +1,12 @@
 import { Route, Routes } from "react-router-dom";
-import LoginPage from "./Pages/misc/Login/Login";
-import ProtectedRoute from "./components/ProtectedRoute";
-import { AuthProvider } from "./contexts/AuthContext";
+
+import LoginPage from "./pages/login/login";
+import Admin from "./pages/admin/Admin";
+
 import RedirectIfAuthenticated from "./components/RedirectIfAuthenticated";
-import StaffDashboard from "./Pages/staff/StaffDashboard/StaffDashboard";
+import ProtectedRoute from "./components/ProtectedRoute";
+
+import { AuthProvider } from "./contexts/AuthContext";
 import { ActivePageProvider } from "./contexts/ActivePageContext";
 
 const App = () => {
@@ -15,7 +18,7 @@ const App = () => {
           element={
             <ProtectedRoute target="staff">
               <ActivePageProvider>
-                <StaffDashboard />
+                <Admin />
               </ActivePageProvider>
             </ProtectedRoute>
           }
@@ -27,8 +30,7 @@ const App = () => {
               <LoginPage />
             </RedirectIfAuthenticated>
           }
-        />{" "}
-        {/* <Route path="/unauthorized" element={<UnauthorizedPage />} /> */}
+        />
       </Routes>
     </AuthProvider>
   );
