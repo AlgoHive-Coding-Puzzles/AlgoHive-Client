@@ -16,8 +16,6 @@ export interface CompetitionStatistics {
 // Get all competitions
 export const fetchCompetitions = async (): Promise<Competition[]> => {
   const response = await ApiClient.get("/competitions/");
-  console.log("Competitions response:", response.data);
-
   return response.data;
 };
 
