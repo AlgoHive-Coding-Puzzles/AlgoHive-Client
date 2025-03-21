@@ -58,7 +58,7 @@ const MacbookScroll = ({
           translateY: textTransform,
           opacity: textOpacity,
         }}
-        className="mb-20 text-center text-3xl font-bold text-neutral-800"
+        className="mb-20 text-center text-3xl font-bold text-white"
       >
         {title || (
           <span>
