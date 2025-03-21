@@ -6,8 +6,6 @@ import AppDock from "../../components/admin/dock/Dock";
 
 import { useActivePage } from "../../contexts/ActivePageContext";
 
-import "./Admin.css";
-
 export default function Admin() {
   const { t } = useTranslation();
   const { activePage, setActivePage } = useActivePage();
@@ -21,9 +19,23 @@ export default function Admin() {
 
     window.addEventListener("scroll", handleScroll);
 
+    // Dynamically load the CSS
+    const styleLink = document.createElement("link");
+    styleLink.setAttribute("rel", "stylesheet");
+    styleLink.setAttribute("type", "text/css");
+    styleLink.setAttribute("href", "/admin-styles.css");
+    styleLink.setAttribute("id", "admin-styles");
+    document.head.appendChild(styleLink);
+
     // Cleanup when component unmounts
     return () => {
       window.removeEventListener("scroll", handleScroll);
+
+      // Remove the CSS when unmounting
+      const styleElement = document.getElementById("admin-styles");
+      if (styleElement) {
+        document.head.removeChild(styleElement);
+      }
     };
   }, []);
 

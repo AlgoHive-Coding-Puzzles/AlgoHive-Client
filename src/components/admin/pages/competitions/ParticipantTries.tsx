@@ -9,6 +9,7 @@ import { Tag } from "primereact/tag";
 
 import { fetchUserCompetitionTries } from "../../../../services/competitionsService";
 import { User } from "../../../../models/User";
+import { Try } from "../../../../models/Try";
 
 interface ParticipantTriesProps {
   visible: boolean;
@@ -24,7 +25,7 @@ export default function ParticipantTries({
   participant,
 }: ParticipantTriesProps) {
   const { t } = useTranslation();
-  const [tries, setTries] = useState<unknown[]>([]);
+  const [tries, setTries] = useState<Try[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -38,7 +39,7 @@ export default function ParticipantTries({
       setLoading(true);
       const data = await fetchUserCompetitionTries(
         competitionId,
-        participant.id
+        participant?.id || ""
       );
       setTries(data);
     } catch (error) {
@@ -54,7 +55,7 @@ export default function ParticipantTries({
     return date.toLocaleString();
   };
 
-  const scoreTemplate = (rowData: any) => {
+  const scoreTemplate = (rowData: Try) => {
     let severity: "success" | "warning" | "danger" | "info" = "info";
 
     if (rowData.score >= 80) {
@@ -68,11 +69,11 @@ export default function ParticipantTries({
     return <Tag value={rowData.score.toFixed(1)} severity={severity} />;
   };
 
-  const attemptTemplate = (rowData: any) => {
+  const attemptTemplate = (rowData: Try) => {
     return <Tag value={rowData.attempts.toString()} />;
   };
 
-  const statusTemplate = (rowData: any) => {
+  const statusTemplate = (rowData: Try) => {
     if (rowData.end_time) {
       return <Tag severity="success" value="Completed" />;
     }
@@ -82,7 +83,7 @@ export default function ParticipantTries({
   return (
     <Dialog
       header={t("staffTabs.competitions.statistics.viewTriesFor", {
-        name: `${participant.firstname} ${participant.lastname}`,
+        name: `${participant?.firstname} ${participant?.lastname}`,
       })}
       visible={visible}
       onHide={onHide}

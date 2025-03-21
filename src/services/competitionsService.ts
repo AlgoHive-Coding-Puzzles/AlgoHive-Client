@@ -16,6 +16,8 @@ export interface CompetitionStatistics {
 // Get all competitions
 export const fetchCompetitions = async (): Promise<Competition[]> => {
   const response = await ApiClient.get("/competitions/");
+  console.log("Competitions response:", response.data);
+
   return response.data;
 };
 
@@ -116,5 +118,11 @@ export const fetchUserCompetitionTries = async (
   const response = await ApiClient.get(
     `/competitions/${competitionId}/users/${userId}/tries`
   );
+  return response.data;
+};
+
+// Get all competitions accessible to the current user through their groups
+export const fetchUserCompetitions = async (): Promise<Competition[]> => {
+  const response = await ApiClient.get("/competitions/user");
   return response.data;
 };

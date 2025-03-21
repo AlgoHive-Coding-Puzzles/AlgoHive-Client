@@ -208,11 +208,19 @@ export default function HomePage() {
               shape="circle"
               className="bg-indigo-700 text-white font-bold"
             />
+
             <Button
               label={t("staffTabs.home.logout")}
               icon="pi pi-sign-out"
               onClick={confirmLogout}
               className="p-button-text p-button-danger"
+              style={{ backgroundColor: "rgba(255, 255, 255, 1)" }}
+            />
+            <Button
+              label={t("staffTabs.home.leaveStaffPortal")}
+              icon="pi pi-arrow-left"
+              onClick={() => navigate("/")}
+              className="p-button-text p-button-secondary"
               style={{ backgroundColor: "rgba(255, 255, 255, 1)" }}
             />
           </div>

@@ -89,6 +89,7 @@
       "viewFullActivity": "View full activity history",
       "updateProfile": "Update Profile",
       "saveChanges": "Save Changes",
+      "leaveStaffPortal": "Leave Staff Portal",
       "messages": {
         "error": "Error",
         "success": "Success",
@@ -381,6 +382,22 @@
       "puzzlesCount": "Puzzles",
       "backToCatalog": "Back to catalog"
     }
+  },
+  "users": {
+    "menus": {
+      "staffPortal": "Staff Portal",
+      "competitions": "Competitions",
+      "leaderboard": "Leaderboard",
+      "howToPlay": "How to Play",
+      "welcome": "Welcome"
+    },
+    "are": "Are",
+    "youReady": "you ready",
+    "toExplore": "to explore the world of algorithms?",
+    "tagline": "Go through all the puzzles and improve your skills with",
+    "competitions": "Competitions",
+    "selectCompetition": "Select the competition you want to join",
+    "noCompetitions": "No competitions available"
   },
   "login": {
     "welcome": "Welcome to",

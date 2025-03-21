@@ -1,7 +1,7 @@
 import { t } from "i18next";
-import { User } from "../../../../models/User";
-import { Group } from "../../../../models/Group";
-import { Role } from "../../../../models/Role";
+import { Group } from "../../../../../models/Group";
+import { Role } from "../../../../../models/Role";
+import { User } from "../../../../../models/User";
 
 /**
  * Displays user status (active/blocked) with color coding

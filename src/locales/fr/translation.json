@@ -89,6 +89,7 @@
       "viewFullActivity": "Voir l'historique complet des activités",
       "updateProfile": "Mettre à jour le profil",
       "saveChanges": "Enregistrer les modifications",
+      "leaveStaffPortal": "Quitter le portail du personnel",
       "messages": {
         "error": "Erreur",
         "success": "Succès",
@@ -379,6 +380,22 @@
       "puzzlesCount": "Énigmes",
       "backToCatalog": "Retour au catalogue"
     }
+  },
+  "users": {
+    "menus": {
+      "staffPortal": "Portail du personnel",
+      "competitions": "Compétitions",
+      "leaderboard": "Classement",
+      "howToPlay": "Comment jouer",
+      "welcome": "Bienvenue"
+    },
+    "are": "Êtes",
+    "youReady": "vous prêt",
+    "toExplore": "à vous mesurer aux défis des algorithmes ?",
+    "tagline": "Améliorez vos compétences avec des énigmes de programmation avec",
+    "competitions": "Compétitions",
+    "selectCompetition": "Sélectionnez la compétition à laquelle vous souhaitez participer",
+    "noCompetitions": "Aucune compétition disponible"
   },
   "login": {
     "welcome": "Bienvenue sur",

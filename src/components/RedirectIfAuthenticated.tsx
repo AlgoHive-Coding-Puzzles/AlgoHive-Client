@@ -10,13 +10,8 @@ const RedirectIfAuthenticated = ({
 }: RedirectIfAuthenticatedProps) => {
   const { user } = useAuth();
 
-  if (user) {
-    // If the user is authenticated, redirect to the home page
-    return <Navigate to="/" />;
-  }
-
-  // If the user is not authenticated, render the children (LoginPage)
-  return children;
+  // If the user is authenticated, redirect to the home page
+  return user ? <Navigate to="/" /> : <>{children}</>;
 };
 
 export default RedirectIfAuthenticated;

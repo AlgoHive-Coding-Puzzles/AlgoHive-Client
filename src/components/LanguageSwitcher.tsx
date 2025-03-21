@@ -12,14 +12,18 @@ const LanguageSwitcher: React.FC = () => {
   };
 
   return (
-    <div className="language-switcher">
+    <div className="language-switcher font-semibold text-sm">
       <select
         value={i18n.language}
         onChange={handleLanguageChange}
         aria-label={t("language.select", "Select language")}
       >
-        <option value="fr">Français</option>
-        <option value="en">English</option>
+        <option className="text-black" value="fr">
+          Français
+        </option>
+        <option className="text-black" value="en">
+          English
+        </option>
       </select>
     </div>
   );

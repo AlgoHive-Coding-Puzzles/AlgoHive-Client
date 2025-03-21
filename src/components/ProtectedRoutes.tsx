@@ -2,13 +2,16 @@ import React, { useEffect, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
-interface ProtectedRouteProps {
+interface ProtectedRoutesProps {
   children: React.ReactNode;
-  target: "staff" | "participant";
+  target?: "staff" | "participant";
   allowedRoles?: string[];
 }
 
-const ProtectedRoute = ({ children, target }: ProtectedRouteProps) => {
+const ProtectedRoutes = ({
+  children,
+  target = "participant",
+}: ProtectedRoutesProps) => {
   const { isAuthenticated, isLoading, checkAuth, user } = useAuth();
   const [initialCheckDone, setInitialCheckDone] = useState(false);
   const location = useLocation();
@@ -53,4 +56,4 @@ const ProtectedRoute = ({ children, target }: ProtectedRouteProps) => {
   return <>{children}</>;
 };
 
-export default ProtectedRoute;
+export default ProtectedRoutes;
