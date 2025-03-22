@@ -11,6 +11,7 @@ import "./Home.css";
 import UsersHomeCompetitions from "../../components/users/home/Competitions";
 import MacbookScroll from "../../components/users/MacbookScroll";
 import { useTranslation } from "react-i18next";
+import Footer from "../../components/Footer";
 
 export default function Users() {
   const { t } = useTranslation();
@@ -44,6 +45,8 @@ export default function Users() {
       <MacbookScroll src="/github.png" />
 
       <UsersHomeCompetitions />
+
+      <Footer />
     </>
   );
 }
