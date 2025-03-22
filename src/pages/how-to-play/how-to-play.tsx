@@ -1,13 +1,11 @@
 // import { useTranslation } from "react-i18next";
-import { useTranslation } from "react-i18next";
 import AnimatedContainer from "../../components/AnimatedContainer";
 import CirclePattern from "../../components/CirclePattern";
 import Navbar from "../../components/users/Navbar";
-import { cn } from "../../utils/utils";
 import { Accordion, AccordionItem } from "../../components/ui/accordion";
 
 export default function HowToPlay() {
-  const { t } = useTranslation();
+  //   const { t } = useTranslation();
 
   const faqData = [
     {
