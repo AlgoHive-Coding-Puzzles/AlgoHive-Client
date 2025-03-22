@@ -469,7 +469,7 @@ export const Keypad = () => {
         >
           <div className="flex w-full justify-end pr-1"></div>
           <div className="flex w-full justify-start pl-1">
-            <span className="block">command</span>
+            <span className="block ">command</span>
           </div>
         </KBtn>
         <KBtn className="w-[8.2rem]"></KBtn>
@@ -532,7 +532,7 @@ export const KBtn = ({
       >
         <div
           className={cn(
-            "flex w-full flex-col items-center justify-center text-[5px] text-neutral-200",
+            "flex w-full flex-col items-center justify-center text-[4px] md:text-[5px] text-neutral-200",
             childrenClassName,
             backlit && "text-white"
           )}
