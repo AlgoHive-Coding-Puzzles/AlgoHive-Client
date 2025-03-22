@@ -1,5 +1,6 @@
 import AnimatedContainer from "../../components/AnimatedContainer";
 import CirclePattern from "../../components/CirclePattern";
+import Footer from "../../components/Footer";
 import { Input } from "../../components/ui/input";
 import Navbar from "../../components/users/Navbar";
 import { useAuth } from "../../contexts/AuthContext";
@@ -121,6 +122,8 @@ const AccountPage = () => {
           </div>
         </div>
       </AnimatedContainer>
+
+      <Footer />
     </div>
   );
 };
