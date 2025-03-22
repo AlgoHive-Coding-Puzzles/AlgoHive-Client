@@ -33,7 +33,7 @@ const UsersHomeCompetitions = () => {
         {t("users.selectCompetition")}
       </h1>
       <div className="mt-14 flex flex-col">
-        {competitions.length === 0 ? (
+        {!competitions || competitions.length === 0 ? (
           <AnimatedContainer
             delay={100}
             visibleClass="animate-in fade-in slide-in-from-top-24 duration-500"

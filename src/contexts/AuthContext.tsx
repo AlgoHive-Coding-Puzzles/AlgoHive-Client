@@ -84,17 +84,32 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       setIsLoading(true);
       // The cookie will be sent automatically with the request
       const response = await ApiClient.get("/auth/check");
+      if (!response.data) {
+        setUser(null);
+        return false;
+      }
+
+      // Check if the response is valid
+      if (response.data.error) {
+        setUser(null);
+        return false;
+      }
+
+      if (response.data.valid === false) {
+        setUser(null);
+        return false;
+      }
 
       setUser({
-        id: response.data.user_id,
-        email: response.data.email,
-        firstname: response.data.firstname,
-        lastname: response.data.lastname,
-        permissions: response.data.permissions,
-        blocked: response.data.blocked,
-        last_connected: response.data.last_connected,
-        roles: response.data.roles,
-        groups: response.data.groups,
+        id: response.data.user.user_id,
+        email: response.data.user.email,
+        firstname: response.data.user.firstname,
+        lastname: response.data.user.lastname,
+        permissions: response.data.user.permissions,
+        blocked: response.data.user.blocked,
+        last_connected: response.data.user.last_connected,
+        roles: response.data.user.roles,
+        groups: response.data.user.groups,
       });
       return true;
     } catch (error) {
