@@ -18,7 +18,7 @@ const UsersHomeCompetitions = () => {
     };
 
     fetchAllCompetitions();
-  });
+  }, []);
 
   return (
     <div className="container mt-24 lg:mt-80" style={{ minHeight: "75vh" }}>
