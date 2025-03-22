@@ -9,6 +9,7 @@ import { isStaff } from "./utils/permissions";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 import Users from "./pages/home/Home";
 import AccountPage from "./pages/account/Account";
+import HowToPlay from "./pages/how-to-play/how-to-play";
 
 // Lazy load Admin component to improve load time
 const Admin = lazy(() => import("./pages/admin/Admin"));
@@ -46,6 +47,7 @@ const AppRoutes = () => {
       />
 
       <Route path="/account" element={<AccountPage />} />
+      <Route path="/how-to-play" element={<HowToPlay />} />
     </Routes>
   );
 };

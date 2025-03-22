@@ -61,9 +61,8 @@ const Navbar: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
       title: t("users.menus.leaderboard"),
     },
     {
-      id: "how_to",
+      id: "how-to-play",
       title: t("users.menus.howToPlay"),
-      to: "/second-pages",
     },
   ];
 
@@ -84,7 +83,7 @@ const Navbar: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
   const logginNav = [
     {
       id: "login",
-      title: "Login",
+      title: t("users.menus.login"),
     },
   ];
 
