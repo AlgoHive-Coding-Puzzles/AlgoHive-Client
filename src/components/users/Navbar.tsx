@@ -98,7 +98,7 @@ const Navbar: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 
   return (
     <nav className="flex items-center relative z-[99999] justify-between py-6 w-[calc(100%-3rem)] max-h-[75px] mx-auto border-b border-white/10 border-dashed">
-      <p className="flex items-center font-semibold">
+      <div className="flex items-center font-semibold">
         <div className="flex flex-col items-start">
           <div
             onClick={() => {
@@ -126,7 +126,7 @@ const Navbar: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
             {tagline}
           </small>
         </div>
-      </p>
+      </div>
       {/* Burger Menu Button */}
       <button
         ref={buttonRef}

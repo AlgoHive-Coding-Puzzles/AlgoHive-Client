@@ -294,13 +294,13 @@ export default function HomePage() {
         <Card title={t("staffTabs.home.resetPassword")} className="shadow-lg">
           <div className="mb-4">
             <label
-              htmlFor="old-password"
+              htmlFor="oldpassword"
               className="block text-sm font-medium mb-1"
             >
               {t("staffTabs.home.oldPassword")}
             </label>
             <Password
-              id="old-password"
+              id="oldpassword"
               value={oldPassword}
               onChange={(e) => setOldPassword(e.target.value)}
               className="w-full"
@@ -425,10 +425,13 @@ export default function HomePage() {
             />
 
             <div className="">
-              <label className="block text-sm font-medium mb-1">
+              <label
+                className="block text-sm font-medium mb-1"
+                htmlFor="language"
+              >
                 {t("staffTabs.home.language")}
               </label>
-              <Button>
+              <Button id="language">
                 <LanguageSwitcher />
               </Button>
             </div>
@@ -489,6 +492,7 @@ export default function HomePage() {
               onChange={(e) => setEmail(e.target.value)}
               className="w-full"
               placeholder={t("common.fields.email")}
+              autoComplete="off"
             />
           </div>
 

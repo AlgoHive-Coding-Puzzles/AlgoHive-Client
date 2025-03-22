@@ -17,6 +17,7 @@ const LanguageSwitcher: React.FC = () => {
         value={i18n.language}
         onChange={handleLanguageChange}
         aria-label={t("language.select", "Select language")}
+        id="language-select"
       >
         <option className="text-black" value="fr">
           Français

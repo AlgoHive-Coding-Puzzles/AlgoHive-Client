@@ -1,5 +1,6 @@
 import React from "react";
 import { cn } from "../utils/utils";
+import useVisible from "../lib/hooks/use-visible";
 
 type AnimatedContainerProps = {
   visibleClass?: string;
@@ -12,14 +13,24 @@ const AnimatedContainer: React.FC<
 > = ({
   className,
   children,
-
+  visibleClass,
+  notVisibleClass,
+  delay = 0,
   ...props
 }) => {
+  const [elementRef, isVisible] = useVisible({ delay });
+
   return (
     <div
+      ref={elementRef}
       className={cn(
-        "animate-in fade-in slide-in-from-top-24 duration-500 !slide-in-from-top-0",
-
+        "",
+        isVisible
+          ? cn(
+              "animate-in fade-in slide-in-from-top-24 duration-500",
+              visibleClass
+            )
+          : cn("opacity-0", notVisibleClass),
         className
       )}
       {...props}

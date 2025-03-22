@@ -124,14 +124,14 @@ export const CatalogDetails = ({
         />
       )}
 
-      {!loading && !error && themes.length === 0 && (
+      {!loading && !error && (!themes || themes.length === 0) && (
         <div className="flex flex-col items-center justify-center p-6 bg-gray-50 rounded">
           <i className="pi pi-folder-open text-5xl text-gray-400 mb-4"></i>
           <p className="text-gray-600">{t("staff.catalogs.noThemes")}</p>
         </div>
       )}
 
-      {!loading && !error && themes.length > 0 && (
+      {!loading && !error && themes && themes.length > 0 && (
         <Accordion className="w-full">
           {themes.map((theme) => (
             <AccordionTab
