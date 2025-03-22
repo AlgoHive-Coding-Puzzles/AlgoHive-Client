@@ -15,7 +15,8 @@
       "unblock": "Débloquer",
       "reset": "Réinitialiser",
       "view": "Voir",
-      "close": "Fermer"
+      "close": "Fermer",
+      "logout": "Déconnexion"
     },
     "fields": {
       "firstName": "Prénom",
@@ -28,7 +29,10 @@
       "status": "Statut",
       "actions": "Actions",
       "password": "Mot de passe",
-      "lastConnection": "Dernière connexion"
+      "lastConnection": "Dernière connexion",
+      "changePassword": "Changer le mot de passe",
+      "confirmPassword": "Confirmer le mot de passe",
+      "currentPassword": "Mot de passe actuel"
     },
     "selects": {
       "scopes": "Sélectionner des périmètres",
@@ -396,7 +400,9 @@
     "tagline": "Améliorez vos compétences avec des énigmes de programmation avec",
     "competitions": "Compétitions",
     "selectCompetition": "Sélectionnez la compétition à laquelle vous souhaitez participer",
-    "noCompetitions": "Aucune compétition disponible"
+    "noCompetitions": "Aucune compétition disponible",
+    "connectYourAccount": "Veuillez vous connecter votre compte pour voir les compétitions",
+    "accountSettings": "Paramètres du compte"
   },
   "login": {
     "welcome": "Bienvenue sur",

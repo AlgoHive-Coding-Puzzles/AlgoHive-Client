@@ -15,7 +15,8 @@
       "unblock": "Unblock",
       "reset": "Reset",
       "view": "View",
-      "close": "Close"
+      "close": "Close",
+      "logout": "Logout"
     },
     "fields": {
       "firstName": "First name",
@@ -28,7 +29,10 @@
       "status": "Status",
       "actions": "Actions",
       "password": "Password",
-      "lastConnection": "Last connection"
+      "lastConnection": "Last connection",
+      "changePassword": "Change password",
+      "confirmPassword": "Enter Password Again",
+      "currentPassword": "Enter Current Password"
     },
     "selects": {
       "scopes": "Select scopes",
@@ -398,7 +402,9 @@
     "tagline": "Go through all the puzzles and improve your skills with",
     "competitions": "Competitions",
     "selectCompetition": "Select the competition you want to join",
-    "noCompetitions": "No competitions available"
+    "noCompetitions": "No competitions available",
+    "connectYourAccount": "Please connect your account to view competitions",
+    "accountSettings": "Account Settings"
   },
   "login": {
     "welcome": "Welcome to",

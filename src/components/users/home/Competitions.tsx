@@ -3,8 +3,12 @@ import AnimatedContainer from "../../AnimatedContainer";
 import { Competition } from "../../../models/Competition";
 import { fetchUserCompetitions } from "../../../services/competitionsService";
 import { t } from "i18next";
+import { MeteorsCard } from "../../MeteorsCard";
+import { useAuth } from "../../../contexts/AuthContext";
+import CirclePattern from "../../CirclePattern";
 
 const UsersHomeCompetitions = () => {
+  const { user } = useAuth();
   const [competitions, setCompetitions] = useState<Competition[]>([]);
 
   useEffect(() => {
@@ -21,7 +25,7 @@ const UsersHomeCompetitions = () => {
   }, []);
 
   return (
-    <div className="container mt-24 lg:mt-80" style={{ minHeight: "75vh" }}>
+    <div className="container mt-32 lg:mt-80" style={{ minHeight: "75vh" }}>
       <span className="text-xl font-semibold text-surface-950 dark:text-surface-0">
         {t("users.competitions")}
       </span>
@@ -30,11 +34,54 @@ const UsersHomeCompetitions = () => {
       </h1>
       <div className="mt-14 flex flex-col">
         {competitions.length === 0 ? (
-          <div className="flex items-center justify-center w-full h-96">
-            <div className="text-3xl text-surface-950 dark:text-surface-0">
-              {t("users.noCompetitions")}
+          <AnimatedContainer
+            delay={100}
+            visibleClass="animate-in fade-in slide-in-from-top-24 duration-500"
+          >
+            <div className="absolute -bottom-[195%] md:-bottom-[320%] 2xl:-bottom-[210%] -left-[40rem] w-[82rem]">
+              <CirclePattern className="  right-[40rem] w-[82rem]" />
             </div>
-          </div>
+            <div className="flex flex-col items-center justify-center mt-12 md:mt-24 w-full">
+              <MeteorsCard>
+                <h1 className="relative z-50 mb-4 text-xl font-bold text-white">
+                  {t("users.noCompetitions")}
+                </h1>
+
+                {!user && (
+                  <>
+                    <h2 className="relative z-50 mb-4 font-normal text-slate-500 text-lg">
+                      {t("users.connectYourAccount")}
+                    </h2>
+
+                    <button className="mt-6 bg-slate-800 no-underline group cursor-pointer relative shadow-2xl shadow-zinc-900 rounded-full p-0.5 text-lg font-semibold leading-6 text-white inline-block">
+                      <span className="absolute inset-0 overflow-hidden rounded-full">
+                        <span className="absolute inset-0 rounded-full bg-[image:radial-gradient(75%_100%_at_50%_0%,rgba(56,189,248,0.6)_0%,rgba(56,189,248,0)_75%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                      </span>
+                      <div className="relative flex space-x-2 items-center z-10 rounded-full bg-zinc-950 py-2 px-6 ring-1 ring-white/10">
+                        <span>{t("users.menus.login")}</span>
+                        <svg
+                          fill="none"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          width="20"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M10.75 8.75L14.25 12L10.75 15.25"
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="1.5"
+                          />
+                        </svg>
+                      </div>
+                      <span className="absolute -bottom-0 left-[1.125rem] h-px w-[calc(100%-2.25rem)] bg-gradient-to-r from-emerald-400/0 via-emerald-400/90 to-emerald-400/0 transition-opacity duration-500 group-hover:opacity-40" />
+                    </button>
+                  </>
+                )}
+              </MeteorsCard>
+            </div>
+          </AnimatedContainer>
         ) : (
           <>
             {competitions.map((item, index) => (

@@ -1,4 +1,4 @@
-// import { useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import AnimatedContainer from "../../components/AnimatedContainer";
 import CirclePattern from "../../components/CirclePattern";
 import Navbar from "../../components/users/Navbar";
@@ -6,11 +6,11 @@ import { Accordion, AccordionItem } from "../../components/ui/accordion";
 import Footer from "../../components/Footer";
 
 export default function HowToPlay() {
-  //   const { t } = useTranslation();
+  const { t } = useTranslation();
 
   const faqData = [
     {
-      title: "Lorem ipsum dolor sit amet?",
+      title: t("Lorem ipsum dolor sit amet?"),
       content:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean gravida justo ut felis condimentum, sit amet dignissim nulla porttitor.",
     },
