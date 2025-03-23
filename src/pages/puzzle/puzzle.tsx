@@ -4,7 +4,10 @@ import { useParams } from "react-router-dom";
 import { Puzzle } from "../../models/Catalogs";
 import { Competition } from "../../models/Competition";
 import { fetchCompetitionDetails } from "../../services/competitionsService";
-import { fetchPuzzleDetails } from "../../services/catalogsService";
+import {
+  fetchPuzzleDetails,
+  fetchPuzzleInput,
+} from "../../services/catalogsService";
 import AnimatedContainer from "../../components/AnimatedContainer";
 import Navbar from "../../components/users/Navbar";
 import { prettyPrintTitle } from "../../utils/puzzles";
@@ -12,9 +15,12 @@ import "./puzzle.css";
 import { Button } from "primereact/button";
 import CirclePattern from "../../components/CirclePattern";
 import { InputText } from "primereact/inputtext";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function PuzzlePage() {
   // const { t } = useTranslation();
+  const { user } = useAuth();
+
   const { quest_number } = useParams<{ quest_number: string }>();
   const { competition_id } = useParams<{ competition_id: string }>();
   const competitionId = competition_id || "";
@@ -55,6 +61,20 @@ export default function PuzzlePage() {
 
     fetchPuzzle();
   }, [competitionId, questNumber]);
+
+  const handleInputRequest = async () => {
+    // Redirect to current url and just add /input
+    const currentUrl = window.location.href;
+    const inputUrl = currentUrl + "/input";
+
+    if (!window || !inputUrl) return;
+
+    // Open a new tab with the input URL
+    const newTab = window.open(inputUrl, "_blank");
+    if (newTab) {
+      newTab.focus();
+    }
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -101,7 +121,7 @@ export default function PuzzlePage() {
                 <Button
                   label="Get your puzzle input"
                   className="w-full max-w-xs mx-auto"
-                  onClick={() => console.log("Submit clicked")}
+                  onClick={() => handleInputRequest()}
                   icon="pi pi-download"
                   size="small"
                   style={{

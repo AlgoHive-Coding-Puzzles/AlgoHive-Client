@@ -79,3 +79,23 @@ export async function fetchPuzzleDetails(
     throw error;
   }
 }
+
+export async function fetchPuzzleInput(
+  catalogId: string,
+  themeName: string,
+  puzzleId: string,
+  inputId: string
+): Promise<{ input_lines: string[] }> {
+  try {
+    const response = await ApiClient.get(
+      `/catalogs/${catalogId}/themes/${themeName}/puzzles/${puzzleId}/inputs/${inputId}`
+    );
+    if (response.status !== 200) {
+      throw new Error(`Error: ${response.status}`);
+    }
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching puzzle input:", error);
+    throw error;
+  }
+}
