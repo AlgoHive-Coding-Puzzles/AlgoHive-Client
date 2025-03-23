@@ -4,10 +4,7 @@ import { useParams } from "react-router-dom";
 import { Puzzle } from "../../models/Catalogs";
 import { Competition } from "../../models/Competition";
 import { fetchCompetitionDetails } from "../../services/competitionsService";
-import {
-  fetchPuzzleDetails,
-  fetchPuzzleInput,
-} from "../../services/catalogsService";
+import { fetchPuzzleDetails } from "../../services/catalogsService";
 import AnimatedContainer from "../../components/AnimatedContainer";
 import Navbar from "../../components/users/Navbar";
 import { prettyPrintTitle } from "../../utils/puzzles";
@@ -15,11 +12,9 @@ import "./puzzle.css";
 import { Button } from "primereact/button";
 import CirclePattern from "../../components/CirclePattern";
 import { InputText } from "primereact/inputtext";
-import { useAuth } from "../../contexts/AuthContext";
 
 export default function PuzzlePage() {
   // const { t } = useTranslation();
-  const { user } = useAuth();
 
   const { quest_number } = useParams<{ quest_number: string }>();
   const { competition_id } = useParams<{ competition_id: string }>();
