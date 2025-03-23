@@ -68,12 +68,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const logout = async () => {
     try {
       // Call the API to remove the cookie
-      const response = await ApiClient.post("/auth/logout");
-      console.log("Logout response", response.data);
+      await ApiClient.post("/auth/logout");
       setUser(null);
     } catch (error) {
-      alert("An error occurred while logging out.");
-      console.error("Logout error", error);
+      console.error("Cookie is missing, user is already logged out", error);
     }
   };
 
