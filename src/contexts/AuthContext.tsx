@@ -68,22 +68,22 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const logout = async () => {
     try {
       // Call the API to remove the cookie
-      await ApiClient.post("/auth/logout");
+      const response = await ApiClient.post("/auth/logout");
+      console.log("Logout response", response.data);
       setUser(null);
     } catch (error) {
+      alert("An error occurred while logging out.");
       console.error("Logout error", error);
     }
   };
 
   const checkAuth = async () => {
     try {
-      if (location.pathname != "/login" && user != null) {
-        return true;
-      }
-
       setIsLoading(true);
       // The cookie will be sent automatically with the request
       const response = await ApiClient.get("/auth/check");
+      console.log("Auth check response", response.data);
+
       if (!response.data) {
         setUser(null);
         return false;
@@ -127,7 +127,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     if (location.pathname != "/login") {
       checkAuth();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const value = {
