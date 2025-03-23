@@ -1,5 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import { useEffect, useState } from "react";
 
 interface RedirectIfAuthenticatedProps {
   children: React.ReactNode;
@@ -8,10 +9,20 @@ interface RedirectIfAuthenticatedProps {
 const RedirectIfAuthenticated = ({
   children,
 }: RedirectIfAuthenticatedProps) => {
-  const { user } = useAuth();
+  const { checkAuth } = useAuth();
+  const [isConnected, setIsConnected] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const isUserConnected = async () => {
+      const repsonse = await checkAuth();
+      setIsConnected(repsonse);
+    };
+
+    isUserConnected();
+  }, [checkAuth]);
 
   // If the user is authenticated, redirect to the home page
-  return user ? <Navigate to="/" /> : <>{children}</>;
+  return isConnected ? <Navigate to="/" /> : <>{children}</>;
 };
 
 export default RedirectIfAuthenticated;

@@ -46,7 +46,15 @@ const AppRoutes = () => {
         }
       />
 
-      <Route path="/account" element={<AccountPage />} />
+      <Route
+        path="/account"
+        element={
+          <ProtectedRoutes target="all">
+            <AccountPage />
+          </ProtectedRoutes>
+        }
+      />
+
       <Route path="/how-to-play" element={<HowToPlay />} />
     </Routes>
   );

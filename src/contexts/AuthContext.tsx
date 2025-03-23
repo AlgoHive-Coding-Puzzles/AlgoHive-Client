@@ -71,6 +71,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       await ApiClient.post("/auth/logout");
       setUser(null);
     } catch (error) {
+      setUser(null);
       console.error("Cookie is missing, user is already logged out", error);
     }
   };
@@ -80,7 +81,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       setIsLoading(true);
       // The cookie will be sent automatically with the request
       const response = await ApiClient.get("/auth/check");
-      console.log("Auth check response", response.data);
 
       if (!response.data) {
         setUser(null);
