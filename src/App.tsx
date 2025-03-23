@@ -11,6 +11,7 @@ import Users from "./pages/home/Home";
 import AccountPage from "./pages/account/Account";
 import HowToPlay from "./pages/how-to-play/how-to-play";
 import CompetitionPage from "./pages/competition/competition";
+import PuzzlePage from "./pages/puzzle/puzzle";
 
 // Lazy load Admin component to improve load time
 const Admin = lazy(() => import("./pages/admin/Admin"));
@@ -61,6 +62,15 @@ const AppRoutes = () => {
         element={
           <ProtectedRoutes target="all">
             <CompetitionPage />
+          </ProtectedRoutes>
+        }
+      />
+
+      <Route
+        path="/puzzle/:competition_id/quest/:quest_number"
+        element={
+          <ProtectedRoutes target="all">
+            <PuzzlePage />
           </ProtectedRoutes>
         }
       />

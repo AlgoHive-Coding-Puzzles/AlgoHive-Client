@@ -1,4 +1,4 @@
-import { Catalog, Theme } from "../models/Catalogs";
+import { Catalog, Puzzle, Theme } from "../models/Catalogs";
 import { ApiClient } from "../config/ApiClient";
 
 export async function fetchCatalogs(): Promise<Catalog[]> {
@@ -57,6 +57,25 @@ export async function fetchCatalogThemeDetails(
     return response.data;
   } catch (error) {
     console.error("Error fetching catalog theme details:", error);
+    throw error;
+  }
+}
+
+export async function fetchPuzzleDetails(
+  catalogId: string,
+  themeId: string,
+  puzzleId: string
+): Promise<Puzzle> {
+  try {
+    const response = await ApiClient.get(
+      `/catalogs/${catalogId}/themes/${themeId}/puzzles/${puzzleId}`
+    );
+    if (response.status !== 200) {
+      throw new Error(`Error: ${response.status}`);
+    }
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching puzzle details:", error);
     throw error;
   }
 }

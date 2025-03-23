@@ -1,0 +1,23 @@
+.puzzle-container {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 20px;
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.puzzle-container h2 {
+  font-size: 1.4em;
+  margin-bottom: 0.5em;
+}
+
+.puzzle-container code {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  white-space: pre-wrap;
+  display: inline-block;
+  background-color: #101019;
+  border-radius: 15px;
+  border: 1px solid #2a2a3b;
+  padding-right: 1.8em;
+  color: white;
+}

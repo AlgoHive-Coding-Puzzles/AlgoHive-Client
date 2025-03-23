@@ -102,6 +102,13 @@ export default function CompetitionPage() {
                             }
                             data-pr-tooltip={t("puzzles.clickToAccess")}
                             data-pr-position="top"
+                            onClick={() => {
+                              if (isPuzzleUnlocked(index, tries.length)) {
+                                window.location.href = `/puzzle/${
+                                  selectedCompetition.id
+                                }/quest/${index + 1}`;
+                              }
+                            }}
                           >
                             <Badge
                               value={index + 1}
