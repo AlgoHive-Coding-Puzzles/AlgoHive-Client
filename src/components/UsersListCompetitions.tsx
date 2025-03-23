@@ -1,13 +1,22 @@
 import { useEffect, useState } from "react";
-import AnimatedContainer from "../../AnimatedContainer";
-import { Competition } from "../../../models/Competition";
-import { fetchUserCompetitions } from "../../../services/competitionsService";
+import AnimatedContainer from "./AnimatedContainer";
+import { Competition } from "../models/Competition";
+import { fetchUserCompetitions } from "../services/competitionsService";
 import { t } from "i18next";
-import { MeteorsCard } from "../../MeteorsCard";
-import { useAuth } from "../../../contexts/AuthContext";
-import CirclePattern from "../../CirclePattern";
+import { MeteorsCard } from "./MeteorsCard";
+import { useAuth } from "../contexts/AuthContext";
+import CirclePattern from "./CirclePattern";
+import { cn } from "../utils/utils";
 
-const UsersHomeCompetitions = () => {
+interface UsersListCompetitionsProps {
+  className?: string;
+  setCompetition?: (competition: Competition) => void;
+}
+
+const UsersListCompetitions: React.FC<UsersListCompetitionsProps> = ({
+  className,
+  setCompetition,
+}) => {
   const { user } = useAuth();
   const [competitions, setCompetitions] = useState<Competition[]>([]);
 
@@ -25,7 +34,8 @@ const UsersHomeCompetitions = () => {
   }, []);
 
   return (
-    <div className="container mt-32 lg:mt-80" style={{ minHeight: "75vh" }}>
+    // <div className="container" style={{ minHeight: "75vh" }}>
+    <div className={cn("container min-[height:75vh]", className)}>
       <span className="text-xl font-semibold text-surface-950 dark:text-surface-0">
         {t("users.competitions")}
       </span>
@@ -83,14 +93,21 @@ const UsersHomeCompetitions = () => {
             </div>
           </AnimatedContainer>
         ) : (
-          <>
+          <div>
             {competitions.map((item, index) => (
               <AnimatedContainer key={index} delay={index * 200}>
-                <div className="group py-6 lg:py-8 pr-6 lg:pr-8 pl-8 lg:pl-12 rounded-full flex items-center justify-between hover:bg-amber-100 hover:text-orange-600 transition-colors cursor-pointer border border-white/12 mb-2">
+                <div
+                  className="group py-6 lg:py-8 pr-6 lg:pr-8 pl-8 lg:pl-12 rounded-full flex items-center justify-between hover:bg-amber-100 hover:text-orange-600 transition-colors cursor-pointer border border-white/12 mb-2 relative"
+                  onClick={() => {
+                    if (setCompetition) {
+                      setCompetition(item);
+                    }
+                  }}
+                >
                   <div className="w-[23rem] flex-1 lg:flex-none text-2xl md:text-4xl font-semibold text-surface-950 dark:text-surface-0 group-hover:text-surface-0 dark:group-hover:text-surface-950 transition-colors">
                     {item.title}
                   </div>
-                  <div className="lg:block hidden relative w-[25rem] h-full">
+                  <div className="lg:block hidden relative w-[25rem] h-full pointer-events-none">
                     <div className="opacity-100 absolute top-1/2 -translate-y-1/2 text-lg text-surface-950 dark:text-surface-0">
                       {item.description}
                     </div>
@@ -101,11 +118,11 @@ const UsersHomeCompetitions = () => {
                 </div>
               </AnimatedContainer>
             ))}
-          </>
+          </div>
         )}
       </div>
     </div>
   );
 };
 
-export default UsersHomeCompetitions;
+export default UsersListCompetitions;

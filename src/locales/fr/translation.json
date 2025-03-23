@@ -388,9 +388,9 @@
   "users": {
     "menus": {
       "staffPortal": "Portail du personnel",
-      "competitions": "Compétitions",
-      "leaderboard": "Classement",
       "howToPlay": "Comment jouer",
+      "support": "Support",
+      "myCompetitions": "Mes compétitions",
       "welcome": "Bienvenue",
       "login": "Connexion"
     },
@@ -462,6 +462,22 @@
           "desc": "Si vous rencontrez des bugs ou des problèmes, veuillez les signaler à l'équipe de support. Vos retours sont précieux pour améliorer la plateforme."
         }
       }
+    },
+    "competition": {
+      "my": "Mes",
+      "competitions": "Compétitions"
+    }
+  },
+  "puzzles": {
+    "clickToAccess": "Cliquez pour accéder à l'énigme",
+    "notUnlocked": "Cette énigme n'est pas encore déverrouillée",
+    "selectPuzzle": "Sélectionnez une énigme pour commencer",
+    "difficulty": {
+      "easy": "Facile",
+      "medium": "Moyen",
+      "hard": "Difficile",
+      "veryHard": "Très difficile",
+      "impossible": "Impossible"
     }
   },
   "login": {

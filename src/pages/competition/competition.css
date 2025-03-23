@@ -1,0 +1,42 @@
+.quest-card {
+  position: relative;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.quest-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+  border: 1px solid #ffa600;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 166, 0, 0.2),
+    rgba(255, 166, 0, 0.1)
+  );
+  box-shadow: 0 1rem 2rem rgba(255, 166, 0, 0.2);
+  border-radius: 0.5rem;
+  transition: all 0.3s ease-in-out;
+  filter: brightness(1.05);
+}
+
+.quest-card .p-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1;
+  border-radius: 5px;
+  background-color: #f8f8f8;
+}
+
+.grayscale-card {
+  filter: grayscale(100%);
+  opacity: 0.6;
+  transition: all 0.3s ease-in-out;
+}
+
+.grayscale-card:hover {
+  filter: grayscale(70%);
+  opacity: 1;
+}

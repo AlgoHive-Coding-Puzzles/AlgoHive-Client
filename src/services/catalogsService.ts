@@ -42,3 +42,21 @@ export async function fetchCatalogThemes(catalogId: string): Promise<Theme[]> {
     throw error;
   }
 }
+
+export async function fetchCatalogThemeDetails(
+  catalogId: string,
+  themeId: string
+): Promise<Theme> {
+  try {
+    const response = await ApiClient.get(
+      `/catalogs/${catalogId}/themes/${themeId}`
+    );
+    if (response.status !== 200) {
+      throw new Error(`Error: ${response.status}`);
+    }
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching catalog theme details:", error);
+    throw error;
+  }
+}

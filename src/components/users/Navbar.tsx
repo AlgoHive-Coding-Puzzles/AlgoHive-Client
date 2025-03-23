@@ -53,16 +53,12 @@ const Navbar: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 
   const navbarData = [
     {
-      id: "competitions",
-      title: t("users.menus.competitions"),
-    },
-    {
-      id: "leaderboard",
-      title: t("users.menus.leaderboard"),
-    },
-    {
       id: "how-to-play",
       title: t("users.menus.howToPlay"),
+    },
+    {
+      id: "support",
+      title: t("users.menus.support"),
     },
   ];
 
@@ -77,6 +73,10 @@ const Navbar: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
     {
       id: "account",
       title: t("users.menus.welcome") + " " + user?.firstname,
+    },
+    {
+      id: "competitions",
+      title: t("users.menus.myCompetitions"),
     },
   ];
 
@@ -160,7 +160,7 @@ const Navbar: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
             </Link>
           </li>
         ))}
-        <li>
+        <li className="mt-1">
           <LanguageSwitcher />
         </li>
       </ul>

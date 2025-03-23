@@ -8,7 +8,7 @@ import Shape4 from "../../components/icons/shapes/shape-4.svg";
 import Shape5 from "../../components/icons/shapes/shape-5.svg";
 
 import "./Home.css";
-import UsersHomeCompetitions from "../../components/users/home/Competitions";
+import UsersListCompetitions from "../../components/UsersListCompetitions";
 import MacbookScroll from "../../components/users/MacbookScroll";
 import { useTranslation } from "react-i18next";
 import Footer from "../../components/Footer";
@@ -44,7 +44,7 @@ export default function Users() {
 
       <MacbookScroll src="/github.png" />
 
-      <UsersHomeCompetitions />
+      <UsersListCompetitions className="mt-32 lg:mt-80" />
 
       <Footer />
     </>

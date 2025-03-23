@@ -390,9 +390,10 @@
   "users": {
     "menus": {
       "staffPortal": "Staff Portal",
-      "competitions": "Competitions",
-      "leaderboard": "Leaderboard",
+
       "howToPlay": "How to Play",
+      "support": "Support",
+      "myCompetitions": "My Competitions",
       "welcome": "Welcome",
       "login": "Log in"
     },
@@ -464,6 +465,22 @@
           "desc": "If you encounter any bugs or issues, please report them to the support team. Your feedback is valuable in improving the platform."
         }
       }
+    },
+    "competition": {
+      "my": "My",
+      "competitions": "Competitions"
+    }
+  },
+  "puzzles": {
+    "clickToAccess": "Click to access the puzzle",
+    "notUnlocked": "This puzzle is not unlocked yet",
+    "selectPuzzle": "Select a puzzle to start solving",
+    "difficulty": {
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard",
+      "veryHard": "Very Hard",
+      "impossible": "Impossible"
     }
   },
   "login": {
