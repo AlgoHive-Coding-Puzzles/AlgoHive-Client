@@ -4,30 +4,37 @@ import CirclePattern from "../../components/CirclePattern";
 import Navbar from "../../components/users/Navbar";
 import { Accordion, AccordionItem } from "../../components/ui/accordion";
 import Footer from "../../components/Footer";
+import { MeteorsCard } from "../../components/MeteorsCard";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function HowToPlay() {
   const { t } = useTranslation();
+  const { user } = useAuth();
 
   const faqData = [
     {
-      title: t("Lorem ipsum dolor sit amet?"),
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean gravida justo ut felis condimentum, sit amet dignissim nulla porttitor.",
+      title: t("users.howToPlay.faq.question1.title"),
+      content: t("users.howToPlay.faq.question1.desc"),
     },
     {
-      title: "Lorem ipsum dolor sit amet?",
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean gravida justo ut felis condimentum, sit amet dignissim nulla porttitor.",
+      title: t("users.howToPlay.faq.question2.title"),
+      content: t("users.howToPlay.faq.question2.desc"),
     },
     {
-      title: "Lorem ipsum dolor sit amet?",
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean gravida justo ut felis condimentum, sit amet dignissim nulla porttitor.",
+      title: t("users.howToPlay.faq.question3.title"),
+      content: t("users.howToPlay.faq.question3.desc"),
     },
     {
-      title: "Lorem ipsum dolor sit amet?",
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean gravida justo ut felis condimentum, sit amet dignissim nulla porttitor.",
+      title: t("users.howToPlay.faq.question4.title"),
+      content: t("users.howToPlay.faq.question4.desc"),
+    },
+    {
+      title: t("users.howToPlay.faq.question5.title"),
+      content: t("users.howToPlay.faq.question5.desc"),
+    },
+    {
+      title: t("users.howToPlay.faq.question6.title"),
+      content: t("users.howToPlay.faq.question6.desc"),
     },
   ];
 
@@ -48,11 +55,13 @@ export default function HowToPlay() {
             <div className="relative z-20">
               <Navbar />
               <h1 className="max-w-[calc(100%-3rem)] lg:max-w-5xl mx-auto title lg:text-6xl text-4xl text-center mt-18 font-bold">
-                <span className="text-amber-600 ">How </span> to play AlgoHive
+                <span className="text-amber-600 ">
+                  {t("users.howToPlay.how")}{" "}
+                </span>{" "}
+                {t("users.howToPlay.toPlayAlgohive")}
               </h1>
               <p className="mt-6 max-w-[calc(100%-3rem)] lg:max-w-4xl text-lg lg:text-xl text-white/64 text-center mx-auto">
-                You will find all the information you need to play the game
-                here. FAQ, description of the game, and more.
+                {t("users.howToPlay.description")}
               </p>
             </div>
             <div className="relative z-10 h-[35rem] max-w-[calc(100%-3rem)] lg:max-w-[calc(100%-12rem)] mt-16 lg:mt-40 mx-auto rounded-4xl shadow-black-card overflow-hidden">
@@ -75,37 +84,12 @@ export default function HowToPlay() {
         </AnimatedContainer>
         <div className="container mt-6 lg:mt-24 max-w-[56rem] px-4">
           <div>
-            <p className="text-xl text-surface-500 dark:text-white/64">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
-              gravida justo ut felis condimentum, sit amet dignissim nulla
-              porttitor. Pellentesque et dignissim sapien. Phasellus tortor
-              justo, hendrerit sit amet pellentesque vitae, ultricies id est.
-              Nullam molestie eros a lectus laoreet tristique. Donec finibus
-              sollicitudin lobortis. Aenean rutrum dolor quis venenatis gravida.
-              Curabitur id amet.
+            <h5 className="text-4xl font-semibold text-surface-950  dark:text-surface-0 leading-tight">
+              {t("users.howToPlay.paragraphs.p1.title")}
+            </h5>
+            <p className="text-xl text-surface-500 dark:text-white/64 mt-5">
+              {t("users.howToPlay.paragraphs.p1.desc1")}
             </p>
-            <div className="mt-10 flex items-center justify-between gap-4">
-              <div className="flex items-center gap-2 ">
-                <a
-                  href={""}
-                  className="h-8 px-4 flex items-center justify-center shadow-stroke rounded-full hover:bg-surface-100 transition-all dark:shadow-none border-0 dark:border border-white/12 dark:hover:bg-white/8"
-                >
-                  <i className="pi pi-link text-surface-950 dark:text-surface-0 text-base leading-none"></i>
-                </a>
-                <a
-                  href={""}
-                  className="h-8 px-4 flex items-center justify-center shadow-stroke rounded-full hover:bg-surface-100 transition-all dark:shadow-none border-0 dark:border border-white/12 dark:hover:bg-white/8"
-                >
-                  <i className="pi pi-link text-surface-950 dark:text-surface-0 text-base leading-none"></i>
-                </a>
-                <a
-                  href={""}
-                  className="h-8 px-4 flex items-center justify-center shadow-stroke rounded-full hover:bg-surface-100 transition-all dark:shadow-none border-0 dark:border border-white/12 dark:hover:bg-white/8"
-                >
-                  <i className="pi pi-link text-surface-950 dark:text-surface-0 text-base leading-none"></i>
-                </a>
-              </div>
-            </div>
 
             <div className="mt-20">
               <div className="max-w-[58rem] px-4 mx-auto">
@@ -118,10 +102,11 @@ export default function HowToPlay() {
                   />
                 </div>
                 <h1 className="mt-10 text-center text-3xl lg:text-5xl font-semibold text-surface-950 leading-tight">
-                  Frequently <br /> Asked Questions
+                  {t("users.howToPlay.faq.title1")} <br />{" "}
+                  {t("users.howToPlay.faq.title2")}
                 </h1>
                 <p className="text-xl text-center text-surface-500 dark:text-white/64 mt-6">
-                  Find quick answers to common questions about AlgoHive.
+                  {t("users.howToPlay.faq.desc")}
                 </p>
                 <Accordion className="mt-14">
                   {faqData.map((item, index) => (
@@ -138,91 +123,101 @@ export default function HowToPlay() {
             </div>
             <div className="mt-20">
               <h5 className="text-4xl font-semibold text-surface-950  dark:text-surface-0 leading-tight">
-                Lorem ipsum dolor sit ex.
+                {t("users.howToPlay.paragraphs.p2.title")}
               </h5>
               <p className="text-xl text-surface-500 dark:text-white/64 mt-7">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-                tempus dictum erat, sed venenatis elit pharetra vel. Donec
-                rutrum posuere libero, quis finibus diam. Sed in ornare leo.
-                Fusce quis fermentum lorem. Nullam non orci massa. Praesent ex
-                metus, interdum mollis tortor in, condimentum finibus lorem.
-                Aenean amet.
+                {t("users.howToPlay.paragraphs.p2.desc1")}
               </p>
               <p className="text-xl text-surface-500 dark:text-white/64 mt-7">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eu
-                consequat metus, ut viverra neque. Nulla in purus nec ante
-                sagittis bibendum. Curabitur consectetur convallis sapien, sit
-                amet interdum lorem. Mauris vitae placerat enim. Suspendisse
-                purus leo, laoreet nec porttitor non, porttitor et ante. Donec
-                ut laoreet augue, at laoreet nibh. Maecenas hendrerit ligula
-                eros.
+                {t("users.howToPlay.paragraphs.p2.desc2")}
               </p>
-              <div className="flex md:flex-row flex-col items-center gap-6 mt-24"></div>
+              <p className="text-xl text-surface-500 dark:text-white/64 mt-7">
+                {t("users.howToPlay.paragraphs.p2.desc3")}
+              </p>
+              <div className="flex md:flex-row flex-col items-center gap-6 mt-12"></div>
             </div>
-            <div className="mt-24">
+            <div className="mt-12">
               <h5 className="text-4xl font-semibold text-surface-950 dark:text-surface-0 leading-tight">
-                Lorem ipsum dolor sit ex.
+                {t("users.howToPlay.paragraphs.p3.title")}
               </h5>
               <p className="text-xl text-surface-500 dark:text-white/64 mt-7">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-                tempus dictum erat, sed venenatis elit pharetra vel. Donec
-                rutrum posuere libero, quis finibus diam. Sed in ornare leo.
-                Fusce quis fermentum lorem. Nullam non orci massa.
+                {t("users.howToPlay.paragraphs.p3.desc")}
               </p>
-              <p className="text-xl text-surface-500 dark:text-white/64 mt-7">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eu
-                consequat metus, ut viverra neque. Nulla in purus nec ante
-                sagittis bibendum. Curabitur consectetur convallis sapien, sit
-                amet interdum lorem. Mauris vitae placerat enim. Suspendisse
-                purus leo, laoreet nec porttitor non, porttitor et ante. Donec
-                ut laoreet augue, at laoreet nibh. Maecenas hendrerit ligula
-                eros.
-              </p>
-              <ul className="mt-16 list-disc list-inside space-y-10">
-                <li className="text-xl text-surface-500 dark:text-white/64">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eu
-                  consequat metus, ut viverra neque. Nulla in purus nec ante
-                  sagittis bibendum. Curabitur consectetur convallis sapien, sit
-                  amet interdum lorem. Mauris vitae placerat enim. Suspendisse
-                  purus leo.
-                </li>
-                <li className="text-xl text-surface-500 dark:text-white/64">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eu
-                  consequat metus, ut viverra neque. Nulla in purus nec ante
-                  sagittis bibendum.
-                </li>
-                <li className="text-xl text-surface-500 dark:text-white/64">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eu
-                  consequat metus, ut viverra neque. Nulla in purus nec ante
-                  sagittis bibendum.
-                </li>
-              </ul>
             </div>
             <div className="mt-16">
               <h5 className="text-4xl font-semibold text-surface-950 dark:text-surface-0 leading-tight">
-                Lorem ipsum
-                <br />
-                dolor sit ex.
+                {t("users.howToPlay.paragraphs.p4.title")}
               </h5>
-              <p className="text-xl text-surface-500 dark:text-white/64 mt-7">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eu
-                consequat metus, ut viverra neque. Nulla in purus nec ante
-                sagittis bibendum. Curabitur consectetur convallis sapien, sit
-                amet interdum lorem. Mauris vitae placerat enim. Suspendisse
-                purus leo.
-              </p>
+              <ul className="mt-16 list-disc list-inside space-y-10">
+                <li className="text-xl text-surface-500 dark:text-white/64">
+                  {t("users.howToPlay.paragraphs.p4.desc1")}
+                </li>
+                <li className="text-xl text-surface-500 dark:text-white/64">
+                  {t("users.howToPlay.paragraphs.p4.desc2")}
+                </li>
+                <li className="text-xl text-surface-500 dark:text-white/64">
+                  {t("users.howToPlay.paragraphs.p4.desc3")}
+                </li>
+                <li className="text-xl text-surface-500 dark:text-white/64">
+                  {t("users.howToPlay.paragraphs.p4.desc4")}
+                </li>
+              </ul>
             </div>
             <AnimatedContainer className="mt-18 rounded-4xl bg-main-gradient p-10">
               <div className="flex items-start justify-between gap-4"></div>
               <p className="mt-7 text-2xl text-white/80 leading-snug">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eu
-                consequat metus, ut viverra neque. Nulla in purus nec ante
-                sagittis bibendum. Curabitur consectetur convallis sapien, sit
-                amet interdum lorem. Mauris vitae placerat enim. Suspendisse
-                purus leo, laoreet nec porttitor non, porttitor et ante. Donec
-                ut laoreet augue, at laoreet nibh. Maecenas hendrerit ligula
-                eros.
+                {t("users.howToPlay.catchphrase")}
               </p>
+              <AnimatedContainer
+                delay={100}
+                visibleClass="animate-in fade-in slide-in-from-top-24 duration-500"
+              >
+                <div className="absolute -bottom-[195%] md:-bottom-[320%] 2xl:-bottom-[210%] -left-[40rem] w-[82rem]">
+                  <CirclePattern className="  right-[40rem] w-[82rem]" />
+                </div>
+                <div className="flex flex-col   mt-12 md:mt-24 w-full">
+                  <MeteorsCard>
+                    {user && (
+                      <h1 className="relative z-50 mb-4 text-xl font-bold text-white">
+                        {t("users.howToPlay.alreadyLoggedIn")}
+                      </h1>
+                    )}
+
+                    {!user && (
+                      <>
+                        <h2 className="relative z-50 mb-4 font-normal text-slate-500 text-lg">
+                          {t("users.howToPlay.connectYourAccount")}
+                        </h2>
+
+                        <button className="mt-6 bg-slate-800 no-underline group cursor-pointer relative shadow-2xl shadow-zinc-900 rounded-full p-0.5 text-lg font-semibold leading-6 text-white inline-block">
+                          <span className="absolute inset-0 overflow-hidden rounded-full">
+                            <span className="absolute inset-0 rounded-full bg-[image:radial-gradient(75%_100%_at_50%_0%,rgba(56,189,248,0.6)_0%,rgba(56,189,248,0)_75%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                          </span>
+                          <div className="relative flex space-x-2 items-center z-10 rounded-full bg-zinc-950 py-2 px-6 ring-1 ring-white/10">
+                            <span>{t("users.menus.login")}</span>
+                            <svg
+                              fill="none"
+                              height="20"
+                              viewBox="0 0 24 24"
+                              width="20"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M10.75 8.75L14.25 12L10.75 15.25"
+                                stroke="currentColor"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="1.5"
+                              />
+                            </svg>
+                          </div>
+                          <span className="absolute -bottom-0 left-[1.125rem] h-px w-[calc(100%-2.25rem)] bg-gradient-to-r from-emerald-400/0 via-emerald-400/90 to-emerald-400/0 transition-opacity duration-500 group-hover:opacity-40" />
+                        </button>
+                      </>
+                    )}
+                  </MeteorsCard>
+                </div>
+              </AnimatedContainer>
             </AnimatedContainer>
           </div>
         </div>

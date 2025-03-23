@@ -402,7 +402,67 @@
     "selectCompetition": "Sélectionnez la compétition à laquelle vous souhaitez participer",
     "noCompetitions": "Aucune compétition disponible",
     "connectYourAccount": "Veuillez vous connecter votre compte pour voir les compétitions",
-    "accountSettings": "Paramètres du compte"
+    "accountSettings": "Paramètres du compte",
+    "howToPlay": {
+      "how": "Comment",
+      "toPlayAlgohive": "jouer sur AlgoHive",
+      "description": "Vous trouverez ici toutes les informations nécessaires pour jouer au jeu. FAQ, description du jeu, et plus encore.",
+      "paragraphs": {
+        "p1": {
+          "title": "Bienvenue sur AlgoHive ! 🐝",
+          "desc1": "AlgoHive, c’est un terrain de jeu pour les esprits curieux qui aiment résoudre des puzzles de programmation. Ici, chaque défi mettra à l’épreuve vos compétences techniques, votre compréhension des énoncés et votre capacité à résoudre des problèmes. Que vous soyez débutant et prêt à tester vos limites ou développeur aguerri en quête d’un nouveau challenge, vous trouverez de quoi vous amuser."
+        },
+        "p2": {
+          "title": "Comment ça marche ?",
+          "desc1": "Chaque puzzle se déroule en deux étapes :",
+          "desc2": "Première partie : Vous recevez un énoncé de problème à analyser avec attention. Votre mission ? Écrire un programme capable de produire le bon résultat à partir des données fournies.",
+          "desc3": "Deuxième partie : Une fois la première partie réussie, l’énoncé évolue : nouvelles contraintes, complexité supplémentaire… À vous d’adapter votre solution et d’affiner votre approche pour relever ce nouveau défi."
+        },
+        "p3": {
+          "title": "Pour qui ?",
+          "desc": "Si vous aimez résoudre des casse-têtes et trouver des solutions astucieuses à des problèmes, AlgoHive est fait pour vous – peu importe votre niveau d’expérience."
+        },
+        "p4": {
+          "title": "Ce qu’il vous faudra :",
+          "desc1": "Des bases en programmation",
+          "desc2": "Des compétences en résolution de problèmes et un sens du détail",
+          "desc3": "Une curiosité pour relever des défis difficiles !",
+          "desc4": "Une volonté d'apprendre et d'améliorer vos compétences"
+        }
+      },
+      "catchphrase": "Prêt à jouer ? Connectez-vous pour voir les compétitions qui vous sont disponibles.",
+      "alreadyLoggedIn": "Vous êtes déjà connecté !",
+      "connectYourAccount": "Connectez-vous pour commencer votre aventure !",
+      "faq": {
+        "title1": "Questions",
+        "title2": "Fréquemment Posées",
+        "desc": "Trouvez des réponses rapides aux questions courantes sur AlgoHive.",
+        "question1": {
+          "title": "Quel est le niveau minimum pour participer ?",
+          "desc": "Il n'y a pas de niveau minimum pour participer. AlgoHive est conçu pour tous les niveaux de programmeurs, des débutants aux experts."
+        },
+        "question2": {
+          "title": "Qui est derrière AlgoHive ?",
+          "desc": "AlgoHive est un projet développé par un seul développeur passionné de programmation et de défis algorithmiques. L'objectif est de créer une plateforme qui aide les développeurs à améliorer leurs compétences tout en s'amusant."
+        },
+        "question3": {
+          "title": "Puis-je obtenir une solution aux énigmes si je suis bloqué ?",
+          "desc": "Non, les énigmes sont conçues pour être résolues de manière indépendante. Cependant, n'hésitez pas à demander des indices ou des conseils à la communauté."
+        },
+        "question4": {
+          "title": "Comment participer aux compétitions ?",
+          "desc": "Pour participer aux compétitions, vous devez vous connecter à votre compte et sélectionner la compétition à laquelle vous souhaitez participer. Une fois que vous êtes dans, vous pouvez commencer à résoudre des énigmes et à rivaliser avec les autres."
+        },
+        "question5": {
+          "title": "Puis-je utiliser l'IA pour m'aider à résoudre les énigmes ?",
+          "desc": "Bien que vous puissiez utiliser des outils d'IA pour vous aider, l'objectif d'AlgoHive est d'améliorer vos propres compétences. Nous vous encourageons à essayer de résoudre les énigmes par vous-même d'abord. Il est plus difficile de s'améliorer en programmation si vous demandez à une IA de le faire à votre place."
+        },
+        "question6": {
+          "title": "Que faire si je trouve un bug ou un problème sur la plateforme ?",
+          "desc": "Si vous rencontrez des bugs ou des problèmes, veuillez les signaler à l'équipe de support. Vos retours sont précieux pour améliorer la plateforme."
+        }
+      }
+    }
   },
   "login": {
     "welcome": "Bienvenue sur",
