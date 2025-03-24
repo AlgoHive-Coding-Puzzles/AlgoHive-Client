@@ -12,7 +12,15 @@ const AccountPage = () => {
 
   const handleLogout = async () => {
     try {
-      await logout();
+      Promise.all([
+        logout(),
+        new Promise((resolve) => {
+          setTimeout(() => {
+            window.location.href = "/";
+            resolve(true);
+          }, 1000);
+        }),
+      ]);
     } catch (error) {
       console.error("Logout failed:", error);
     }
