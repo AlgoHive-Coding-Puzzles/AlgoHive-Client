@@ -124,3 +124,48 @@ export const fetchUserCompetitions = async (): Promise<Competition[]> => {
   const response = await ApiClient.get("/competitions/user");
   return response.data;
 };
+
+export const getCompetitionPuzzleInput = async (
+  competitionId: string,
+  puzzleId: string,
+  puzzleIndex: number,
+  puzzleDifficulty: string
+): Promise<{ input_lines: string[] }> => {
+  const response = await ApiClient.post("/competitions/input", {
+    competition_id: competitionId,
+    puzzle_difficulty: puzzleDifficulty,
+    puzzle_id: puzzleId,
+    puzzle_index: puzzleIndex,
+  });
+  return response.data;
+};
+
+export const submitPuzzleAnswer = async (
+  competitionId: string,
+  puzzleId: string,
+  puzzleIndex: number,
+  puzzleDifficulty: string,
+  solution: string,
+  puzzle_step: number
+): Promise<boolean> => {
+  const response = await ApiClient.post("/competitions/answer_puzzle", {
+    competition_id: competitionId,
+    puzzle_difficulty: puzzleDifficulty,
+    puzzle_id: puzzleId,
+    puzzle_index: puzzleIndex,
+    solution: solution,
+    puzzle_step: puzzle_step,
+  });
+  return response.data;
+};
+
+export const fetchPuzzleTries = async (
+  competitionId: string,
+  puzzleId: string,
+  puzzleIndex: number
+): Promise<Try[]> => {
+  const response = await ApiClient.get(
+    `/competitions/${competitionId}/puzzles/${puzzleId}/${puzzleIndex}/tries`
+  );
+  return response.data;
+};

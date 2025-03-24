@@ -64,9 +64,6 @@ export default function CompetitionPage() {
         selectedCompetition.id,
         user.id
       );
-      triesDetails.push({} as Try);
-      triesDetails.push({} as Try);
-      triesDetails.push({} as Try);
 
       setTries(triesDetails);
     };

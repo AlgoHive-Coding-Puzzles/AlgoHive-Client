@@ -3,7 +3,10 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Puzzle } from "../../models/Catalogs";
 import { Competition } from "../../models/Competition";
-import { fetchCompetitionDetails } from "../../services/competitionsService";
+import {
+  fetchCompetitionDetails,
+  fetchPuzzleTries,
+} from "../../services/competitionsService";
 import { fetchPuzzleDetails } from "../../services/catalogsService";
 import AnimatedContainer from "../../components/AnimatedContainer";
 import Navbar from "../../components/users/Navbar";
@@ -11,10 +14,13 @@ import { prettyPrintTitle } from "../../utils/puzzles";
 import "./puzzle.css";
 import { Button } from "primereact/button";
 import CirclePattern from "../../components/CirclePattern";
-import { InputText } from "primereact/inputtext";
+import InputAnswer from "../../components/puzzle/InputAnswer";
+import { Try } from "../../models/Try";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function PuzzlePage() {
   // const { t } = useTranslation();
+  const { user } = useAuth();
 
   const { quest_number } = useParams<{ quest_number: string }>();
   const { competition_id } = useParams<{ competition_id: string }>();
@@ -23,39 +29,58 @@ export default function PuzzlePage() {
 
   const [competition, setCompetition] = useState<Competition | null>(null);
   const [puzzle, setPuzzle] = useState<Puzzle | null>(null);
+  const [tries, setTries] = useState<Try[]>([]);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchPuzzle = async () => {
+    let isMounted = true;
+
+    const _fetchPuzzleDetails = async () => {
       try {
         setLoading(true);
-        const competitionData = await fetchCompetitionDetails(competitionId);
-        setCompetition(competitionData);
-        if (competitionData) {
-          console.log("Competition Data:", competitionData);
 
+        // Fetch competition details
+        const competitionData = await fetchCompetitionDetails(competitionId);
+        if (isMounted) setCompetition(competitionData);
+
+        if (competitionData) {
+          // Fetch puzzle details
           const puzzleData = await fetchPuzzleDetails(
             competitionData.catalog_id,
             competitionData.catalog_theme,
             questNumber
           );
+          if (isMounted) {
+            setPuzzle(puzzleData);
 
-          setPuzzle(puzzleData);
-
-          console.log("Puzzle Data:", puzzleData);
+            // Fetch user competition tries
+            if (user) {
+              const triesDetails = await fetchPuzzleTries(
+                competitionData.id,
+                puzzleData?.id || "",
+                parseInt(questNumber)
+              );
+              setTries(triesDetails);
+            }
+          }
         }
       } catch (error) {
-        console.error("Error fetching puzzle:", error);
-        setError("Failed to fetch puzzle data.");
+        console.error("Error fetching puzzle details:", error);
+        if (isMounted)
+          setError("Failed to fetch puzzle data. Please try again.");
       } finally {
-        setLoading(false);
+        if (isMounted) setLoading(false);
       }
     };
 
-    fetchPuzzle();
-  }, [competitionId, questNumber]);
+    _fetchPuzzleDetails();
+
+    return () => {
+      isMounted = false; // Cleanup function to prevent state updates
+    };
+  }, [competitionId, questNumber, user]);
 
   const handleInputRequest = async () => {
     // Redirect to current url and just add /input
@@ -129,30 +154,17 @@ export default function PuzzlePage() {
                 {/* Orange Line */}
                 <div className="w-16 h-1 bg-orange-500 mx-auto mt-4 ml-0"></div>
 
-                <div className="flex items-center justify-center gap-6 max-w-xl mt-6">
-                  <div className="p-inputgroup flex-1">
-                    <span className="p-inputgroup-addon">
-                      <i className="pi pi-question-circle mr-2"></i> Answer:
-                    </span>
-                    <InputText
-                      type="text"
-                      placeholder="Enter your answer here"
-                      className="w-full max-w-md mx-auto"
-                      onChange={(e) => console.log(e.target.value)}
-                    />
-                    <Button
-                      label="Submit"
-                      className="max-w-md mx-auto"
-                      onClick={() => console.log("Submit clicked")}
-                      icon="pi pi-check"
-                      size="small"
-                      style={{
-                        backgroundColor: "#121212",
-                        color: "#fff",
-                        border: "0.8px solid #fff",
-                      }}
-                    />
-                  </div>
+                <div className="flex items-center justify-center gap-6 max-w-2xl md:max-w-xl mt-6">
+                  <InputAnswer
+                    competition={competition}
+                    puzzle={puzzle}
+                    puzzle_index={parseInt(questNumber)}
+                    step={
+                      tries.filter((item) => item.end_time).length % 2 === 0
+                        ? 1
+                        : 2
+                    }
+                  />
                 </div>
               </div>
             </div>

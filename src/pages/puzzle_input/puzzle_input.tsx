@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { fetchCompetitionDetails } from "../../services/competitionsService";
 import {
-  fetchPuzzleDetails,
-  fetchPuzzleInput,
-} from "../../services/catalogsService";
+  fetchCompetitionDetails,
+  getCompetitionPuzzleInput,
+} from "../../services/competitionsService";
+import { fetchPuzzleDetails } from "../../services/catalogsService";
 import { useAuth } from "../../contexts/AuthContext";
 
 export default function PuzzleInputPage() {
@@ -13,7 +13,7 @@ export default function PuzzleInputPage() {
   const { quest_number } = useParams<{ quest_number: string }>();
   const { competition_id } = useParams<{ competition_id: string }>();
   const competitionId = competition_id || "";
-  const questNumber = quest_number || "";
+  const questNumber = quest_number ? parseInt(quest_number) : 0;
 
   const [input, setInput] = useState<string | null>(null);
 
@@ -29,20 +29,18 @@ export default function PuzzleInputPage() {
         const competitionData = await fetchCompetitionDetails(competitionId);
 
         if (competitionData) {
-          console.log("Competition Data:", competitionData);
-
           const puzzleData = await fetchPuzzleDetails(
             competitionData.catalog_id,
             competitionData.catalog_theme,
-            questNumber
+            questNumber?.toString()
           );
 
           if (puzzleData && user) {
-            const inputData = await fetchPuzzleInput(
-              competitionData.catalog_id,
-              competitionData.catalog_theme,
+            const inputData = await getCompetitionPuzzleInput(
+              competitionData.id,
               puzzleData.id,
-              user.id
+              questNumber,
+              puzzleData.difficulty
             );
 
             const inputText = inputData.input_lines.join(" ");

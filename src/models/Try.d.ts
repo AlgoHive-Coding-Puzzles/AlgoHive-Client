@@ -8,6 +8,8 @@ export interface Try {
   end_time?: string;
   attempts: number;
   score: number;
+  last_move_time?: string;
+  last_answer?: string;
   competition_id: string;
   user_id: string;
   user?: User;
