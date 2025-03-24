@@ -11,6 +11,9 @@ import LanguageSwitcher from "../../components/LanguageSwitcher";
 
 const LoginPage = () => {
   const { t } = useTranslation();
+
+  const { user } = useAuth();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -20,6 +23,10 @@ const LoginPage = () => {
   const toast = useRef<Toast>(null);
 
   const from = location.state?.from || "/";
+
+  if (user) {
+    navigate(from, { replace: true });
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
