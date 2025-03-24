@@ -34,7 +34,7 @@ const ProtectedRoutes = ({
 
   // Redirect if not authenticated
   if (!isAuthenticated) {
-    return <Navigate to="/login" state={{ from: location.pathname }} replace />;
+    return <Navigate to="/" state={{ from: location.pathname }} replace />;
   }
 
   // Redirect if user is not staff
