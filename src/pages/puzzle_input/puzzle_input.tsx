@@ -20,6 +20,8 @@ export default function PuzzleInputPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  document.title = "Copy Input - Quest " + questNumber;
+
   useEffect(() => {
     const fetchPuzzle = async () => {
       try {
@@ -45,14 +47,6 @@ export default function PuzzleInputPage() {
 
             const inputText = inputData.input_lines.join(" ");
             setInput(inputText);
-
-            const file = new File([inputText], "input");
-            const fileUrl = URL.createObjectURL(file);
-            const a = document.createElement("a");
-            a.href = fileUrl;
-            a.download = "input";
-            a.click();
-            URL.revokeObjectURL(fileUrl);
           }
         }
       } catch (error) {

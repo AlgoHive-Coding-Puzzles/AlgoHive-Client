@@ -51,7 +51,7 @@ const AppRoutes = () => {
       />
 
       <Route
-        path="/competitions"
+        path="/competitions/:competition_id?"
         element={
           <ProtectedRoutes target="all">
             <CompetitionPage />

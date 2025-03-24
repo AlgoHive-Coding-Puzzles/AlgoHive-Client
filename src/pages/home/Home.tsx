@@ -12,9 +12,14 @@ import UsersListCompetitions from "../../components/UsersListCompetitions";
 import MacbookScroll from "../../components/users/MacbookScroll";
 import { useTranslation } from "react-i18next";
 import Footer from "../../components/Footer";
+import { Competition } from "../../models/Competition";
 
 export default function Users() {
   const { t } = useTranslation();
+
+  const redirectToCompetition = (competition: Competition) => {
+    window.location.href = `/competitions/${competition.id}`;
+  };
 
   return (
     <>
@@ -44,7 +49,10 @@ export default function Users() {
 
       <MacbookScroll src="/github.png" />
 
-      <UsersListCompetitions className="mt-32 lg:mt-80" />
+      <UsersListCompetitions
+        className="mt-32 lg:mt-80"
+        setCompetition={redirectToCompetition}
+      />
 
       <Footer />
     </>

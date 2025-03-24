@@ -16,20 +16,39 @@ import {
 } from "../../utils/puzzles";
 import { Tag } from "primereact/tag";
 import { Try } from "../../models/Try";
-import { fetchUserCompetitionTries } from "../../services/competitionsService";
+import {
+  fetchCompetitionDetails,
+  fetchUserCompetitionTries,
+} from "../../services/competitionsService";
 import { useAuth } from "../../contexts/AuthContext";
 import "./competition.css";
 import { Badge } from "primereact/badge";
 import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
 
 export default function CompetitionPage() {
   const { user } = useAuth();
   const { t } = useTranslation();
 
+  const { competition_id } = useParams();
+  const competitionId = competition_id || "";
+
   const [selectedCompetition, setSelectedCompetition] =
     useState<Competition | null>(null);
   const [theme, setTheme] = useState<Theme | null>(null);
   const [tries, setTries] = useState<Try[]>([]);
+
+  useEffect(() => {
+    const fetchCompetitionFromId = async () => {
+      if (!competitionId || competitionId.length == 0) return;
+
+      const competition = await fetchCompetitionDetails(competitionId);
+      if (!competition) return;
+      setSelectedCompetition(competition);
+    };
+
+    fetchCompetitionFromId();
+  }, [competitionId]);
 
   useEffect(() => {
     const getCompetitionDetails = async () => {
