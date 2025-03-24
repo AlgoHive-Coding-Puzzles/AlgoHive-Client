@@ -10,6 +10,15 @@ const AccountPage = () => {
   const { t } = useTranslation();
   const { user, logout } = useAuth();
 
+  const handleLogout = async () => {
+    try {
+      await logout();
+      window.location.href = "/";
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
+
   return (
     <div className="mb-20">
       <AnimatedContainer>
@@ -29,8 +38,7 @@ const AccountPage = () => {
                     <button
                       className="button-regular px-5 py-3 min-w-40 bg-red-900 hover:bg-red-800 text-surface-0 font-medium rounded-2xl"
                       onClick={() => {
-                        logout();
-                        window.location.href = "/";
+                        handleLogout();
                       }}
                     >
                       {t("common.actions.logout")}
