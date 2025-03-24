@@ -15,10 +15,8 @@ const AccountPage = () => {
       Promise.all([
         logout(),
         new Promise((resolve) => {
-          setTimeout(() => {
-            window.location.href = "/";
-            resolve(true);
-          }, 1000);
+          window.location.href = "/";
+          resolve(true);
         }),
       ]);
     } catch (error) {
