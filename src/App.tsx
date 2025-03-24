@@ -4,7 +4,6 @@ import { lazy, Suspense } from "react";
 import LoginPage from "./pages/login/login";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { ActivePageProvider } from "./contexts/ActivePageContext";
-import RedirectIfAuthenticated from "./components/RedirectIfAuthenticated";
 import { isStaff } from "./utils/permissions";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 import Users from "./pages/home/Home";
