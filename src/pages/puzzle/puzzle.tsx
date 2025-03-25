@@ -26,7 +26,7 @@ export default function PuzzlePage() {
   const { quest_number } = useParams<{ quest_number: string }>();
   const { competition_id } = useParams<{ competition_id: string }>();
   const competitionId = competition_id || "";
-  const questNumber = quest_number || "";
+  const questNumber = (parseInt(quest_number || "1") - 1).toString() || "1";
 
   const [competition, setCompetition] = useState<Competition | null>(null);
   const [puzzle, setPuzzle] = useState<Puzzle | null>(null);
@@ -209,14 +209,14 @@ export default function PuzzlePage() {
               )}
 
               {firstTry?.end_time && !secondTry?.end_time && (
-                <div className="flex items-center justify-center gap-6 max-w-2xl md:max-w-xl mt-6">
+                <div className="flex gap-6 max-w-2xl md:max-w-xl mt-6">
                   {InputTemplate(2)}
                 </div>
               )}
 
               {secondTry?.end_time && (
                 <>
-                  <div className="flex items-center justify-center gap-6 max-w-2xl md:max-w-xl mt-6">
+                  <div className="flex gap-6 max-w-2xl md:max-w-xl mt-6">
                     <InputAnswered solution={secondTry.last_answer || ""} />
                   </div>
                 </>

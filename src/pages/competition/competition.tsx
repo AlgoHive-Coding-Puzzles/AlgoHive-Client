@@ -36,7 +36,6 @@ export default function CompetitionPage() {
   const [selectedCompetition, setSelectedCompetition] =
     useState<Competition | null>(null);
   const [theme, setTheme] = useState<Theme | null>(null);
-  const [tries, setTries] = useState<Try[]>([]);
   const [finishedTries, setFinishedTries] = useState<Try[]>([]);
 
   useEffect(() => {
@@ -66,8 +65,14 @@ export default function CompetitionPage() {
         user.id
       );
 
-      setTries(triesDetails);
-      setFinishedTries(triesDetails.filter((tryItem) => tryItem.end_time));
+      const sortedAndFilteredTries = triesDetails
+        .sort(
+          (a, b) =>
+            new Date(a.start_time).getTime() - new Date(b.start_time).getTime()
+        )
+        .filter((tryItem) => tryItem.end_time);
+
+      setFinishedTries(sortedAndFilteredTries);
     };
 
     getCompetitionDetails();
@@ -158,7 +163,7 @@ export default function CompetitionPage() {
                                     backgroundColor: isPartDone(
                                       index,
                                       1,
-                                      tries.length
+                                      finishedTries.length
                                     )
                                       ? "#d8d76d"
                                       : "#9b9ac8",
@@ -171,7 +176,7 @@ export default function CompetitionPage() {
                                     backgroundColor: isPartDone(
                                       index,
                                       2,
-                                      tries.length
+                                      finishedTries.length
                                     )
                                       ? "#d8d76d"
                                       : "#9b9ac8",

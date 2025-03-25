@@ -13,7 +13,7 @@ export default function PuzzleInputPage() {
   const { quest_number } = useParams<{ quest_number: string }>();
   const { competition_id } = useParams<{ competition_id: string }>();
   const competitionId = competition_id || "";
-  const questNumber = quest_number ? parseInt(quest_number) : 0;
+  const questNumber = parseInt(quest_number || "1") - 1 || 1;
 
   const [input, setInput] = useState<string | null>(null);
 
