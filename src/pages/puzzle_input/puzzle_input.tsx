@@ -51,7 +51,7 @@ export default function PuzzleInputPage() {
 
         const hasPermission = await checkPuzzlePermission(
           competitionData.id,
-          questNumber
+          questNumber - 1
         );
 
         if (!hasPermission) {
