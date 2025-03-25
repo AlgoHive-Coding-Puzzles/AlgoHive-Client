@@ -47,7 +47,6 @@ export const isPartDone = (
   step: number,
   tryLength: number
 ): boolean => {
-  if (index < 0) index = 0;
   // Calculer le nombre d'essais nécessaires pour cette partie
   const requiredTries = index * 2 + step;
 
@@ -56,7 +55,7 @@ export const isPartDone = (
 
 export const isPuzzleUnlocked = (index: number, tryLength: number): boolean => {
   // Return false if the previous puzzle is not done, true otherwise
-  if (index > 0) {
+  if (index >= 0) {
     return isPartDone(index - 1, 2, tryLength);
   }
   // If it's the first puzzle, it's always unlocked

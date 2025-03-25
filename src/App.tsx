@@ -60,7 +60,7 @@ const AppRoutes = () => {
       />
 
       <Route
-        path="/puzzle/:competition_id/quest/:quest_number/input"
+        path="/competition/:competition_id/puzzle/:puzzle_index/input"
         element={
           <ProtectedRoutes target="all">
             <PuzzleInputPage />
@@ -69,7 +69,7 @@ const AppRoutes = () => {
       />
 
       <Route
-        path="/puzzle/:competition_id/quest/:quest_number"
+        path="/competition/:competition_id/puzzle/:puzzle_index"
         element={
           <ProtectedRoutes target="all">
             <PuzzlePage />

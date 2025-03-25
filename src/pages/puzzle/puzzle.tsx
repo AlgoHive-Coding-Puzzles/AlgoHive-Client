@@ -23,10 +23,11 @@ export default function PuzzlePage() {
   // const { t } = useTranslation();
   const { user } = useAuth();
 
-  const { quest_number } = useParams<{ quest_number: string }>();
+  const { puzzle_index } = useParams<{ puzzle_index: string }>();
+  const questNumber = parseInt(puzzle_index as string) - 1;
+
   const { competition_id } = useParams<{ competition_id: string }>();
   const competitionId = competition_id || "";
-  const questNumber = (parseInt(quest_number || "1") - 1).toString() || "1";
 
   const [competition, setCompetition] = useState<Competition | null>(null);
   const [puzzle, setPuzzle] = useState<Puzzle | null>(null);
@@ -35,7 +36,7 @@ export default function PuzzlePage() {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [refresh, setRefresh] = useState(false);
+  const [refresh, setRefresh] = useState("");
 
   useEffect(() => {
     let isMounted = true;
@@ -53,7 +54,7 @@ export default function PuzzlePage() {
           const puzzleData = await fetchPuzzleDetails(
             competitionData.catalog_id,
             competitionData.catalog_theme,
-            questNumber
+            questNumber.toString()
           );
           if (isMounted) {
             setPuzzle(puzzleData);
@@ -63,7 +64,7 @@ export default function PuzzlePage() {
               const triesDetails = await fetchPuzzleTries(
                 competitionData.id,
                 puzzleData?.id || "",
-                parseInt(questNumber)
+                questNumber
               );
               // setTries(triesDetails);
 
@@ -86,7 +87,6 @@ export default function PuzzlePage() {
       } finally {
         if (isMounted) {
           setLoading(false);
-          setRefresh(false);
         }
       }
     };
@@ -136,9 +136,10 @@ export default function PuzzlePage() {
           <InputAnswer
             competition={competition}
             puzzle={puzzle}
-            puzzle_index={parseInt(questNumber)}
+            puzzle_index={questNumber}
             step={step}
             setRefresh={setRefresh}
+            refreshValue={step.toString()}
           />
         </div>
       </div>

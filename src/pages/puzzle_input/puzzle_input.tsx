@@ -10,10 +10,11 @@ import { useAuth } from "../../contexts/AuthContext";
 export default function PuzzleInputPage() {
   const { user } = useAuth();
 
-  const { quest_number } = useParams<{ quest_number: string }>();
+  const { puzzle_index } = useParams<{ puzzle_index: string }>();
   const { competition_id } = useParams<{ competition_id: string }>();
   const competitionId = competition_id || "";
-  const questNumber = parseInt(quest_number || "1") - 1 || 1;
+
+  const questNumber = parseInt(puzzle_index as string);
 
   const [input, setInput] = useState<string | null>(null);
 
@@ -32,14 +33,14 @@ export default function PuzzleInputPage() {
           const puzzleData = await fetchPuzzleDetails(
             competitionData.catalog_id,
             competitionData.catalog_theme,
-            questNumber?.toString()
+            (questNumber - 1).toString()
           );
 
           if (puzzleData && user) {
             const inputData = await getCompetitionPuzzleInput(
               competitionData.id,
               puzzleData.id,
-              questNumber,
+              questNumber - 1,
               puzzleData.difficulty
             );
 
@@ -59,7 +60,7 @@ export default function PuzzleInputPage() {
       }
     };
 
-    if (competitionId && questNumber && user) {
+    if (competitionId && questNumber != undefined && user) {
       fetchPuzzle();
     }
   }, [competitionId, questNumber, user]);

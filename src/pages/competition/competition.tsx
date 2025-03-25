@@ -129,9 +129,9 @@ export default function CompetitionPage() {
                               if (
                                 isPuzzleUnlocked(index, finishedTries.length)
                               ) {
-                                window.location.href = `/puzzle/${
+                                window.location.href = `/competition/${
                                   selectedCompetition.id
-                                }/quest/${index + 1}`;
+                                }/puzzle/${index + 1}`;
                               }
                             }}
                           >

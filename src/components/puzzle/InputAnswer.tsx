@@ -11,7 +11,8 @@ interface InputAnswerProps {
   puzzle: Puzzle;
   puzzle_index: number;
   step: 1 | 2;
-  setRefresh: (refresh: boolean) => void;
+  setRefresh: (refreshValue: string) => void;
+  refreshValue: string;
 }
 
 export default function InputAnswer({
@@ -20,6 +21,7 @@ export default function InputAnswer({
   puzzle_index,
   step,
   setRefresh,
+  refreshValue,
 }: InputAnswerProps) {
   const isMobile = useIsMobile();
   const [solution, setSolution] = useState<string | null>(null);
@@ -44,9 +46,9 @@ export default function InputAnswer({
         step
       );
 
-      console.log(res);
+      console.log("Answer submitted:", res);
 
-      setRefresh(true);
+      setRefresh(refreshValue);
     } catch (e) {
       console.error("Error submitting answer:", e);
     } finally {
