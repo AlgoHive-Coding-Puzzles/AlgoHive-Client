@@ -145,7 +145,7 @@ export const submitPuzzleAnswer = async (
   puzzleId: string,
   puzzleIndex: number,
   puzzleDifficulty: string,
-  solution: string,
+  solution: number,
   puzzle_step: number
 ): Promise<boolean> => {
   const response = await ApiClient.post("/competitions/answer_puzzle", {
@@ -153,10 +153,10 @@ export const submitPuzzleAnswer = async (
     puzzle_difficulty: puzzleDifficulty,
     puzzle_id: puzzleId,
     puzzle_index: puzzleIndex,
-    solution: solution,
+    solution: solution.toString(),
     puzzle_step: puzzle_step,
   });
-  return response.data;
+  return response.data.is_correct;
 };
 
 export const fetchPuzzleTries = async (
