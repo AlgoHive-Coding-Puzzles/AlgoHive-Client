@@ -43,6 +43,10 @@ export default function PuzzleInputPage() {
               puzzleData.difficulty
             );
 
+            // Check if we can .join the input_lines
+            if (!inputData || !inputData.input_lines) {
+              return;
+            }
             const inputText = inputData.input_lines.join(" ");
             setInput(inputText);
           }

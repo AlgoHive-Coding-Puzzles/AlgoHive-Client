@@ -15,8 +15,9 @@ import "./puzzle.css";
 import { Button } from "primereact/button";
 import CirclePattern from "../../components/CirclePattern";
 import InputAnswer from "../../components/puzzle/InputAnswer";
-import { Try } from "../../models/Try";
 import { useAuth } from "../../contexts/AuthContext";
+import InputAnswered from "../../components/puzzle/InputAnswered";
+import { Try } from "../../models/Try";
 
 export default function PuzzlePage() {
   // const { t } = useTranslation();
@@ -29,10 +30,12 @@ export default function PuzzlePage() {
 
   const [competition, setCompetition] = useState<Competition | null>(null);
   const [puzzle, setPuzzle] = useState<Puzzle | null>(null);
-  const [tries, setTries] = useState<Try[]>([]);
+  const [firstTry, setFirstTry] = useState<Try | null>(null);
+  const [secondTry, setSecondTry] = useState<Try | null>(null);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
@@ -62,7 +65,17 @@ export default function PuzzlePage() {
                 puzzleData?.id || "",
                 parseInt(questNumber)
               );
-              setTries(triesDetails);
+              // setTries(triesDetails);
+
+              // Sort tries by start_time in descending order
+              const sortedTries = triesDetails.sort(
+                (a, b) =>
+                  new Date(a.start_time).getTime() -
+                  new Date(b.start_time).getTime()
+              );
+
+              setFirstTry(sortedTries[0] || null);
+              setSecondTry(sortedTries[1] || null);
             }
           }
         }
@@ -71,7 +84,10 @@ export default function PuzzlePage() {
         if (isMounted)
           setError("Failed to fetch puzzle data. Please try again.");
       } finally {
-        if (isMounted) setLoading(false);
+        if (isMounted) {
+          setLoading(false);
+          setRefresh(false);
+        }
       }
     };
 
@@ -80,7 +96,7 @@ export default function PuzzlePage() {
     return () => {
       isMounted = false; // Cleanup function to prevent state updates
     };
-  }, [competitionId, questNumber, user]);
+  }, [competitionId, questNumber, user, refresh]);
 
   const handleInputRequest = async () => {
     // Redirect to current url and just add /input
@@ -94,6 +110,39 @@ export default function PuzzlePage() {
     if (newTab) {
       newTab.focus();
     }
+  };
+
+  const InputTemplate = (step: 1 | 2) => {
+    if (!puzzle || !competition) return null;
+
+    return (
+      <div className="flex flex-col gap-5 mb-32">
+        <Button
+          label="Get your puzzle input"
+          className="w-full max-w-xs"
+          onClick={() => handleInputRequest()}
+          icon="pi pi-download"
+          size="small"
+          style={{
+            backgroundColor: "#101018",
+            color: "#fff",
+            border: "0.8px solid #fff",
+          }}
+        />
+
+        <div className="w-16 h-1 bg-orange-500 mx-auto mt-4 ml-0"></div>
+
+        <div className="flex items-center justify-center gap-6 max-w-2xl md:max-w-xl mt-6">
+          <InputAnswer
+            competition={competition}
+            puzzle={puzzle}
+            puzzle_index={parseInt(questNumber)}
+            step={step}
+            setRefresh={setRefresh}
+          />
+        </div>
+      </div>
+    );
   };
 
   if (loading) {
@@ -133,40 +182,45 @@ export default function PuzzlePage() {
                 {competition.title}
               </p>
 
+              {/** ========================== FIRST PART ========================== */}
+
               <div className="puzzle-container mt-20 mb-10">
                 <div dangerouslySetInnerHTML={{ __html: puzzle.cipher }}></div>
               </div>
 
-              <div className="mx-4 flex flex-col gap-5 mb-32">
-                <Button
-                  label="Get your puzzle input"
-                  className="w-full max-w-xs mx-auto"
-                  onClick={() => handleInputRequest()}
-                  icon="pi pi-download"
-                  size="small"
-                  style={{
-                    backgroundColor: "#101018",
-                    color: "#fff",
-                    border: "0.8px solid #fff",
-                  }}
-                />
-
-                {/* Orange Line */}
-                <div className="w-16 h-1 bg-orange-500 mx-auto mt-4 ml-0"></div>
-
+              {firstTry?.end_time ? (
                 <div className="flex items-center justify-center gap-6 max-w-2xl md:max-w-xl mt-6">
-                  <InputAnswer
-                    competition={competition}
-                    puzzle={puzzle}
-                    puzzle_index={parseInt(questNumber)}
-                    step={
-                      tries.filter((item) => item.end_time).length % 2 === 0
-                        ? 1
-                        : 2
-                    }
-                  />
+                  <InputAnswered solution={firstTry.last_answer || ""} />
                 </div>
-              </div>
+              ) : (
+                <div className="flex items-center gap-6 max-w-2xl md:max-w-xl mt-6">
+                  {InputTemplate(1)}
+                </div>
+              )}
+
+              {/** ========================== SECOND PART ========================== */}
+
+              {firstTry?.end_time && (
+                <div className="puzzle-container mt-20 mb-10">
+                  <div
+                    dangerouslySetInnerHTML={{ __html: puzzle.obscure }}
+                  ></div>
+                </div>
+              )}
+
+              {firstTry?.end_time && !secondTry?.end_time && (
+                <div className="flex items-center justify-center gap-6 max-w-2xl md:max-w-xl mt-6">
+                  {InputTemplate(2)}
+                </div>
+              )}
+
+              {secondTry?.end_time && (
+                <>
+                  <div className="flex items-center justify-center gap-6 max-w-2xl md:max-w-xl mt-6">
+                    <InputAnswered solution={secondTry.last_answer || ""} />
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </AnimatedContainer>

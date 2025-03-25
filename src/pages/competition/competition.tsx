@@ -37,6 +37,7 @@ export default function CompetitionPage() {
     useState<Competition | null>(null);
   const [theme, setTheme] = useState<Theme | null>(null);
   const [tries, setTries] = useState<Try[]>([]);
+  const [finishedTries, setFinishedTries] = useState<Try[]>([]);
 
   useEffect(() => {
     const fetchCompetitionFromId = async () => {
@@ -66,6 +67,7 @@ export default function CompetitionPage() {
       );
 
       setTries(triesDetails);
+      setFinishedTries(triesDetails.filter((tryItem) => tryItem.end_time));
     };
 
     getCompetitionDetails();
@@ -112,14 +114,16 @@ export default function CompetitionPage() {
                             delay={index * 200}
                             className={
                               `quest-card p-8 border-0 dark:border border-white/12 shadow-stroke dark:shadow-none rounded-4xl bg-[#313131] ` +
-                              (isPuzzleUnlocked(index, tries.length)
+                              (isPuzzleUnlocked(index, finishedTries.length)
                                 ? "unlocked-card"
                                 : "grayscale-card")
                             }
                             data-pr-tooltip={t("puzzles.clickToAccess")}
                             data-pr-position="top"
                             onClick={() => {
-                              if (isPuzzleUnlocked(index, tries.length)) {
+                              if (
+                                isPuzzleUnlocked(index, finishedTries.length)
+                              ) {
                                 window.location.href = `/puzzle/${
                                   selectedCompetition.id
                                 }/quest/${index + 1}`;
