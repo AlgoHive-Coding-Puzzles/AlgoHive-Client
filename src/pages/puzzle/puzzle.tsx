@@ -201,7 +201,7 @@ export default function PuzzlePage() {
     // Start polling for the new Try after a short delay
     // (giving time for the API to create the Try)
     // If the step is 1, we can start polling immediately
-    if (!hasCompletedFirstStep) {
+    if (!firstTry) {
       setTimeout(() => {
         setInputRequesting(false);
         startPollingForNewTry();
