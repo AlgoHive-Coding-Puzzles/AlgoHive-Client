@@ -169,3 +169,13 @@ export const fetchPuzzleTries = async (
   );
   return response.data;
 };
+
+export const checkPuzzlePermission = async (
+  competitionId: string,
+  puzzleIndex: number
+): Promise<boolean> => {
+  const response = await ApiClient.get(
+    `/competitions/${competitionId}/permission/puzzles/${puzzleIndex}`
+  );
+  return response.data.has_permission;
+};

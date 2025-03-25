@@ -1,6 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import {
+  checkPuzzlePermission,
   fetchCompetitionDetails,
   getCompetitionPuzzleInput,
 } from "../../services/competitionsService";
@@ -45,6 +46,16 @@ export default function PuzzleInputPage() {
         const competitionData = await fetchCompetitionDetails(competitionId);
         if (!competitionData) {
           setError(`Competition not found: ${competitionId}`);
+          return;
+        }
+
+        const hasPermission = await checkPuzzlePermission(
+          competitionData.id,
+          questNumber
+        );
+
+        if (!hasPermission) {
+          window.location.href = `/competitions/${competitionId}`;
           return;
         }
 

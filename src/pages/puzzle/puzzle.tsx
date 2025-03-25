@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Puzzle } from "../../models/Catalogs";
 import { Competition } from "../../models/Competition";
 import {
+  checkPuzzlePermission,
   fetchCompetitionDetails,
   fetchPuzzleTries,
 } from "../../services/competitionsService";
@@ -77,6 +78,16 @@ export default function PuzzlePage() {
         const competitionData = await fetchCompetitionDetails(competitionId);
         if (!competitionData) {
           setError("Competition not found");
+          return;
+        }
+
+        const hasPermission = await checkPuzzlePermission(
+          competitionData.id,
+          questNumber
+        );
+
+        if (!hasPermission) {
+          window.location.href = `/competitions/${competitionId}`;
           return;
         }
 

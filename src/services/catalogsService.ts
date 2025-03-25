@@ -64,11 +64,11 @@ export async function fetchCatalogThemeDetails(
 export async function fetchPuzzleDetails(
   catalogId: string,
   themeId: string,
-  puzzleId: string
+  puzzleIndex: string
 ): Promise<Puzzle> {
   try {
     const response = await ApiClient.get(
-      `/catalogs/${catalogId}/themes/${themeId}/puzzles/${puzzleId}`
+      `/catalogs/${catalogId}/themes/${themeId}/puzzles/${puzzleIndex}`
     );
     if (response.status !== 200) {
       throw new Error(`Error: ${response.status}`);
