@@ -44,6 +44,8 @@ export default function InputAnswer({
         step
       );
 
+      console.log(res);
+
       setRefresh(true);
     } catch (e) {
       console.error("Error submitting answer:", e);
