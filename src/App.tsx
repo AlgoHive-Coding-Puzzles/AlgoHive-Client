@@ -12,6 +12,7 @@ import HowToPlay from "./pages/how-to-play/how-to-play";
 import CompetitionPage from "./pages/competition/competition";
 import PuzzlePage from "./pages/puzzle/puzzle";
 import PuzzleInputPage from "./pages/puzzle_input/puzzle_input";
+import ResetPasswordPage from "./pages/reset-password/reset-password";
 
 // Lazy load Admin component to improve load time
 const Admin = lazy(() => import("./pages/admin/Admin"));
@@ -23,6 +24,7 @@ const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/reset-password" element={<ResetPasswordPage />} />
       <Route path="/" element={<Users />} />
       <Route
         path="/staff_portal"

@@ -211,6 +211,24 @@ export async function resetPassword(userId: string) {
   }
 }
 
+export async function resetPasswordWithToken(token: string, password: string) {
+  try {
+    const response = await ApiClient.post("/auth/reset-password", {
+      token,
+      password,
+    });
+
+    if (response.status !== 200) {
+      throw new Error(`Error: ${response.status}`);
+    }
+
+    return response.data;
+  } catch (error) {
+    console.error("Error resetting password with token:", error);
+    throw error;
+  }
+}
+
 export async function importUsersFromXLSX(groupId: string, file: File) {
   try {
     const formData = new FormData();
@@ -233,6 +251,23 @@ export async function importUsersFromXLSX(groupId: string, file: File) {
     return response.data;
   } catch (error) {
     console.error("Error importing users:", error);
+    throw error;
+  }
+}
+
+export async function requestPasswordReset(email: string) {
+  try {
+    const response = await ApiClient.post("/auth/request-reset", {
+      email,
+    });
+
+    if (response.status !== 200) {
+      throw new Error(`Error: ${response.status}`);
+    }
+
+    return response.data;
+  } catch (error) {
+    console.error("Error requesting password reset:", error);
     throw error;
   }
 }

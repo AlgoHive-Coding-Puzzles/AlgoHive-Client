@@ -72,8 +72,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       // Call the API to remove the cookie
       await ApiClient.post("/auth/logout");
       setUser(null);
+      setHasDefaultPassword(false);
     } catch (error) {
       setUser(null);
+      setHasDefaultPassword(false);
       console.error("Cookie is missing, user is already logged out", error);
     }
   };

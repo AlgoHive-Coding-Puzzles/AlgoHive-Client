@@ -543,6 +543,17 @@
     },
     "error": "Erreur de connexion.",
     "invalidCredentials": "Identifiants invalides.",
-    "invalidEmailOrPassword": "E-mail ou mot de passe invalide."
+    "invalidEmailOrPassword": "E-mail ou mot de passe invalide.",
+    "resetPassword": {
+      "title": "Réinitialiser le mot de passe",
+      "desc": "Entrez votre adresse e-mail pour recevoir un lien de réinitialisation.",
+      "submit": "Réinitialiser le mot de passe",
+      "success": "Succès",
+      "successMessage": "Si l'email existe dans notre base de données, vous recevrez un e-mail avec un lien pour réinitialiser votre mot de passe.",
+      "error": "Une erreur est survenue. Merci de contacter un administrateur.",
+      "newPassword": "Nouveau mot de passe",
+      "confirmNewPassword": "Confirmer le nouveau mot de passe",
+      "resetSuccess": "Mot de passe réinitialisé avec succès"
+    }
   }
 }

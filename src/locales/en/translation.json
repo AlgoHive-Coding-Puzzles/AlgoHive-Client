@@ -545,6 +545,17 @@
     },
     "error": "Login error.",
     "invalidCredentials": "Invalid credentials.",
-    "invalidEmailOrPassword": "Invalid email or password."
+    "invalidEmailOrPassword": "Invalid email or password.",
+    "resetPassword": {
+      "title": "Reset Password",
+      "desc": "Enter your email address to receive a password reset link.",
+      "submit": "Reset Password",
+      "success": "Success",
+      "successMessage": "If this email address is registered, you will receive a password reset link shortly.",
+      "error": "An error occured, please contact your administrator.",
+      "newPassword": "New Password",
+      "confirmNewPassword": "Confirm New Password",
+      "resetSuccess": "Password reset successfully"
+    }
   }
 }
