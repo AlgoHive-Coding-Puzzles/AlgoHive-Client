@@ -390,12 +390,15 @@
   "users": {
     "menus": {
       "staffPortal": "Staff Portal",
-
       "howToPlay": "How to Play",
       "support": "Support",
       "myCompetitions": "My Competitions",
       "welcome": "Welcome",
       "login": "Log in"
+    },
+    "security": {
+      "defaultPasswordWarning": "Your password is the default one. Please change it.",
+      "changePassword": "Change your password"
     },
     "footer": {
       "title": "Ready to explore the AlgoHive platform?",

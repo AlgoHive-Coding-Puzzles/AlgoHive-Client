@@ -12,6 +12,7 @@ import { ApiClient } from "../config/ApiClient";
 interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
+  hasDefaultPassword: boolean;
   isLoading: boolean;
   login: (username: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
@@ -35,6 +36,7 @@ interface AuthProviderProps {
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
+  const [hasDefaultPassword, setHasDefaultPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   const login = async (email: string, password: string) => {
@@ -98,6 +100,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         return false;
       }
 
+      setHasDefaultPassword(response.data.hasDefaultPassword);
+
       setUser({
         id: response.data.user.user_id,
         email: response.data.user.email,
@@ -130,6 +134,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const value = {
     user,
     isAuthenticated: !!user,
+    hasDefaultPassword,
     isLoading,
     login,
     logout,

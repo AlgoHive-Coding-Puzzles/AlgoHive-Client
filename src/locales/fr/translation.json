@@ -394,6 +394,10 @@
       "welcome": "Bienvenue",
       "login": "Connexion"
     },
+    "security": {
+      "defaultPasswordWarning": "Le mot de passe par défaut est encore actif. Veuillez le changer.",
+      "changePassword": "Changer le mot de passe"
+    },
     "footer": {
       "title": "Êtes-vous prêt à explorer la plateforme AlgoHive ?",
       "description": "Rejoins-nous dès à présent et commence ton expérience vers la maîtrise des algorithmes et des structures de données. Auto-hébergé, open-source et gratuit.",
