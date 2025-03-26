@@ -9,6 +9,7 @@ import ProtectedRoutes from "./components/ProtectedRoutes";
 import Users from "./pages/home/Home";
 import AccountPage from "./pages/account/Account";
 import HowToPlay from "./pages/how-to-play/how-to-play";
+import SupportPage from "./pages/support/support";
 import CompetitionPage from "./pages/competition/competition";
 import PuzzlePage from "./pages/puzzle/puzzle";
 import PuzzleInputPage from "./pages/puzzle_input/puzzle_input";
@@ -80,6 +81,7 @@ const AppRoutes = () => {
       />
 
       <Route path="/how-to-play" element={<HowToPlay />} />
+      <Route path="/support" element={<SupportPage />} />
     </Routes>
   );
 };

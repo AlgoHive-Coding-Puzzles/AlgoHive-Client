@@ -433,6 +433,43 @@
     "noCompetitions": "No competitions available",
     "connectYourAccount": "Please connect your account to view competitions",
     "accountSettings": "Account Settings",
+    "support": {
+      "title": "Support",
+      "description": "Get help and assistance with AlgoHive",
+      "getInTouch": "Get in touch",
+      "contactUs": "Contact Us",
+      "helpCenter": "Help Center",
+      "faq": "Frequently Asked Questions",
+      "reportIssue": "Report an Issue",
+      "contactForm": {
+        "name": "Your name",
+        "email": "Your email address",
+        "subject": "Subject",
+        "message": "Message",
+        "send": "Send Message",
+        "success": "Message sent successfully!",
+        "error": "Error sending message",
+        "required": "This field is required"
+      },
+      "issueTypes": {
+        "placeholder": "Select an issue type",
+        "title": "Select an issue type",
+        "technical": "Technical Problem",
+        "account": "Account Issue",
+        "puzzle": "Puzzle Question",
+        "suggestion": "Feature Suggestion",
+        "other": "Other"
+      },
+      "communitySupport": "Community Support",
+      "communityDesc": "Join our community channels to get help from other users and our support team.",
+      "documentation": "Documentation",
+      "documentationDesc": "Explore the technical documentation to find answers to common questions and guides.",
+      "directSupport": "Direct Support",
+      "directSupportDesc": "Contact me directly for personalized assistance.",
+      "github": "GitHub Issues",
+      "createPuzzles": "Create your own puzzles",
+      "docs": "Read the Docs"
+    },
     "howToPlay": {
       "how": "How",
       "toPlayAlgohive": "to play AlgoHive",
