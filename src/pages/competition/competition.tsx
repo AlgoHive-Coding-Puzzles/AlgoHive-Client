@@ -26,6 +26,7 @@ import { Badge } from "primereact/badge";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import BackButton from "../../components/ui/back-button";
+import Footer from "../../components/Footer";
 
 export default function CompetitionPage() {
   const { user } = useAuth();
@@ -89,7 +90,7 @@ export default function CompetitionPage() {
         >
           <div className="bg-main-gradient h-[51.5rem] absolute top-0 inset-x-0"></div>
           <div className="container relative">
-            <div className="h-[51.5rem] absolute top-0 left-4 right-4">
+            <div className="h-[46rem] absolute top-0 left-4 right-4">
               <div className="absolute inset-0 overflow-hidden lg:block hidden">
                 <CirclePattern className="absolute w-[82rem] -bottom-full translate-y-24 left-1/2 -translate-x-1/2 -z-20" />
               </div>
@@ -212,11 +213,15 @@ export default function CompetitionPage() {
               <div className="mt-16">
                 <UsersListCompetitions
                   setCompetition={setSelectedCompetition}
-                />{" "}
+                />
               </div>
             )}
           </div>
         </AnimatedContainer>
+
+        <div className="mt-20">
+          <Footer />
+        </div>
       </section>
     </>
   );

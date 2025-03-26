@@ -34,7 +34,6 @@ const UsersListCompetitions: React.FC<UsersListCompetitionsProps> = ({
   }, []);
 
   return (
-    // <div className="container" style={{ minHeight: "75vh" }}>
     <div className={cn("container min-[height:75vh]", className)}>
       <span className="text-xl font-semibold text-surface-950 dark:text-surface-0">
         {t("users.competitions")}

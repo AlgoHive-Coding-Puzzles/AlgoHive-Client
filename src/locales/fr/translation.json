@@ -362,7 +362,8 @@
         "score": "Score",
         "puzzle": "Énigme",
         "loading": "Chargement des essais..."
-      }
+      },
+      "noCompetitionsAvailable": "Aucune compétition n'est disponible pour le moment."
     }
   },
   "staff": {
