@@ -397,6 +397,30 @@
       "welcome": "Welcome",
       "login": "Log in"
     },
+    "footer": {
+      "title": "Ready to explore the AlgoHive platform?",
+      "description": "Join us today and start your journey towards mastering algorithms and data structures. SelfHosted, open-source, and free to use.",
+      "links": {
+        "title": "Links",
+        "howToPlay": "How to play",
+        "support": "Support",
+        "license": "License",
+        "profile": "My Profile"
+      },
+      "project": {
+        "title": "The Project",
+        "github": "GitHub",
+        "createPuzzles": "Create your own puzzles",
+        "host": "Host your own AlgoHive",
+        "kofi": "Support me on Ko-fi"
+      },
+      "moreChallenges": {
+        "title": "More challenges",
+        "aoc": "Advent of Code",
+        "htb": "Hack The Box",
+        "cg": "Coding Games"
+      }
+    },
     "are": "Are",
     "youReady": "you ready",
     "toExplore": "to explore the world of algorithms?",

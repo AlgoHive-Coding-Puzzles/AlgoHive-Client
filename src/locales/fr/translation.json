@@ -394,6 +394,30 @@
       "welcome": "Bienvenue",
       "login": "Connexion"
     },
+    "footer": {
+      "title": "Êtes-vous prêt à explorer la plateforme AlgoHive ?",
+      "description": "Rejoins-nous dès à présent et commence ton expérience vers la maîtrise des algorithmes et des structures de données. Auto-hébergé, open-source et gratuit.",
+      "links": {
+        "title": "Liens",
+        "howToPlay": "Comment jouer",
+        "support": "Support",
+        "license": "Licence",
+        "profile": "Mon Profil"
+      },
+      "project": {
+        "title": "Le Projet",
+        "github": "GitHub",
+        "createPuzzles": "Créer des énigmes",
+        "host": "Auto-héberger AlgoHive",
+        "kofi": "Soutenir sur Ko-fi"
+      },
+      "moreChallenges": {
+        "title": "Plus de défis",
+        "aoc": "Advent of Code",
+        "htb": "Hack The Box",
+        "cg": "Coding Games"
+      }
+    },
     "are": "Êtes",
     "youReady": "vous prêt",
     "toExplore": "à vous mesurer aux défis des algorithmes ?",
@@ -401,7 +425,7 @@
     "competitions": "Compétitions",
     "selectCompetition": "Sélectionnez la compétition à laquelle vous souhaitez participer",
     "noCompetitions": "Aucune compétition disponible",
-    "connectYourAccount": "Veuillez vous connecter votre compte pour voir les compétitions",
+    "connectYourAccount": "Veuillez vous connecter à votre compte pour voir les compétitions",
     "accountSettings": "Paramètres du compte",
     "howToPlay": {
       "how": "Comment",

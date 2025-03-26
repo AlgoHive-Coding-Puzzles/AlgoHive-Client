@@ -50,7 +50,7 @@ export default function Users() {
       <MacbookScroll src="/github.png" />
 
       <UsersListCompetitions
-        className="mt-32 lg:mt-80"
+        className="mt-32 lg:mt-96"
         setCompetition={redirectToCompetition}
       />
 

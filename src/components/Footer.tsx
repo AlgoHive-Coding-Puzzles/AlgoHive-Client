@@ -1,41 +1,81 @@
 import React from "react";
 import CirclePattern from "./CirclePattern";
 import AnimatedContainer from "./AnimatedContainer";
+import { t } from "i18next";
+import { useAuth } from "../contexts/AuthContext";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 const Footer: React.FC = () => {
+  const { user } = useAuth();
+
   const socials = [
-    { icon: "pi pi-youtube", link: "#" },
-    { icon: "pi pi-twitter", link: "#" },
-    { icon: "pi pi-discord", link: "#" },
+    { icon: "pi pi-crown", link: "https://ko-fi.com/Y8Y41CI3RB" },
+    {
+      icon: "pi pi-discord",
+      link: "https://discordapp.com/users/387291278670430208",
+    },
+    { icon: "pi pi-github", link: "https://github.com/Eric-Philippe" },
   ];
+
+  const footerNavsDataLinks = [
+    { label: t("users.footer.links.howToPlay"), to: "/how-to-play" },
+    { label: t("users.footer.links.support"), to: "/support" },
+    { label: t("users.footer.links.license"), to: "/license" },
+  ];
+
+  const footerNavsDataProject = [
+    {
+      label: t("users.footer.project.github"),
+      to: "https://github.com/AlgoHive-Coding-Puzzles",
+    },
+    {
+      label: t("users.footer.project.createPuzzles"),
+      to: "https://github.com/AlgoHive-Coding-Puzzles/BeeLine",
+    },
+    {
+      label: t("users.footer.project.host"),
+      to: "https://github.com/AlgoHive-Coding-Puzzles/AlgoHive-Infra",
+    },
+    {
+      label: t("users.footer.project.kofi"),
+      to: "https://ko-fi.com/Y8Y41CI3RB",
+    },
+  ];
+
+  const footerNavsDataMore = [
+    {
+      label: t("users.footer.moreChallenges.aoc"),
+      to: "https://adventofcode.com/",
+    },
+    {
+      label: t("users.footer.moreChallenges.htb"),
+      to: "https://www.hackthebox.com/",
+    },
+    {
+      label: t("users.footer.moreChallenges.cg"),
+      to: "https://www.codingame.com/start/fr/",
+    },
+  ];
+
+  if (user) {
+    footerNavsDataLinks.push({
+      label: t("users.footer.links.profile"),
+      to: `/account`,
+    });
+  }
 
   const footerNavsData = [
     {
-      title: "Links",
-      items: [
-        { label: "Account", to: "/pages/travel" },
-        { label: "Competitions", to: "/pages/saas" },
-        { label: "Leaderboard", to: "/pages/startup" },
-        { label: "How To Play", to: "/pages/enterprise" },
-      ],
+      title: t("users.footer.links.title"),
+      items: footerNavsDataLinks,
     },
     {
-      title: "The Project",
-      items: [
-        { label: "GitHub", to: "/second-pages/about" },
-        { label: "Pricing", to: "/second-pages/pricing" },
-        { label: "Blog", to: "/second-pages/blog" },
-        { label: "Blog Detail", to: "/second-pages/blog/detail" },
-        { label: "Contact", to: "/second-pages/contact" },
-      ],
+      title: t("users.footer.project.title"),
+      items: footerNavsDataProject,
     },
     {
-      title: "More challenges",
-      items: [
-        { label: "Advent of Code", to: "/second-pages/signup" },
-        { label: "HackTheBox", to: "/second-pages/signin" },
-        { label: "CodingGames", to: "/second-pages/404" },
-      ],
+      title: t("users.footer.moreChallenges.title"),
+      items: footerNavsDataMore,
     },
   ];
 
@@ -46,12 +86,10 @@ const Footer: React.FC = () => {
           <div className="mb-20 pb-36 pt-16 flex items-center justify-center border-b border-white/10 border-dashed ">
             <div className="max-w-[34rem] mx-auto">
               <h1 className="title text-4xl lg:text-6xl font-semibold text-center !leading-tight">
-                Ready to explore the AlgoHive platform?
+                {t("users.footer.title")}
               </h1>
               <p className="text-lg lg:text-xl text-white/64 text-center max-w-[25rem] mx-auto mt-6">
-                Join us today and start your journey towards mastering
-                algorithms and data structures. SelfHosted, open-source, and
-                free to use.
+                {t("users.footer.description")}
               </p>
             </div>
           </div>
@@ -59,7 +97,12 @@ const Footer: React.FC = () => {
           <CirclePattern className="absolute -bottom-12 opacity-50 translate-y-1/2 w-[50rem] lg:w-[80rem] -translate-x-1/2 left-1/2" />
           <div className="max-w-[64rem] mx-auto flex lg:flex-row flex-col">
             <div className="flex-1 flex flex-col justify-between gap-4 py-4 lg:px-0 px-4">
-              <a href="#">AlgoHive</a>
+              <a href="#">
+                <span className="text-orange-500 font-bold">Algo</span>
+                <span className="text-surface-0">Hive.dev</span>
+              </a>
+
+              <LanguageSwitcher />
               <div className="hidden lg:flex items-center gap-2">
                 {socials.map((item, index) => (
                   <a
@@ -72,7 +115,7 @@ const Footer: React.FC = () => {
                 ))}
               </div>
             </div>
-            <div className="flex flex-wrap items-start justify-between gap-x-28 gap-y-7">
+            <div className="flex flex-wrap items-start justify-between md:gap-x-10 lg:gap-x-24 gap-y-7">
               {footerNavsData.map((data, index) => (
                 <div key={index} className="p-2 flex flex-col gap-2">
                   <div className="px-3 py-2 text-surface-0 text-xl font-medium">

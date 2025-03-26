@@ -108,7 +108,14 @@ const LoginPage = () => {
           <Divider className="my-4" />
           <p className="text-center text-sm mt-4">
             {t("login.noAccount")}{" "}
-            <a href="#" className="text-blue-500">
+            <a
+              className="text-blue-500"
+              onClick={() => {
+                // TODO: Fetch the Admin email from the backend
+                window.location.href =
+                  "mailto:ericphlpp@proton.me?subject=Account Request&body=I would like to request an account for AlgoHive.";
+              }}
+            >
               {t("login.askAdmin")}
             </a>
           </p>
