@@ -25,6 +25,7 @@ import "./competition.css";
 import { Badge } from "primereact/badge";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
+import BackButton from "../../components/ui/back-button";
 
 export default function CompetitionPage() {
   const { user } = useAuth();
@@ -97,9 +98,11 @@ export default function CompetitionPage() {
               <Navbar />
               {selectedCompetition && (
                 <>
-                  <h1 className="max-w-[calc(100%-3rem)] lg:max-w-5xl mx-auto title lg:text-6xl text-4xl text-center mt-18 font-bold">
-                    {selectedCompetition.title}
-                  </h1>
+                  <div className="flex flex-col items-center gap-4 mt-20">
+                    <h1 className="max-w-[calc(100%-3rem)] lg:max-w-5xl mx-auto title lg:text-6xl text-4xl text-center font-bold">
+                      {selectedCompetition.title}
+                    </h1>
+                  </div>
 
                   <div className="w-32 h-1 bg-orange-500 mx-auto mt-4" />
 
@@ -110,6 +113,15 @@ export default function CompetitionPage() {
                   <p className="text-center text-xl text-surface-950 dark:text-surface-0 font-semibold mt-10">
                     {t("puzzles.selectPuzzle")}
                   </p>
+
+                  <div className="w-full flex justify-center mt-10">
+                    <BackButton
+                      onClickAction={() => {
+                        setSelectedCompetition(null);
+                      }}
+                      text={t("puzzles.backToCompetitions")}
+                    />
+                  </div>
                   <div className={`lg:mt-28 mt-24`}>
                     {theme && theme.puzzles && (
                       <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6">

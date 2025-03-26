@@ -1,6 +1,7 @@
 import { InputText } from "primereact/inputtext";
 import useIsMobile from "../../lib/hooks/use-is-mobile";
 import { memo } from "react";
+import { useTranslation } from "react-i18next";
 
 interface InputAnsweredProps {
   solution: string;
@@ -8,6 +9,7 @@ interface InputAnsweredProps {
 
 function InputAnswered({ solution }: InputAnsweredProps) {
   const isMobile = useIsMobile();
+  const { t } = useTranslation();
 
   return (
     <div className="w-full max-w-md">
@@ -15,7 +17,7 @@ function InputAnswered({ solution }: InputAnsweredProps) {
         {!isMobile && (
           <span className="p-inputgroup-addon">
             <i className="pi pi-check-circle text-green-500 mr-2"></i>
-            Your puzzle answer was:
+            {t("puzzles.input.yourAnswerWas")}
           </span>
         )}
         <InputText
@@ -23,7 +25,7 @@ function InputAnswered({ solution }: InputAnsweredProps) {
           className="w-full"
           value={solution}
           disabled
-          aria-label="Your submitted answer"
+          aria-label={t("puzzles.input.yourAnswer")}
         />
         {isMobile && (
           <span className="p-inputgroup-addon bg-green-100">
@@ -33,7 +35,7 @@ function InputAnswered({ solution }: InputAnsweredProps) {
       </div>
       {isMobile && (
         <div className="text-xs text-center mt-1 text-gray-500">
-          Your puzzle answer was accepted
+          {t("puzzles.input.wasAccepted")}
         </div>
       )}
     </div>

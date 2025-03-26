@@ -6,6 +6,7 @@ import { Competition } from "../../models/Competition";
 import { Puzzle } from "../../models/Catalogs";
 import { submitPuzzleAnswer } from "../../services/competitionsService";
 import { InputNumber, InputNumberChangeEvent } from "primereact/inputnumber";
+import { useTranslation } from "react-i18next";
 
 interface InputAnswerProps {
   competition: Competition;
@@ -30,6 +31,7 @@ function InputAnswer({
   const [solution, setSolution] = useState<number>();
   const [loading, setLoading] = useState(false);
   const toast = useRef<Toast>(null);
+  const { t } = useTranslation();
 
   // Handle input change
   const handleChange = useCallback((e: InputNumberChangeEvent) => {
@@ -42,8 +44,8 @@ function InputAnswer({
     if (solution === undefined || solution === null) {
       toast.current?.show({
         severity: "error",
-        summary: "Error",
-        detail: "Solution cannot be empty.",
+        summary: t("puzzles.input.error"),
+        detail: t("puzzles.input.solution"),
         life: 3000,
       });
       return;
@@ -65,15 +67,15 @@ function InputAnswer({
       if (isCorrect) {
         toast.current?.show({
           severity: "success",
-          summary: "Correct Answer",
-          detail: "Congratulations! You found the right answer.",
+          summary: t("puzzles.input.correct"),
+          detail: t("puzzles.input.congratulations"),
           life: 3000,
         });
       } else {
         toast.current?.show({
           severity: "warn",
-          summary: "Incorrect Answer",
-          detail: "Try again!",
+          summary: t("puzzles.input.incorrect"),
+          detail: t("puzzles.input.tryAgain"),
           life: 3000,
         });
       }
@@ -88,8 +90,8 @@ function InputAnswer({
       // Handle submission errors
       toast.current?.show({
         severity: "error",
-        summary: "Submission Failed",
-        detail: "An error occurred while submitting your answer.",
+        summary: t("puzzles.input.failed"),
+        detail: t("puzzles.input.error"),
         life: 3000,
       });
       console.error("Error submitting answer:", error);
@@ -105,6 +107,7 @@ function InputAnswer({
     step,
     setRefresh,
     refreshValue,
+    t,
   ]);
 
   // Handle keyboard submission
@@ -123,20 +126,21 @@ function InputAnswer({
       <div className="p-inputgroup flex-1">
         {!isMobile && (
           <span className="p-inputgroup-addon">
-            <i className="pi pi-question-circle mr-2"></i> Answer:
+            <i className="pi pi-question-circle mr-2"></i>{" "}
+            {t("puzzles.input.answer")}:
           </span>
         )}
         <InputNumber
-          placeholder="Enter your answer here"
+          placeholder={t("puzzles.input.enterAnswer")}
           className="w-full max-w-md mx-auto"
           value={solution}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
           disabled={loading || disabled}
-          aria-label="Answer input"
+          aria-label={t("puzzles.input.answer")}
         />
         <Button
-          label="Submit"
+          label={t("puzzles.input.submit")}
           className="max-w-md mx-auto"
           onClick={handleSubmit}
           icon={loading ? "pi pi-spinner pi-spin" : "pi pi-check"}
@@ -147,7 +151,7 @@ function InputAnswer({
             border: "0.8px solid #fff",
           }}
           disabled={loading || disabled}
-          aria-label="Submit answer"
+          aria-label={t("puzzles.input.submit")}
         />
       </div>
     </>

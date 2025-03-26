@@ -19,6 +19,9 @@ import { Try } from "../../models/Try";
 import "./puzzle.css";
 import { Button } from "primereact/button";
 import { Tooltip } from "primereact/tooltip";
+import BackButton from "../../components/ui/back-button";
+import useIsMobile from "../../lib/hooks/use-is-mobile";
+import { useTranslation } from "react-i18next";
 
 export default function PuzzlePage() {
   const { user } = useAuth();
@@ -26,6 +29,9 @@ export default function PuzzlePage() {
     puzzle_index: string;
     competition_id: string;
   }>();
+
+  const isMobile = useIsMobile();
+  const { t } = useTranslation();
 
   // Derived state with useMemo
   const questNumber = useMemo(
@@ -229,7 +235,7 @@ export default function PuzzlePage() {
       <div className="flex justify-center items-center h-screen">
         <div className="text-center">
           <i className="pi pi-spinner pi-spin text-3xl"></i>
-          <p className="mt-2">Loading puzzle...</p>
+          <p className="mt-2">{t("puzzles.input.loading")}</p>
         </div>
       </div>
     );
@@ -258,36 +264,42 @@ export default function PuzzlePage() {
     );
   }
 
+  const GetInputTemplate = () => {
+    return (
+      <Button
+        label={
+          inputRequesting
+            ? t("puzzles.input.openingInput")
+            : pollingForTry
+            ? t("puzzles.input.checkingInput")
+            : t("puzzles.input.getInput")
+        }
+        className="w-full max-w-xs"
+        onClick={handleInputRequest}
+        icon={
+          inputRequesting || pollingForTry
+            ? "pi pi-spinner pi-spin"
+            : "pi pi-download"
+        }
+        disabled={inputRequesting || pollingForTry}
+        size="small"
+        style={{
+          backgroundColor: "#101018",
+          color: "#fff",
+          border: "0.8px solid #fff",
+        }}
+      />
+    );
+  };
+
   // Template for input sections
   const InputTemplate = (step: 1 | 2) => {
     const currentStepTry = step === 1 ? firstTry : secondTry;
     const hasRequestedInput = !!currentStepTry;
 
     return (
-      <div className="flex flex-col gap-5 mb-32">
-        <Button
-          label={
-            inputRequesting
-              ? "Opening input..."
-              : pollingForTry
-              ? "Checking for input..."
-              : "Get your puzzle input"
-          }
-          className="w-full max-w-xs"
-          onClick={handleInputRequest}
-          icon={
-            inputRequesting || pollingForTry
-              ? "pi pi-spinner pi-spin"
-              : "pi pi-download"
-          }
-          disabled={inputRequesting || pollingForTry}
-          size="small"
-          style={{
-            backgroundColor: "#101018",
-            color: "#fff",
-            border: "0.8px solid #fff",
-          }}
-        />
+      <div className="flex flex-col gap-5 ">
+        {GetInputTemplate()}
 
         {pollingForTry && (
           <div className="text-xs text-center text-blue-300">
@@ -301,9 +313,7 @@ export default function PuzzlePage() {
         <div
           className={hasRequestedInput ? "" : "opacity-60 cursor-not-allowed"}
           data-pr-tooltip={
-            !hasRequestedInput
-              ? "You need to get your puzzle input first"
-              : undefined
+            !hasRequestedInput ? t("puzzles.input.needInput") : undefined
           }
         >
           <Tooltip
@@ -329,9 +339,11 @@ export default function PuzzlePage() {
   return (
     <>
       <section>
-        <div className="absolute top-0 inset-x-0 h-[45rem] lg:h-[42rem] shadow-black-card bg-main-gradient overflow-hidden">
-          <CirclePattern className="absolute -bottom-[135%] md:-bottom-[115%] -right-[40rem] w-[82rem]" />
-        </div>
+        {!isMobile && (
+          <div className="absolute top-0 inset-x-0 h-[45rem] lg:h-[42rem] shadow-black-card bg-main-gradient overflow-hidden">
+            <CirclePattern className="absolute -bottom-[135%] md:-bottom-[115%] -right-[40rem] w-[82rem]" />
+          </div>
+        )}
 
         <AnimatedContainer
           visibleClass="!slide-in-from-top-0"
@@ -339,9 +351,11 @@ export default function PuzzlePage() {
         >
           <div className="container relative">
             <Navbar />
-            <h1 className="max-w-[calc(100%-3rem)] lg:max-w-5xl mx-auto title lg:text-6xl text-4xl text-center mt-18 font-bold">
-              {prettyPrintTitle(puzzle.name)}
-            </h1>
+            <div className="flex flex-col items-center gap-4 mt-20">
+              <h1 className="max-w-[calc(100%-3rem)] lg:max-w-5xl mx-auto title lg:text-6xl text-4xl text-center font-bold">
+                {prettyPrintTitle(puzzle.name)}
+              </h1>
+            </div>
 
             <div className="w-32 h-1 bg-orange-500 mx-auto mt-4" />
 
@@ -375,6 +389,29 @@ export default function PuzzlePage() {
                 )}
               </>
             )}
+
+            {hasCompletedFirstStep && hasCompletedSecondStep && (
+              <>
+                <div className="text-lg text-surface-950 dark:text-surface-0 font-semibold mt-10 bg-gradient-to-r from-amber-400 to-red-900 bg-clip-text text-transparent">
+                  {t("puzzles.input.bothPartsComplete")}
+                </div>
+
+                <div className="text-md text-surface-950 dark:text-surface-0 font-semibold mb-6 mt-2">
+                  {t("puzzles.input.canStillAccess")}
+                </div>
+
+                {GetInputTemplate()}
+              </>
+            )}
+
+            <div className="w-full flex justify-start my-20">
+              <BackButton
+                onClickAction={() =>
+                  (window.location.href = `/competitions/${competitionId}`)
+                }
+                text={t("puzzles.backToCompetition")}
+              />
+            </div>
           </div>
         </AnimatedContainer>
       </section>
