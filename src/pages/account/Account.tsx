@@ -5,10 +5,24 @@ import Footer from "../../components/Footer";
 import { Input } from "../../components/ui/input";
 import Navbar from "../../components/users/Navbar";
 import { useAuth } from "../../contexts/AuthContext";
+import { useRef, useState } from "react";
+import { Toast } from "primereact/toast";
+import { changePassword } from "../../services/usersService";
 
 const AccountPage = () => {
   const { t } = useTranslation();
   const { user, logout } = useAuth();
+
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const [loading, setLoading] = useState(false);
+
+  const toast = useRef<Toast>(null);
+
+  const hasChanges =
+    oldPassword !== "" && newPassword !== "" && confirmPassword !== "";
 
   const handleLogout = async () => {
     try {
@@ -18,8 +32,43 @@ const AccountPage = () => {
     }
   };
 
+  const handlePasswordChange = async () => {
+    if (newPassword !== confirmPassword) {
+      toast.current?.show({
+        severity: "error",
+        summary: t("common.states.error"),
+        detail: t("users.passwordMismatch"),
+        life: 3000,
+      });
+      return;
+    }
+
+    try {
+      setLoading(true);
+      // Call the API to change the password
+      await changePassword(oldPassword, newPassword);
+      toast.current?.show({
+        severity: "success",
+        summary: t("common.actions.success"),
+        detail: t("users.passwordChanged"),
+        life: 3000,
+      });
+    } catch (error) {
+      console.error("Error changing password:", error);
+      toast.current?.show({
+        severity: "error",
+        summary: t("common.actions.error"),
+        detail: t("users.passwordChangeFailed"),
+        life: 3000,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="mb-20">
+      <Toast ref={toast} />
       <AnimatedContainer>
         <div className="absolute top-0 inset-x-0 h-[45rem] lg:h-[42rem] shadow-black-card bg-main-gradient overflow-hidden">
           <CirclePattern className="absolute -bottom-[135%] md:-bottom-[115%] -right-[40rem] w-[82rem]" />
@@ -94,6 +143,8 @@ const AccountPage = () => {
                       className="w-full px-5 py-3"
                       type="password"
                       placeholder="*******"
+                      value={oldPassword}
+                      onChange={(e) => setOldPassword(e.target.value)}
                     />
                   </div>
                 </div>
@@ -106,6 +157,8 @@ const AccountPage = () => {
                       className="w-full px-5 py-3"
                       type="password"
                       placeholder="*******"
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
                     />
                   </div>
                 </div>
@@ -118,13 +171,26 @@ const AccountPage = () => {
                       className="w-full px-5 py-3"
                       type="password"
                       placeholder="*******"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
                     />
                   </div>
                 </div>
               </div>
               <div className="pt-10 flex justify-end">
-                <button className="button-regular px-5 py-3 min-w-40 bg-amber-700 hover:bg-amber-800 text-surface-0 font-medium rounded-2xl">
-                  {t("common.actions.save")}
+                <button
+                  className="button-regular px-5 py-3 min-w-40 bg-amber-700 hover:bg-amber-800 text-surface-0 font-medium rounded-2xl disabled:opacity-50 disabled:cursor-not-allowed"
+                  onClick={handlePasswordChange}
+                  disabled={!hasChanges || loading}
+                >
+                  {loading ? (
+                    <div className="flex items-center gap-2">
+                      <div className="w-4 h-4 border-2 border-white rounded-full animate-spin border-t-transparent"></div>
+                      {t("common.states.loading")}
+                    </div>
+                  ) : (
+                    t("common.actions.save")
+                  )}
                 </button>
               </div>
             </div>

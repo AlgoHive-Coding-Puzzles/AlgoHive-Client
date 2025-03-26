@@ -43,7 +43,7 @@
     },
     "states": {
       "none": "None",
-      "loading": "Loading resources...",
+      "loading": "Loading ...",
       "empty": "No data available",
       "error": "Error",
       "validationError": "Form validation error",
@@ -493,6 +493,11 @@
     "competition": {
       "my": "My",
       "competitions": "Competitions"
+    },
+    "account": {
+      "passwordMismatch": "Passwords do not match",
+      "passwordChanged": "Password changed successfully",
+      "passwordChangeFailed": "Failed to change password"
     }
   },
   "puzzles": {

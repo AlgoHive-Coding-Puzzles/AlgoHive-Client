@@ -43,7 +43,7 @@
     },
     "states": {
       "none": "Aucun",
-      "loading": "Chargement des ressources...",
+      "loading": "Chargement ...",
       "empty": "Aucune donnée disponible",
       "error": "Erreur",
       "validationError": "Erreur de validation du formulaire",
@@ -490,6 +490,11 @@
     "competition": {
       "my": "Mes",
       "competitions": "Compétitions"
+    },
+    "account": {
+      "passwordMismatch": "Les mots de passe ne correspondent pas",
+      "passwordChanged": "Mot de passe changé avec succès",
+      "passwordChangeFailed": "Échec du changement de mot de passe"
     }
   },
   "puzzles": {
