@@ -99,3 +99,18 @@ export async function fetchStaffGroups(): Promise<Group[]> {
     throw error;
   }
 }
+
+export async function fetchUserGroups(): Promise<Group[]> {
+  try {
+    const response = await ApiClient.get("/user/groups");
+
+    if (response.status !== 200) {
+      throw new Error(`Error: ${response.status}`);
+    }
+
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user groups:", error);
+    throw error;
+  }
+}

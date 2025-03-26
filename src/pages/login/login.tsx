@@ -18,11 +18,14 @@ const LoginPage = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
 
   const [showForgotDialog, setShowForgotDialog] = useState(false);
   const [resetEmail, setResetEmail] = useState("");
 
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
   const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -37,9 +40,9 @@ const LoginPage = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-
+    setLoading(true);
     try {
-      await login(email, password);
+      await login(email, password, rememberMe);
       navigate(from, { replace: true });
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
@@ -50,6 +53,8 @@ const LoginPage = () => {
         detail: t("login.invalidCredentials"),
         life: 3000,
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -123,7 +128,13 @@ const LoginPage = () => {
               </div>
               <div className="flex justify-between text-sm">
                 <div className="flex items-center">
-                  <input type="checkbox" id="remember" className="mr-2" />
+                  <input
+                    type="checkbox"
+                    id="remember"
+                    className="mr-2"
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                  />
                   <label htmlFor="remember">{t("login.remember")}</label>
                 </div>
                 <a
@@ -138,21 +149,14 @@ const LoginPage = () => {
                 type="submit"
                 label={t("login.submit")}
                 className="w-full p-button-primary"
+                loading={loading}
+                disabled={loading}
               />
             </form>
             <Divider className="my-4" />
             <p className="text-center text-sm mt-4">
               {t("login.noAccount")}{" "}
-              <a
-                className="text-blue-500"
-                onClick={() => {
-                  // TODO: Fetch the Admin email from the backend
-                  window.location.href =
-                    "mailto:ericphlpp@proton.me?subject=Account Request&body=I would like to request an account for AlgoHive.";
-                }}
-              >
-                {t("login.askAdmin")}
-              </a>
+              <a className="text-blue-500">{t("login.askAdmin")}</a>
             </p>
           </div>
 

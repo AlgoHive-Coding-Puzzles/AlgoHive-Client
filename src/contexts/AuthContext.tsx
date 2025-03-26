@@ -14,7 +14,11 @@ interface AuthContextType {
   isAuthenticated: boolean;
   hasDefaultPassword: boolean;
   isLoading: boolean;
-  login: (username: string, password: string) => Promise<void>;
+  login: (
+    username: string,
+    password: string,
+    rememberMe: boolean
+  ) => Promise<void>;
   logout: () => Promise<void>;
   checkAuth: () => Promise<boolean>;
 }
@@ -39,11 +43,16 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [hasDefaultPassword, setHasDefaultPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  const login = async (email: string, password: string) => {
+  const login = async (
+    email: string,
+    password: string,
+    rememberMe: boolean
+  ) => {
     try {
       const response = await ApiClient.post("/auth/login", {
         email,
         password,
+        rememberMe,
       });
 
       setUser({

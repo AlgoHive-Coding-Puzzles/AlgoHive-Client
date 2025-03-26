@@ -5,13 +5,16 @@ import Footer from "../../components/Footer";
 import { Input } from "../../components/ui/input";
 import Navbar from "../../components/users/Navbar";
 import { useAuth } from "../../contexts/AuthContext";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Toast } from "primereact/toast";
 import { changePassword } from "../../services/usersService";
+import { Group } from "../../models/Group";
+import { fetchUserGroups } from "../../services/groupsService";
 
 const AccountPage = () => {
   const { t } = useTranslation();
   const { user, logout } = useAuth();
+  const [groups, setGroups] = useState<Group[]>([]);
 
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -20,6 +23,19 @@ const AccountPage = () => {
   const [loading, setLoading] = useState(false);
 
   const toast = useRef<Toast>(null);
+
+  useEffect(() => {
+    const fetchGroups = async () => {
+      try {
+        const groups = await fetchUserGroups();
+        setGroups(groups);
+      } catch (error) {
+        console.error("Error fetching groups:", error);
+      }
+    };
+
+    fetchGroups();
+  }, []);
 
   const hasChanges =
     oldPassword !== "" && newPassword !== "" && confirmPassword !== "";
@@ -37,7 +53,7 @@ const AccountPage = () => {
       toast.current?.show({
         severity: "error",
         summary: t("common.states.error"),
-        detail: t("users.passwordMismatch"),
+        detail: t("users.account.passwordMismatch"),
         life: 3000,
       });
       return;
@@ -49,16 +65,16 @@ const AccountPage = () => {
       await changePassword(oldPassword, newPassword);
       toast.current?.show({
         severity: "success",
-        summary: t("common.actions.success"),
-        detail: t("users.passwordChanged"),
+        summary: t("common.states.success"),
+        detail: t("users.account.passwordChanged"),
         life: 3000,
       });
     } catch (error) {
       console.error("Error changing password:", error);
       toast.current?.show({
         severity: "error",
-        summary: t("common.actions.error"),
-        detail: t("users.passwordChangeFailed"),
+        summary: t("common.states.error"),
+        detail: t("users.account.passwordChangeFailed"),
         life: 3000,
       });
     } finally {
@@ -128,6 +144,20 @@ const AccountPage = () => {
                       className="w-full px-5 py-3"
                       placeholder="email@this.com"
                       value={user?.email}
+                      disabled
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-col sm:flex-row gap-2 items-start">
+                  <div className="sm:flex-[0.45] text-lg text-surface-0 font-medium">
+                    {t("common.fields.groups")}
+                  </div>
+                  <div className="sm:flex-[0.55] w-full">
+                    <Input
+                      className="w-full px-5 py-3"
+                      value={groups
+                        .map((group) => group.description)
+                        .join(", ")}
                       disabled
                     />
                   </div>
