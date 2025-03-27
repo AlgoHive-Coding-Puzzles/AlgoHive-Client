@@ -622,5 +622,53 @@
       "confirmNewPassword": "Confirm New Password",
       "resetSuccess": "Password reset successfully"
     }
+  },
+  "license": {
+    "title": "License & Privacy Policy",
+    "openSource": {
+      "title": "Open Source License",
+      "description": "AlgoHive is an open-source application released under the MIT License. This means you can:",
+      "use": "Use the software for commercial purposes",
+      "modify": "Modify the source code",
+      "distribute": "Distribute the software",
+      "selfHost": "Self-host your own instance"
+    },
+    "privacy": {
+      "title": "Privacy Policy",
+      "dataCollection": {
+        "title": "Data Collection",
+        "description": "We collect minimal personal information necessary for the functioning of the platform:",
+        "email": "Email address (for authentication)",
+        "name": "Name (for profile personalization)",
+        "password": "Password (securely hashed)",
+        "submissions": "Competition submissions and results"
+      },
+      "security": {
+        "title": "Data Security",
+        "description": "We take data security seriously:",
+        "hashing": "All passwords are securely hashed in the database",
+        "encryption": "Personal information is encrypted in transit",
+        "access": "Access to user data is strictly controlled"
+      },
+      "cookies": {
+        "title": "Cookies",
+        "description": "We use only essential cookies:",
+        "session": "Session cookie for authentication",
+        "noTracking": "No tracking or advertising cookies",
+        "noThirdParty": "No third-party cookies"
+      },
+      "rights": {
+        "title": "Your Rights",
+        "description": "As a user, you have the right to:",
+        "access": "Access your personal data",
+        "delete": "Request deletion of your account and data",
+        "export": "Export your data",
+        "update": "Update your personal information"
+      }
+    },
+    "contact": {
+      "title": "Contact",
+      "description": "For any questions regarding the license or privacy policy, please contact us at:"
+    }
   }
 }
