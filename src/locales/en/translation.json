@@ -574,7 +574,10 @@
       "waitingInput": "Waiting for your input to be ready...",
       "needInput": "You need to get your puzzle input first",
       "bothPartsComplete": "** Both parts of this puzzle are complete! **",
-      "canStillAccess": "You can still access the input."
+      "canStillAccess": "You can still access the input.",
+      "rateLimited": "Too Many Attempts",
+      "pleaseWait": "Please wait before trying again",
+      "cooldownMessage": "Please wait {{time}} before trying again"
     }
   },
   "login": {

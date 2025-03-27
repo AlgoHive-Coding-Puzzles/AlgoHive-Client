@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import { ApiClient } from "../config/ApiClient";
 import { Competition } from "../models/Competition";
 import { Group } from "../models/Group";
@@ -11,6 +12,12 @@ export interface CompetitionStatistics {
   completion_rate: number;
   average_score: number;
   highest_score: number;
+}
+
+interface RateLimitResponse {
+  is_correct?: boolean;
+  error?: string;
+  wait_time_seconds?: number;
 }
 
 // Get all competitions
@@ -147,16 +154,31 @@ export const submitPuzzleAnswer = async (
   puzzleDifficulty: string,
   solution: number,
   puzzle_step: number
-): Promise<boolean> => {
-  const response = await ApiClient.post("/competitions/answer_puzzle", {
-    competition_id: competitionId,
-    puzzle_difficulty: puzzleDifficulty,
-    puzzle_id: puzzleId,
-    puzzle_index: puzzleIndex,
-    solution: solution.toString(),
-    puzzle_step: puzzle_step,
-  });
-  return response.data.is_correct;
+): Promise<RateLimitResponse> => {
+  try {
+    const response = await ApiClient.post("/competitions/answer_puzzle", {
+      competition_id: competitionId,
+      puzzle_difficulty: puzzleDifficulty,
+      puzzle_id: puzzleId,
+      puzzle_index: puzzleIndex,
+      solution: solution.toString(),
+      puzzle_step: puzzle_step,
+    });
+    return { is_correct: response.data.is_correct };
+  } catch (error: unknown) {
+    if (error instanceof AxiosError) {
+      // Handle Axios error
+      const axiosError = error as AxiosError<RateLimitResponse>;
+      if (axiosError.response?.status === 429) {
+        return {
+          error: "Rate limit exceeded",
+          wait_time_seconds: axiosError.response.data.wait_time_seconds,
+        };
+      }
+    }
+    console.error("An unknown error occurred:", error);
+    return { error: "An unknown error occurred" };
+  }
 };
 
 export const fetchPuzzleTries = async (

@@ -1,12 +1,18 @@
 import { Button } from "primereact/button";
 import { Toast } from "primereact/toast";
-import { useState, useRef, useCallback, memo } from "react";
+import { useState, useRef, useCallback, memo, useEffect } from "react";
 import useIsMobile from "../../lib/hooks/use-is-mobile";
 import { Competition } from "../../models/Competition";
 import { Puzzle } from "../../models/Catalogs";
 import { submitPuzzleAnswer } from "../../services/competitionsService";
 import { InputNumber, InputNumberChangeEvent } from "primereact/inputnumber";
 import { useTranslation } from "react-i18next";
+
+const getSecondsToPretty = (seconds: number) => {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  return `${minutes}m ${remainingSeconds}s`;
+};
 
 interface InputAnswerProps {
   competition: Competition;
@@ -30,8 +36,23 @@ function InputAnswer({
   const isMobile = useIsMobile();
   const [solution, setSolution] = useState<number>();
   const [loading, setLoading] = useState(false);
+  const [cooldown, setCooldown] = useState<number>();
   const toast = useRef<Toast>(null);
   const { t } = useTranslation();
+
+  // Update cooldown timer
+  useEffect(() => {
+    if (!cooldown) return;
+
+    const timer = setInterval(() => {
+      setCooldown((prev) => {
+        if (prev && prev > 1) return prev - 1;
+        return undefined;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [cooldown]);
 
   // Handle input change
   const handleChange = useCallback((e: InputNumberChangeEvent) => {
@@ -40,7 +61,6 @@ function InputAnswer({
 
   // Handle form submission
   const handleSubmit = useCallback(async () => {
-    // Input validation
     if (solution === undefined || solution === null) {
       toast.current?.show({
         severity: "error",
@@ -53,8 +73,7 @@ function InputAnswer({
 
     setLoading(true);
     try {
-      // Submit the answer to the API
-      const isCorrect = await submitPuzzleAnswer(
+      const response = await submitPuzzleAnswer(
         competition.id,
         puzzle.id,
         puzzle_index,
@@ -63,8 +82,23 @@ function InputAnswer({
         step
       );
 
-      // Show appropriate toast message based on result
-      if (isCorrect) {
+      if (response.error && response.wait_time_seconds) {
+        console.log(
+          "Rate limit exceeded. Please wait:",
+          response.wait_time_seconds
+        );
+
+        setCooldown(response.wait_time_seconds);
+        toast.current?.show({
+          severity: "warn",
+          summary: t("puzzles.input.rateLimited"),
+          detail: t("puzzles.input.pleaseWait"),
+          life: 3000,
+        });
+        return;
+      }
+
+      if (response.is_correct) {
         toast.current?.show({
           severity: "success",
           summary: t("puzzles.input.correct"),
@@ -80,14 +114,12 @@ function InputAnswer({
         });
       }
 
-      // Use timestamp + random value to ensure refresh uniqueness
       setRefresh(
         `${refreshValue}_${Date.now()}_${Math.random()
           .toString(36)
           .substring(2)}`
       );
     } catch (error) {
-      // Handle submission errors
       toast.current?.show({
         severity: "error",
         summary: t("puzzles.input.failed"),
@@ -136,7 +168,7 @@ function InputAnswer({
           value={solution}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
-          disabled={loading || disabled}
+          disabled={loading || disabled || !!cooldown}
           aria-label={t("puzzles.input.answer")}
         />
         <Button
@@ -150,10 +182,17 @@ function InputAnswer({
             color: "#fff",
             border: "0.8px solid #fff",
           }}
-          disabled={loading || disabled}
+          disabled={loading || disabled || !!cooldown}
           aria-label={t("puzzles.input.submit")}
         />
       </div>
+      {cooldown && (
+        <div className="text-yellow-500 mt-2">
+          {t("puzzles.input.cooldownMessage", {
+            time: getSecondsToPretty(cooldown),
+          })}
+        </div>
+      )}
     </>
   );
 }

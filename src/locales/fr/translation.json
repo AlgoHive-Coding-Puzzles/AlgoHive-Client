@@ -573,7 +573,10 @@
       "waitingInput": "En attente de votre input...",
       "needInput": "Vous devez d'abord obtenir votre input d'énigme",
       "bothPartsComplete": "** Les deux parties de cette énigme sont terminées ! **",
-      "canStillAccess": "Vous pouvez toujours accéder à votre input."
+      "canStillAccess": "Vous pouvez toujours accéder à votre input.",
+      "rateLimited": "Trop de tentatives",
+      "pleaseWait": "Veuillez patienter avant de réessayer",
+      "cooldownMessage": "Veuillez patienter {{time}} avant de réessayer"
     }
   },
   "login": {
