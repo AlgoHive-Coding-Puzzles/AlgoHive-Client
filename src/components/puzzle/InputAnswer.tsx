@@ -20,7 +20,6 @@ interface InputAnswerProps {
   puzzle_index: number;
   step: 1 | 2;
   setRefresh: (refreshValue: string) => void;
-  refreshValue: string;
   disabled?: boolean;
 }
 
@@ -30,7 +29,6 @@ function InputAnswer({
   puzzle_index,
   step,
   setRefresh,
-  refreshValue,
   disabled,
 }: InputAnswerProps) {
   const isMobile = useIsMobile();
@@ -105,6 +103,10 @@ function InputAnswer({
           detail: t("puzzles.input.congratulations"),
           life: 3000,
         });
+        // Delay the refresh to allow toast to be visible
+        setTimeout(() => {
+          setRefresh(Date.now().toString());
+        }, 1000);
       } else {
         toast.current?.show({
           severity: "warn",
@@ -113,12 +115,6 @@ function InputAnswer({
           life: 3000,
         });
       }
-
-      setRefresh(
-        `${refreshValue}_${Date.now()}_${Math.random()
-          .toString(36)
-          .substring(2)}`
-      );
     } catch (error) {
       toast.current?.show({
         severity: "error",
@@ -138,7 +134,6 @@ function InputAnswer({
     solution,
     step,
     setRefresh,
-    refreshValue,
     t,
   ]);
 

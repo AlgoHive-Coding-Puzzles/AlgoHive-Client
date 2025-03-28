@@ -12,16 +12,16 @@ import AnimatedContainer from "../../components/AnimatedContainer";
 import Navbar from "../../components/users/Navbar";
 import { prettyPrintTitle } from "../../utils/puzzles";
 import CirclePattern from "../../components/CirclePattern";
-import InputAnswer from "../../components/puzzle/InputAnswer";
 import { useAuth } from "../../contexts/AuthContext";
 import InputAnswered from "../../components/puzzle/InputAnswered";
 import { Try } from "../../models/Try";
 import "./puzzle.css";
-import { Button } from "primereact/button";
-import { Tooltip } from "primereact/tooltip";
 import BackButton from "../../components/ui/back-button";
 import useIsMobile from "../../lib/hooks/use-is-mobile";
 import { useTranslation } from "react-i18next";
+import GetInputTemplate from "../../components/puzzle/GetInputButton";
+import InputTemplate from "../../components/puzzle/InputTemplate";
+import { Toast } from "primereact/toast";
 
 export default function PuzzlePage() {
   const { user } = useAuth();
@@ -50,6 +50,9 @@ export default function PuzzlePage() {
   const [pollingForTry, setPollingForTry] = useState(false);
   const pollingTimerRef = useRef<NodeJS.Timeout | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  // Toast state
+  const toast = useRef<Toast | null>(null);
 
   // Memoized derived values
   const firstTry = useMemo(() => tries[0] || null, [tries]);
@@ -264,80 +267,11 @@ export default function PuzzlePage() {
     );
   }
 
-  const GetInputTemplate = () => {
-    return (
-      <Button
-        label={
-          inputRequesting
-            ? t("puzzles.input.openingInput")
-            : pollingForTry
-            ? t("puzzles.input.checkingInput")
-            : t("puzzles.input.getInput")
-        }
-        className="w-full max-w-xs"
-        onClick={handleInputRequest}
-        icon={
-          inputRequesting || pollingForTry
-            ? "pi pi-spinner pi-spin"
-            : "pi pi-download"
-        }
-        disabled={inputRequesting || pollingForTry}
-        size="small"
-        style={{
-          backgroundColor: "#101018",
-          color: "#fff",
-          border: "0.8px solid #fff",
-        }}
-      />
-    );
-  };
-
-  // Template for input sections
-  const InputTemplate = (step: 1 | 2) => {
-    const currentStepTry = step === 1 ? firstTry : secondTry;
-    const hasRequestedInput = !!currentStepTry;
-
-    return (
-      <div className="flex flex-col gap-5 ">
-        {GetInputTemplate()}
-
-        {pollingForTry && (
-          <div className="text-xs text-center text-blue-300">
-            Waiting for your input to be ready...
-          </div>
-        )}
-
-        {/** Orange line */}
-        <div className="w-44 h-1 bg-orange-500 rounded my-4" />
-
-        <div
-          className={hasRequestedInput ? "" : "opacity-60 cursor-not-allowed"}
-          data-pr-tooltip={
-            !hasRequestedInput ? t("puzzles.input.needInput") : undefined
-          }
-        >
-          <Tooltip
-            target="[data-pr-tooltip]"
-            position="mouse"
-            className="bg-surface-950 text-surface-0"
-          />
-          <InputAnswer
-            competition={competition}
-            puzzle={puzzle}
-            puzzle_index={questNumber}
-            step={step}
-            setRefresh={setRefresh}
-            refreshValue={`step${step}_${Date.now()}`} // Use timestamp for unique refresh value
-            disabled={!hasRequestedInput}
-          />
-        </div>
-      </div>
-    );
-  };
-
   // Main component render
   return (
     <>
+      <Toast ref={toast} position="top-right" />
+
       <section>
         {!isMobile && (
           <div className="absolute top-0 inset-x-0 h-[45rem] lg:h-[42rem] shadow-black-card bg-main-gradient overflow-hidden">
@@ -371,7 +305,19 @@ export default function PuzzlePage() {
             {hasCompletedFirstStep ? (
               <InputAnswered solution={firstTry.last_answer || ""} />
             ) : (
-              InputTemplate(1)
+              // InputTemplate(1)
+              <InputTemplate
+                step={1}
+                firstTry={firstTry}
+                secondTry={secondTry}
+                inputRequesting={inputRequesting}
+                pollingForTry={pollingForTry}
+                handleInputRequest={handleInputRequest}
+                setRefresh={setRefresh}
+                competition={competition}
+                puzzle={puzzle}
+                questNumber={questNumber}
+              />
             )}
 
             {/* Second puzzle step (only shown if first step is completed) */}
@@ -385,7 +331,19 @@ export default function PuzzlePage() {
                 {hasCompletedSecondStep ? (
                   <InputAnswered solution={secondTry.last_answer || ""} />
                 ) : (
-                  InputTemplate(2)
+                  // InputTemplate(2)
+                  <InputTemplate
+                    step={2}
+                    firstTry={firstTry}
+                    secondTry={secondTry}
+                    inputRequesting={inputRequesting}
+                    pollingForTry={pollingForTry}
+                    handleInputRequest={handleInputRequest}
+                    setRefresh={setRefresh}
+                    competition={competition}
+                    puzzle={puzzle}
+                    questNumber={questNumber}
+                  />
                 )}
               </>
             )}
@@ -400,17 +358,42 @@ export default function PuzzlePage() {
                   {t("puzzles.input.canStillAccess")}
                 </div>
 
-                {GetInputTemplate()}
+                <GetInputTemplate
+                  inputRequesting={inputRequesting}
+                  pollingForTry={pollingForTry}
+                  handleInputRequest={handleInputRequest}
+                />
               </>
             )}
 
-            <div className="w-full flex justify-start my-20">
+            <div className="w-full flex justify-start my-20 gap-10">
               <BackButton
                 onClickAction={() =>
                   (window.location.href = `/competitions/${competitionId}`)
                 }
                 text={t("puzzles.backToCompetition")}
               />
+
+              {hasCompletedFirstStep && hasCompletedSecondStep && (
+                <button
+                  className="p-[3px] relative"
+                  onClick={() => {
+                    if (!puzzle_index) return;
+                    window.location.href = `/competition/${competitionId}/puzzle/${
+                      parseInt(puzzle_index) + 1
+                    }`;
+                  }}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg" />
+                  <div className="px-8 py-2 bg-black rounded-[6px] relative group transition duration-200 text-white hover:bg-transparent">
+                    <div className="flex items-center gap-2">
+                      <span className="relative z-10">Next puzzle</span>
+                      <i className="pi pi-arrow-right" />
+                    </div>
+                    <span className="absolute inset-0 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg blur opacity-0 group-hover:opacity-100 transition duration-200" />
+                  </div>
+                </button>
+              )}
             </div>
           </div>
         </AnimatedContainer>
