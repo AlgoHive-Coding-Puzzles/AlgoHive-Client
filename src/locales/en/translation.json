@@ -670,5 +670,19 @@
       "title": "Contact",
       "description": "For any questions regarding the license or privacy policy, please contact us at:"
     }
+  },
+  "leaderboard": {
+    "title": "Leaderboard",
+    "rank": "Rank",
+    "user": "User",
+    "group": "Group",
+    "totalScore": "Total Score",
+    "currentPuzzle": "Current Puzzle",
+    "currentStep": "Current Step",
+    "totalAttempts": "Total Attempts",
+    "noEntries": "No entries in the leaderboard yet",
+    "backToCompetition": "Back to Competition",
+    "fullscreen": "Full Screen",
+    "exitFullscreen": "Exit Full Screen"
   }
 }

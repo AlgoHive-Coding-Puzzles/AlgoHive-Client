@@ -1,3 +1,5 @@
+import { User } from "./User";
+
 export interface Try {
   id: string;
   puzzle_id: string;

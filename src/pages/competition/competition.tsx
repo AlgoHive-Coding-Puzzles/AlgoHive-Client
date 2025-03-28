@@ -123,6 +123,16 @@ export default function CompetitionPage() {
                       text={t("puzzles.backToCompetitions")}
                     />
                   </div>
+                  <div className="w-full flex justify-center mt-4">
+                    <button
+                      className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+                      onClick={() => {
+                        window.location.href = `/competition/${selectedCompetition.id}/leaderboard`;
+                      }}
+                    >
+                      View Leaderboard
+                    </button>
+                  </div>
                   <div className={`lg:mt-28 mt-24`}>
                     {theme && theme.puzzles && (
                       <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6">

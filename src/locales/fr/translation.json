@@ -669,5 +669,19 @@
       "title": "Contact",
       "description": "Pour toute question concernant la licence ou la politique de confidentialité, veuillez nous contacter à :"
     }
+  },
+  "leaderboard": {
+    "title": "Classement",
+    "rank": "Rang",
+    "user": "Utilisateur",
+    "group": "Groupe",
+    "totalScore": "Score Total",
+    "currentPuzzle": "Énigme Actuelle",
+    "currentStep": "Étape Actuelle",
+    "totalAttempts": "Tentatives Totales",
+    "noEntries": "Aucune donnée dans le classement pour le moment",
+    "backToCompetition": "Retour à la Compétition",
+    "fullscreen": "Plein écran",
+    "exitFullscreen": "Quitter le plein écran"
   }
 }
