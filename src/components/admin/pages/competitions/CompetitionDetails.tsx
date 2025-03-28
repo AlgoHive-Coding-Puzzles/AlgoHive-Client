@@ -77,11 +77,13 @@ export default function CompetitionDetails({
         new Map(
           triesData
             .filter((try_) => try_.user)
-            .map((try_) => [try_.user.id, try_.user])
+            .map((try_) => [try_.user?.id, try_.user])
         ).values()
       );
 
-      setParticipants(uniqueUsers);
+      setParticipants(
+        uniqueUsers.filter((user): user is User => user !== undefined)
+      );
     } catch (error) {
       console.error("Error loading competition details:", error);
       showToast("error", t("common.states.errorMessage"));
