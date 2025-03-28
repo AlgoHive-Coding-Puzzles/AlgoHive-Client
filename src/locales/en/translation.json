@@ -16,7 +16,8 @@
       "reset": "Reset",
       "view": "View",
       "close": "Close",
-      "logout": "Logout"
+      "logout": "Logout",
+      "confirmDelete": "Confirm Deletion"
     },
     "fields": {
       "firstName": "First name",
@@ -137,7 +138,9 @@
           "errorCreating": "An error occurred while creating the user.",
           "errorUpdating": "An error occurred while updating the user.",
           "errorDeleting": "An error occurred while deleting the user.",
-          "groupRequired": "Group is required."
+          "groupRequired": "Group is required.",
+          "deleteSelectedConfirm": "Are you sure you want to delete {{count}} selected users?",
+          "usersDeleted": "Selected users have been deleted successfully."
         }
       },
       "asAdmin": {

@@ -271,3 +271,20 @@ export async function requestPasswordReset(email: string) {
     throw error;
   }
 }
+
+export async function deleteUsers(userIds: string[]) {
+  try {
+    const response = await ApiClient.delete("/user/bulk", {
+      data: userIds,
+    });
+
+    if (response.status !== 204) {
+      throw new Error(`Error: ${response.status}`);
+    }
+
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting users:", error);
+    throw error;
+  }
+}

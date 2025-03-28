@@ -16,7 +16,8 @@
       "reset": "Réinitialiser",
       "view": "Voir",
       "close": "Fermer",
-      "logout": "Déconnexion"
+      "logout": "Déconnexion",
+      "confirmDelete": "Confirmer la suppression"
     },
     "fields": {
       "firstName": "Prénom",
@@ -128,7 +129,9 @@
           "errorCreating": "Une erreur est survenue lors de la création de l'utilisateur.",
           "errorUpdating": "Une erreur est survenue lors de la mise à jour de l'utilisateur.",
           "errorDeleting": "Une erreur est survenue lors de la suppression de l'utilisateur.",
-          "groupRequired": "Le groupe est requis."
+          "groupRequired": "Le groupe est requis.",
+          "deleteSelectedConfirm": "Êtes-vous sûr de vouloir supprimer les {{count}} utilisateurs sélectionnés ?",
+          "usersDeleted": "Les utilisateurs sélectionnés ont été supprimés avec succès."
         }
       },
       "asAdmin": {

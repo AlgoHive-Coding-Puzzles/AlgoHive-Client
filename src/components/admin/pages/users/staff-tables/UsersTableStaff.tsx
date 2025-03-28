@@ -14,6 +14,7 @@ import {
   resetPassword,
   updateTargetUserProfile,
   importUsersFromXLSX,
+  deleteUsers,
 } from "../../../../../services/usersService";
 import { t } from "i18next";
 
@@ -25,7 +26,7 @@ import { Column } from "primereact/column";
 import { Dropdown } from "primereact/dropdown";
 import { Button } from "primereact/button";
 import { Toast } from "primereact/toast";
-import { ConfirmDialog } from "primereact/confirmdialog";
+import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import UserForm from "../shared/UserForm";
 import UserActions from "../shared/UserActions";
 import {
@@ -59,6 +60,7 @@ export default function UsersTableStaff({
   const [selectedGroup, setSelectedGroup] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Fetch data
@@ -252,6 +254,42 @@ export default function UsersTableStaff({
     }
   };
 
+  // Handle deleting multiple selected users
+  const handleDeleteSelectedUsers = () => {
+    confirmDialog({
+      message: t("staffTabs.users.asStaff.messages.deleteSelectedConfirm", {
+        count: selectedUsers.length,
+      }),
+      header: t("common.actions.confirmDelete"),
+      icon: "pi pi-exclamation-triangle",
+      acceptClassName: "p-button-danger",
+      accept: async () => {
+        try {
+          await deleteUsers(selectedUsers.map((user) => user.id));
+
+          toast?.current?.show({
+            severity: "success",
+            summary: t("common.states.success"),
+            detail: t("staffTabs.users.asStaff.messages.usersDeleted"),
+            life: 3000,
+          });
+
+          // Reset selection and refresh data
+          setSelectedUsers([]);
+          await fetchData();
+        } catch (err) {
+          console.error("Error deleting users:", err);
+          toast?.current?.show({
+            severity: "error",
+            summary: t("common.states.error"),
+            detail: t("staffTabs.users.asStaff.messages.errorDeleting"),
+            life: 3000,
+          });
+        }
+      },
+    });
+  };
+
   const triggerFileInput = () => {
     fileInputRef.current?.click();
   };
@@ -416,6 +454,13 @@ export default function UsersTableStaff({
                 className="p-button-primary"
                 onClick={openNewUserDialog}
               />
+              <Button
+                label="Delete Selected"
+                icon="pi pi-trash"
+                className="p-button-danger"
+                onClick={handleDeleteSelectedUsers}
+                disabled={selectedUsers.length === 0}
+              />
             </div>
           </div>
 
@@ -424,6 +469,9 @@ export default function UsersTableStaff({
             paginator
             rows={10}
             rowsPerPageOptions={[5, 10, 25]}
+            selection={selectedUsers}
+            onSelectionChange={(e) => setSelectedUsers(e.value)}
+            selectionMode="checkbox"
             tableStyle={{ minWidth: "50rem" }}
             emptyMessage={t("staffTabs.users.asStaff.noUsersInGroup")}
             className="p-datatable-sm p-datatable-gridlines"
@@ -431,6 +479,10 @@ export default function UsersTableStaff({
             sortOrder={1}
             removableSort
           >
+            <Column
+              selectionMode="multiple"
+              headerStyle={{ width: "3em" }}
+            ></Column>
             {columns.map((col, i) =>
               col.field === "last_connected" ? (
                 <Column
