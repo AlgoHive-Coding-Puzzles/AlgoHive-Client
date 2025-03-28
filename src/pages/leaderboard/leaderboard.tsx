@@ -159,7 +159,10 @@ export default function LeaderboardPage() {
     triesData.forEach((tryItem) => {
       const userId = tryItem.user_id;
       const username = `${tryItem.user?.firstname} ${tryItem.user?.lastname}`;
-      const group = tryItem.user?.groups.map((g) => g.name).join(", ") || "";
+      const group =
+        tryItem.user && tryItem.user?.groups
+          ? tryItem.user?.groups.map((g) => g.name).join(", ")
+          : "";
 
       if (!userScoreMap.has(userId)) {
         userScoreMap.set(userId, {
