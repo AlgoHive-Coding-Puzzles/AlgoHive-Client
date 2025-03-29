@@ -2,12 +2,6 @@ import { useEffect, useState, useMemo, useCallback, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { Puzzle } from "../../models/Catalogs";
 import { Competition } from "../../models/Competition";
-import {
-  checkPuzzlePermission,
-  fetchCompetitionDetails,
-  fetchPuzzleTries,
-} from "../../services/competitionsService";
-import { fetchPuzzleDetails } from "../../services/catalogsService";
 import AnimatedContainer from "../../components/AnimatedContainer";
 import Navbar from "../../components/users/Navbar";
 import { prettyPrintTitle } from "../../utils/puzzles";
@@ -22,6 +16,7 @@ import { useTranslation } from "react-i18next";
 import GetInputTemplate from "../../components/puzzle/GetInputButton";
 import InputTemplate from "../../components/puzzle/InputTemplate";
 import { Toast } from "primereact/toast";
+import { ServiceManager } from "../../services";
 
 export default function PuzzlePage() {
   const { user } = useAuth();
@@ -84,16 +79,20 @@ export default function PuzzlePage() {
         setError(null);
 
         // Fetch competition details
-        const competitionData = await fetchCompetitionDetails(competitionId);
+        // const competitionData = await fetchCompetitionDetails(competitionId);
+        const competitionData = await ServiceManager.competitions.fetchByID(
+          competitionId
+        );
         if (!competitionData) {
           setError("Competition not found");
           return;
         }
 
-        const hasPermission = await checkPuzzlePermission(
-          competitionData.id,
-          questNumber
-        );
+        const hasPermission =
+          await ServiceManager.competitions.checkPuzzlePermission(
+            competitionData.id,
+            questNumber
+          );
 
         if (!hasPermission) {
           window.location.href = `/competitions/${competitionId}`;
@@ -101,7 +100,7 @@ export default function PuzzlePage() {
         }
 
         // Fetch puzzle details
-        const puzzleData = await fetchPuzzleDetails(
+        const puzzleData = await ServiceManager.catalogs.fetchPuzzleDetails(
           competitionData.catalog_id,
           competitionData.catalog_theme,
           questNumber.toString()
@@ -113,7 +112,7 @@ export default function PuzzlePage() {
 
         // Fetch tries if user is authenticated
         const triesData = user
-          ? await fetchPuzzleTries(
+          ? await ServiceManager.competitions.fetchPuzzleTries(
               competitionData.id,
               puzzleData.id,
               questNumber
@@ -159,7 +158,7 @@ export default function PuzzlePage() {
 
       try {
         // Fetch latest tries
-        const triesData = await fetchPuzzleTries(
+        const triesData = await ServiceManager.competitions.fetchPuzzleTries(
           competitionId,
           puzzle.id,
           questNumber

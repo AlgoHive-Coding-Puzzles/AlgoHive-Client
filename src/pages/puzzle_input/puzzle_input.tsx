@@ -1,12 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { useParams } from "react-router-dom";
-import {
-  checkPuzzlePermission,
-  fetchCompetitionDetails,
-  getCompetitionPuzzleInput,
-} from "../../services/competitionsService";
-import { fetchPuzzleDetails } from "../../services/catalogsService";
 import { useAuth } from "../../contexts/AuthContext";
+import { ServiceManager } from "../../services";
 
 export default function PuzzleInputPage() {
   const { user } = useAuth();
@@ -43,16 +38,19 @@ export default function PuzzleInputPage() {
         setError(null); // Clear any previous errors
 
         // Fetch competition details
-        const competitionData = await fetchCompetitionDetails(competitionId);
+        const competitionData = await ServiceManager.competitions.fetchByID(
+          competitionId
+        );
         if (!competitionData) {
           setError(`Competition not found: ${competitionId}`);
           return;
         }
 
-        const hasPermission = await checkPuzzlePermission(
-          competitionData.id,
-          questNumber - 1
-        );
+        const hasPermission =
+          await ServiceManager.competitions.checkPuzzlePermission(
+            competitionData.id,
+            questNumber - 1
+          );
 
         if (!hasPermission) {
           window.location.href = `/competitions/${competitionId}`;
@@ -60,7 +58,7 @@ export default function PuzzleInputPage() {
         }
 
         // Fetch puzzle details
-        const puzzleData = await fetchPuzzleDetails(
+        const puzzleData = await ServiceManager.catalogs.fetchPuzzleDetails(
           competitionData.catalog_id,
           competitionData.catalog_theme,
           (questNumber - 1).toString()
@@ -72,12 +70,13 @@ export default function PuzzleInputPage() {
         }
 
         // Get puzzle input
-        const inputData = await getCompetitionPuzzleInput(
-          competitionData.id,
-          puzzleData.id,
-          questNumber - 1,
-          puzzleData.difficulty
-        );
+        const inputData =
+          await ServiceManager.competitions.getCompetitionPuzzleInput(
+            competitionData.id,
+            puzzleData.difficulty,
+            puzzleData.id,
+            questNumber - 1
+          );
 
         // Validate input data
         if (!inputData?.input_lines) {

@@ -1,81 +1,42 @@
+import { BaseService } from "./BaseService";
 import { Catalog, Puzzle, Theme } from "../models/Catalogs";
-import { ApiClient } from "../config/ApiClient";
 
-export async function fetchCatalogs(): Promise<Catalog[]> {
-  try {
-    const response = await ApiClient.get("/catalogs/");
-    if (response.status !== 200) {
-      throw new Error(`Erreur: ${response.status}`);
-    }
-
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching catalogs:", error);
-    throw error;
+export class CatalogsService extends BaseService {
+  /** [GET] /catalogs/ */
+  public async fetchCatalogs(): Promise<Catalog[]> {
+    return this.get<Catalog[]>("/catalogs/");
   }
-}
 
-export async function fetchCatalogById(id: string): Promise<Catalog> {
-  try {
-    const response = await ApiClient.get(`/catalogs`);
-
-    if (response.status !== 200) {
-      throw new Error(`Error: ${response.status}`);
-    }
-
-    return response.data.find((catalog: Catalog) => catalog.id === id);
-  } catch (error) {
-    console.error("Error fetching catalog by id:", error);
-    throw error;
+  /** [GET] /catalogs/{catalogID} */
+  public async getCatalogByID(catalogID: string): Promise<Catalog> {
+    const res = await this.get<{ data: Catalog[] }>(`/catalogs/${catalogID}`);
+    return res.data.find((catalog) => catalog.id === catalogID) as Catalog;
   }
-}
 
-export async function fetchCatalogThemes(catalogId: string): Promise<Theme[]> {
-  try {
-    const response = await ApiClient.get(`/catalogs/${catalogId}/themes`);
-    if (response.status !== 200) {
-      throw new Error(`Error: ${response.status}`);
-    }
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching catalog themes:", error);
-    throw error;
+  /** [GET] /catalogs/{catalogID}/themes */
+  public async fetchCatalogThemes(catalogID: string): Promise<Theme[]> {
+    return this.get<Theme[]>(`/catalogs/${catalogID}/themes`);
   }
-}
 
-export async function fetchCatalogThemeDetails(
-  catalogId: string,
-  themeId: string
-): Promise<Theme> {
-  try {
-    const response = await ApiClient.get(
-      `/catalogs/${catalogId}/themes/${themeId}`
+  /** [GET] /catalogs/{catalogID}/themes/{themeID} */
+  public async fetchCatalogThemeDetails(
+    catalogID: string,
+    themeID: string
+  ): Promise<Theme> {
+    return this.get<Theme>(`/catalogs/${catalogID}/themes/${themeID}`);
+  }
+
+  /** [GET] /catalogs/{catalogID}/themes/{themeID}/puzzles */
+  public async fetchPuzzleDetails(
+    catalogID: string,
+    themeID: string,
+    puzzleIndex: string
+  ): Promise<Puzzle> {
+    return this.get<Puzzle>(
+      `/catalogs/${catalogID}/themes/${themeID}/puzzles/${puzzleIndex}`
     );
-    if (response.status !== 200) {
-      throw new Error(`Error: ${response.status}`);
-    }
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching catalog theme details:", error);
-    throw error;
   }
 }
 
-export async function fetchPuzzleDetails(
-  catalogId: string,
-  themeId: string,
-  puzzleIndex: string
-): Promise<Puzzle> {
-  try {
-    const response = await ApiClient.get(
-      `/catalogs/${catalogId}/themes/${themeId}/puzzles/${puzzleIndex}`
-    );
-    if (response.status !== 200) {
-      throw new Error(`Error: ${response.status}`);
-    }
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching puzzle details:", error);
-    throw error;
-  }
-}
+// Create singleton instance
+export const catalogsService = new CatalogsService();

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Catalog } from "../../../models/Catalogs";
-import { fetchCatalogs } from "../../../services/catalogsService";
 
 import { ProgressSpinner } from "primereact/progressspinner";
 import { Message } from "primereact/message";
@@ -9,6 +8,7 @@ import "./Catalogs.css";
 import { t } from "i18next";
 import { CatalogsList } from "../../../components/admin/pages/catalogs/CatalogsList";
 import { CatalogDetails } from "../../../components/admin/pages/catalogs/CatalogDetails";
+import { ServiceManager } from "../../../services";
 
 // Component for displaying catalog details with themes and puzzles
 
@@ -23,7 +23,7 @@ export default function CatalogsPage() {
     const getCatalogs = async () => {
       try {
         setLoading(true);
-        const data = await fetchCatalogs();
+        const data = await ServiceManager.catalogs.fetchCatalogs();
         setCatalogs(data);
       } catch (err) {
         setError(t("staff.catalogs.errorFetchingCatalogs"));

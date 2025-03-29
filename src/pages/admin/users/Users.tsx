@@ -11,8 +11,8 @@ import UsersTableAdmin from "../../../components/admin/pages/users/admin-tables/
 import UsersTableStaff from "../../../components/admin/pages/users/staff-tables/UsersTableStaff";
 
 import { isOwner, roleIsOwner } from "../../../utils/permissions";
-import { fetchRoles } from "../../../services/rolesService";
 import { useAuth } from "../../../contexts/AuthContext";
+import { ServiceManager } from "../../../services";
 
 export default function UsersPage() {
   const { user } = useAuth();
@@ -28,7 +28,9 @@ export default function UsersPage() {
     const getUsers = async () => {
       try {
         setLoading(true);
-        const roles = isOwner(user) ? await fetchRoles() : user?.roles || [];
+        const roles = isOwner(user)
+          ? await ServiceManager.roles.fetchAll()
+          : user?.roles || [];
 
         rolesOptions.current = roles
           .filter((role) => !roleIsOwner(role))

@@ -4,9 +4,9 @@ import { useState, useRef, useCallback, memo, useEffect } from "react";
 import useIsMobile from "../../lib/hooks/use-is-mobile";
 import { Competition } from "../../models/Competition";
 import { Puzzle } from "../../models/Catalogs";
-import { submitPuzzleAnswer } from "../../services/competitionsService";
 import { InputNumber, InputNumberChangeEvent } from "primereact/inputnumber";
 import { useTranslation } from "react-i18next";
+import { ServiceManager } from "../../services";
 
 const getSecondsToPretty = (seconds: number) => {
   const minutes = Math.floor(seconds / 60);
@@ -71,12 +71,12 @@ function InputAnswer({
 
     setLoading(true);
     try {
-      const response = await submitPuzzleAnswer(
+      const response = await ServiceManager.competitions.trySubmitSolution(
         competition.id,
+        puzzle.difficulty,
         puzzle.id,
         puzzle_index,
-        puzzle.difficulty,
-        solution,
+        solution.toString(),
         step
       );
 

@@ -15,12 +15,9 @@ import { Chip } from "primereact/chip";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { TabView, TabPanel } from "primereact/tabview";
 import { InputText } from "primereact/inputtext";
-import {
-  changePassword,
-  updateUserProfile,
-} from "../../../services/usersService";
 import { useActivePage } from "../../../contexts/ActivePageContext";
 import LanguageSwitcher from "../../../components/LanguageSwitcher";
+import { ServiceManager } from "../../../services";
 
 export default function HomePage() {
   const { t } = useTranslation();
@@ -71,7 +68,7 @@ export default function HomePage() {
 
     try {
       setIsChangingPass(true);
-      await changePassword(oldPassword, newPassword);
+      await ServiceManager.users.changePassword(oldPassword, newPassword);
 
       toast.current?.show({
         severity: "success",
@@ -160,7 +157,7 @@ export default function HomePage() {
 
     try {
       setIsUpdating(true);
-      await updateUserProfile(firstName, lastName, email);
+      await ServiceManager.users.update(firstName, lastName, email);
 
       // Show success message
       toast.current?.show({

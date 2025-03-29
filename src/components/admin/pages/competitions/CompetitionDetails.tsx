@@ -13,18 +13,13 @@ import { Toast } from "primereact/toast";
 import { confirmDialog } from "primereact/confirmdialog";
 
 import {
+  Competition,
   CompetitionStatistics,
-  fetchCompetitionStatistics,
-  fetchCompetitionGroups,
-  fetchCompetitionTries,
-  toggleCompetitionVisibility,
-  finishCompetition,
-  deleteCompetition,
-} from "../../../../services/competitionsService";
-import { Competition } from "../../../../models/Competition";
+} from "../../../../models/Competition";
 import { Group } from "../../../../models/Group";
 import { User } from "../../../../models/User";
 import ParticipantTries from "./ParticipantTries";
+import { ServiceManager } from "../../../../services";
 
 interface CompetitionDetailsProps {
   visible: boolean;
@@ -64,9 +59,9 @@ export default function CompetitionDetails({
     try {
       setLoading(true);
       const [stats, groupsData, triesData] = await Promise.all([
-        fetchCompetitionStatistics(competition.id),
-        fetchCompetitionGroups(competition.id),
-        fetchCompetitionTries(competition.id),
+        ServiceManager.competitions.fetchStatistics(competition.id),
+        ServiceManager.competitions.fetchGroups(competition.id),
+        ServiceManager.competitions.fetchTries(competition.id),
       ]);
 
       setStatistics(stats);
@@ -106,7 +101,10 @@ export default function CompetitionDetails({
 
   const handleToggleVisibility = async () => {
     try {
-      await toggleCompetitionVisibility(competition.id, !competition.show);
+      await ServiceManager.competitions.updateVisibility(
+        competition.id,
+        !competition.show
+      );
       showToast(
         "success",
         t("staffTabs.competitions.messages.toggleVisibilitySuccess")
@@ -126,7 +124,7 @@ export default function CompetitionDetails({
 
   const handleFinishCompetition = async () => {
     try {
-      await finishCompetition(competition.id);
+      await ServiceManager.competitions.finishCompetition(competition.id);
       showToast("success", t("staffTabs.competitions.messages.finishSuccess"));
       // Update competition in parent component
       competition.finished = !competition.finished;
@@ -146,7 +144,7 @@ export default function CompetitionDetails({
       acceptClassName: "p-button-danger",
       accept: async () => {
         try {
-          await deleteCompetition(competition.id);
+          await ServiceManager.competitions.remove(competition.id);
           showToast(
             "success",
             t("staffTabs.competitions.messages.deleteSuccess")

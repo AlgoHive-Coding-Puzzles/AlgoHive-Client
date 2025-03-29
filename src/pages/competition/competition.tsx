@@ -5,7 +5,6 @@ import Navbar from "../../components/users/Navbar";
 import { useEffect, useState } from "react";
 import { Competition } from "../../models/Competition";
 import UsersListCompetitions from "../../components/UsersListCompetitions";
-import { fetchCatalogThemeDetails } from "../../services/catalogsService";
 import { Theme } from "../../models/Catalogs";
 import {
   getPuzzleDifficulty,
@@ -16,10 +15,6 @@ import {
 } from "../../utils/puzzles";
 import { Tag } from "primereact/tag";
 import { Try } from "../../models/Try";
-import {
-  fetchCompetitionDetails,
-  fetchUserCompetitionTries,
-} from "../../services/competitionsService";
 import { useAuth } from "../../contexts/AuthContext";
 import "./competition.css";
 import { Badge } from "primereact/badge";
@@ -27,6 +22,7 @@ import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import Footer from "../../components/Footer";
 import OrangeBlackButton from "../../components/ui/button";
+import { ServiceManager } from "../../services";
 
 export default function CompetitionPage() {
   const { user } = useAuth();
@@ -44,7 +40,9 @@ export default function CompetitionPage() {
     const fetchCompetitionFromId = async () => {
       if (!competitionId || competitionId.length == 0) return;
 
-      const competition = await fetchCompetitionDetails(competitionId);
+      const competition = await ServiceManager.competitions.fetchByID(
+        competitionId
+      );
       if (!competition) return;
       setSelectedCompetition(competition);
     };
@@ -56,13 +54,14 @@ export default function CompetitionPage() {
     const getCompetitionDetails = async () => {
       if (!selectedCompetition || !user) return;
 
-      const themeDetails = await fetchCatalogThemeDetails(
-        selectedCompetition.catalog_id,
-        selectedCompetition.catalog_theme
-      );
+      const themeDetails =
+        await ServiceManager.catalogs.fetchCatalogThemeDetails(
+          selectedCompetition.catalog_id,
+          selectedCompetition.catalog_theme
+        );
       setTheme(themeDetails);
 
-      const triesDetails = await fetchUserCompetitionTries(
+      const triesDetails = await ServiceManager.competitions.fetchTriesByUserID(
         selectedCompetition.id,
         user.id
       );

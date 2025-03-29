@@ -7,7 +7,7 @@ import { Card } from "primereact/card";
 import { InputText } from "primereact/inputtext";
 import { useState } from "react";
 import { Competition } from "../../../../models/Competition";
-import { exportCompetitionDataExcel } from "../../../../services/competitionsService";
+import { ServiceManager } from "../../../../services";
 
 interface CompetitionsListProps {
   competitions: Competition[];
@@ -24,7 +24,7 @@ export default function CompetitionsList({
   const [globalFilter, setGlobalFilter] = useState<string>("");
 
   const downloadExcelReport = async (competitionID: string) => {
-    exportCompetitionDataExcel(competitionID);
+    ServiceManager.competitions.getResumeExportXLSX(competitionID);
   };
 
   const statusTemplate = (rowData: Competition) => {

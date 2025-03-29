@@ -1,18 +1,8 @@
-import { AxiosError } from "axios";
-import { ApiClient } from "../config/ApiClient";
-import { Competition } from "../models/Competition";
-import { Group } from "../models/Group";
+import { BaseService } from "./BaseService";
+import { Competition, CompetitionStatistics } from "../models/Competition";
+import { Puzzle } from "../models/Catalogs";
 import { Try } from "../models/Try";
-
-export interface CompetitionStatistics {
-  competition_id: string;
-  title: string;
-  total_users: number;
-  active_users: number;
-  completion_rate: number;
-  average_score: number;
-  highest_score: number;
-}
+import { Group } from "../models/Group";
 
 interface RateLimitResponse {
   is_correct?: boolean;
@@ -20,200 +10,200 @@ interface RateLimitResponse {
   wait_time_seconds?: number;
 }
 
-// Get all competitions
-export const fetchCompetitions = async (): Promise<Competition[]> => {
-  const response = await ApiClient.get("/competitions/");
-  return response.data;
-};
-
-// Get competition details
-export const fetchCompetitionDetails = async (
-  id: string
-): Promise<Competition> => {
-  const response = await ApiClient.get(`/competitions/${id}`);
-  return response.data;
-};
-
-// Create a new competition
-export const createCompetition = async (
-  competition: Partial<Competition>
-): Promise<Competition> => {
-  const response = await ApiClient.post("/competitions/", competition);
-  return response.data;
-};
-
-// Update an existing competition
-export const updateCompetition = async (
-  id: string,
-  competition: Partial<Competition>
-): Promise<Competition> => {
-  const response = await ApiClient.put(`/competitions/${id}`, competition);
-  return response.data;
-};
-
-// Delete a competition
-export const deleteCompetition = async (id: string): Promise<void> => {
-  await ApiClient.delete(`/competitions/${id}`);
-};
-
-// Toggle competition visibility
-export const toggleCompetitionVisibility = async (
-  id: string,
-  show: boolean
-): Promise<Competition> => {
-  const response = await ApiClient.put(`/competitions/${id}/visibility`, {
-    show,
-  });
-  return response.data;
-};
-
-// Mark competition as finished
-export const finishCompetition = async (id: string): Promise<Competition> => {
-  const response = await ApiClient.put(`/competitions/${id}/finish`);
-  return response.data;
-};
-
-// Get competition statistics
-export const fetchCompetitionStatistics = async (
-  id: string
-): Promise<CompetitionStatistics> => {
-  const response = await ApiClient.get(`/competitions/${id}/statistics`);
-  return response.data;
-};
-
-// Get competition groups
-export const fetchCompetitionGroups = async (id: string): Promise<Group[]> => {
-  const response = await ApiClient.get(`/competitions/${id}/groups`);
-  return response.data;
-};
-
-// Add group to competition
-export const addGroupToCompetition = async (
-  competitionId: string,
-  groupId: string
-): Promise<Competition> => {
-  const response = await ApiClient.post(
-    `/competitions/${competitionId}/groups/${groupId}`
-  );
-  return response.data;
-};
-
-// Remove group from competition
-export const removeGroupFromCompetition = async (
-  competitionId: string,
-  groupId: string
-): Promise<Competition> => {
-  const response = await ApiClient.delete(
-    `/competitions/${competitionId}/groups/${groupId}`
-  );
-  return response.data;
-};
-
-// Get competition tries
-export const fetchCompetitionTries = async (id: string): Promise<Try[]> => {
-  const response = await ApiClient.get(`/competitions/${id}/tries`);
-  return response.data;
-};
-
-// Get user competition tries
-export const fetchUserCompetitionTries = async (
-  competitionId: string,
-  userId: string
-): Promise<Try[]> => {
-  const response = await ApiClient.get(
-    `/competitions/${competitionId}/users/${userId}/tries`
-  );
-  return response.data;
-};
-
-// Get all competitions accessible to the current user through their groups
-export const fetchUserCompetitions = async (): Promise<Competition[]> => {
-  const response = await ApiClient.get("/competitions/user");
-  return response.data;
-};
-
-export const getCompetitionPuzzleInput = async (
-  competitionId: string,
-  puzzleId: string,
-  puzzleIndex: number,
-  puzzleDifficulty: string
-): Promise<{ input_lines: string[] }> => {
-  const response = await ApiClient.post("/competitions/input", {
-    competition_id: competitionId,
-    puzzle_difficulty: puzzleDifficulty,
-    puzzle_id: puzzleId,
-    puzzle_index: puzzleIndex,
-  });
-  return response.data;
-};
-
-export const submitPuzzleAnswer = async (
-  competitionId: string,
-  puzzleId: string,
-  puzzleIndex: number,
-  puzzleDifficulty: string,
-  solution: number,
-  puzzle_step: number
-): Promise<RateLimitResponse> => {
-  try {
-    const response = await ApiClient.post("/competitions/answer_puzzle", {
-      competition_id: competitionId,
-      puzzle_difficulty: puzzleDifficulty,
-      puzzle_id: puzzleId,
-      puzzle_index: puzzleIndex,
-      solution: solution.toString(),
-      puzzle_step: puzzle_step,
-    });
-    return { is_correct: response.data.is_correct };
-  } catch (error: unknown) {
-    if (error instanceof AxiosError) {
-      // Handle Axios error
-      const axiosError = error as AxiosError<RateLimitResponse>;
-      if (axiosError.response?.status === 429) {
-        return {
-          error: "Rate limit exceeded",
-          wait_time_seconds: axiosError.response.data.wait_time_seconds,
-        };
-      }
-    }
-    console.error("An unknown error occurred:", error);
-    return { error: "An unknown error occurred" };
+export class CompetitionsService extends BaseService {
+  /** [GET] /competitions/ */
+  public async fetchAll(): Promise<Competition[]> {
+    return this.get<Competition[]>("/competitions/");
   }
-};
 
-export const fetchPuzzleTries = async (
-  competitionId: string,
-  puzzleId: string,
-  puzzleIndex: number
-): Promise<Try[]> => {
-  const response = await ApiClient.get(
-    `/competitions/${competitionId}/puzzles/${puzzleId}/${puzzleIndex}/tries`
-  );
-  return response.data;
-};
+  /** [GET] /competitions/user */
+  public async fetchAllFromUser(): Promise<Competition[]> {
+    return this.get<Competition[]>("/competitions/user");
+  }
 
-export const checkPuzzlePermission = async (
-  competitionId: string,
-  puzzleIndex: number
-): Promise<boolean> => {
-  const response = await ApiClient.get(
-    `/competitions/${competitionId}/permission/puzzles/${puzzleIndex}`
-  );
-  return response.data.has_permission;
-};
+  /** [GET] /competitions/group/{groupID} */
+  public async fetchCompetitionsByGroup(
+    groupID: string
+  ): Promise<Competition[]> {
+    return this.get<Competition[]>(`/competitions/group/${groupID}`);
+  }
 
-export const exportCompetitionDataExcel = async (
-  competitionId: string
-): Promise<void> => {
-  const response = await ApiClient.get(
-    `/competitions/${competitionId}/export`,
-    { responseType: "blob" }
-  );
-  const blob = new Blob([response.data], { type: "application/vnd.ms-excel" });
-  const url = window.URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = `competition_${competitionId}_data.xlsx`;
-  a.click();
-  window.URL.revokeObjectURL(url);
-};
+  /** [POST] /competitions/ */
+  public async create(
+    title: string,
+    description: string,
+    catalog_theme: string,
+    catalog_id: string,
+    show: boolean,
+    finished: boolean,
+    groups_ids: string[]
+  ): Promise<Competition> {
+    return this.post<Competition>("/competitions/", {
+      title,
+      description,
+      catalog_theme,
+      catalog_id,
+      show,
+      finished,
+      groups_ids,
+    });
+  }
+
+  /** [GET] /competitions/{competitionID} */
+  public async fetchByID(competitionID: string): Promise<Competition> {
+    return this.get<Competition>(`/competitions/${competitionID}`);
+  }
+
+  /** [PUT] /competitions/{competitionID} */
+  public async update(
+    competitionID: string,
+    title: string,
+    description: string,
+    catalog_theme: string,
+    catalog_id: string,
+    show: boolean,
+    finished: boolean,
+    groups_ids: string[]
+  ): Promise<Competition> {
+    return this.put<Competition>(`/competitions/${competitionID}`, {
+      title,
+      description,
+      catalog_theme,
+      catalog_id,
+      show,
+      finished,
+      groups_ids,
+    });
+  }
+
+  /** [DELETE] /competitions/${competitionID} */
+  public async remove(competitionID: string): Promise<void> {
+    return this.delete<void>(`/competitions/${competitionID}`);
+  }
+
+  /** [GET] /competitions/{competitionID}/puzzles */
+  public async fetchPuzzles(competitionID: string): Promise<Puzzle[]> {
+    return this.get<Puzzle[]>(`/competitions/${competitionID}/puzzles`);
+  }
+
+  /** [POST] /competitions/{competitionID}/puzzles/{puzzleID}/submit */
+  public async trySubmitSolution(
+    competition_id: string,
+    puzzle_difficulty: string,
+    puzzle_id: string,
+    puzzle_index: number,
+    solution: string,
+    puzzle_step: number
+  ): Promise<RateLimitResponse> {
+    return this.post<RateLimitResponse>(`/competitions/answer_puzzle`, {
+      competition_id,
+      puzzle_difficulty,
+      puzzle_id,
+      puzzle_index,
+      solution,
+      puzzle_step,
+    });
+  }
+
+  /** [GET] /competitions/{competitionID}/puzzles/{puzzleID}/results */
+  public async fetchLeaderboard(competitionID: string): Promise<string[]> {
+    return this.get<string[]>(`/competitions/${competitionID}/leaderboard`);
+  }
+
+  /** [GET] competitions/{id}/tries */
+  public async fetchTries(competitionID: string): Promise<Try[]> {
+    return this.get<Try[]>(`/competitions/${competitionID}/tries`);
+  }
+
+  /** [GET] /competitions/{competitionID}/users/{userID}/tries */
+  public async fetchTriesByUserID(
+    competitionID: string,
+    userID: string
+  ): Promise<Try[]> {
+    return this.get<Try[]>(
+      `/competitions/${competitionID}/users/${userID}/tries`
+    );
+  }
+
+  /** [GET] /competitions/{competitionID}/permission/puzzles/{puzzleIndex} */
+  public async checkPuzzlePermission(
+    competitionID: string,
+    puzzleIndex: number
+  ): Promise<{ is_allowed: boolean }> {
+    return this.get<{ is_allowed: boolean }>(
+      `/competitions/${competitionID}/permission/puzzles/${puzzleIndex}`
+    );
+  }
+
+  /** [GET] /competitions/{competitionID}/puzzles/{puzzleID}/{puzzleIndex}/tries */
+  public async fetchPuzzleTries(
+    competitionID: string,
+    puzzleID: string,
+    puzzleIndex: number
+  ): Promise<Try[]> {
+    return this.get<Try[]>(
+      `/competitions/${competitionID}/puzzles/${puzzleID}/${puzzleIndex}/tries`
+    );
+  }
+
+  /** [POST] /competitions/input */
+  public async getCompetitionPuzzleInput(
+    competition_id: string,
+    puzzle_difficulty: string,
+    puzzle_id: string,
+    puzzle_index: number
+  ): Promise<{ input_lines: string[] }> {
+    return this.post<{ input_lines: string[] }>(`/competitions/input`, {
+      competition_id,
+      puzzle_difficulty,
+      puzzle_id,
+      puzzle_index,
+    });
+  }
+
+  /** [GET] /competitions/{id}/groups */
+  public async fetchGroups(competitionID: string): Promise<Group[]> {
+    return this.get<Group[]>(`/competitions/${competitionID}/groups`);
+  }
+
+  /** [GET] /competitions/{id}/statistics */
+  public async fetchStatistics(
+    competitionID: string
+  ): Promise<CompetitionStatistics> {
+    return this.get<CompetitionStatistics>(
+      `/competitions/${competitionID}/statistics`
+    );
+  }
+
+  /** [PUT] /competitions/{id}/visibility */
+  public async updateVisibility(
+    competitionID: string,
+    is_visible: boolean
+  ): Promise<void> {
+    return this.put<void>(`/competitions/${competitionID}/visibility`, {
+      is_visible,
+    });
+  }
+
+  /** [PUT] /competitions/{id}/finish */
+  public async finishCompetition(competitionID: string): Promise<void> {
+    return this.put<void>(`/competitions/${competitionID}/finish`);
+  }
+
+  /** [GET] /competitions/{competitionId}/export */
+  public async getResumeExportXLSX(competitionID: string): Promise<void> {
+    const res = await this.getBlob(`/competitions/${competitionID}/export`);
+    const blob = new Blob([res], {
+      type: "application/vnd.ms-excel",
+    });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `competition_${competitionID}_data.xlsx`;
+    a.click();
+    window.URL.revokeObjectURL(url);
+  }
+}
+
+// Create singleton instance
+export const competitionsService = new CompetitionsService();

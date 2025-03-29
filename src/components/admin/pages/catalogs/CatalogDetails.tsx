@@ -10,8 +10,8 @@ import { ProgressSpinner } from "primereact/progressspinner";
 import { Tag } from "primereact/tag";
 import { useState, useEffect } from "react";
 import { Catalog, Theme, Puzzle } from "../../../../models/Catalogs";
-import { fetchCatalogThemes } from "../../../../services/catalogsService";
 import { PuzzleDetails } from "./PuzzleDetails";
+import { ServiceManager } from "../../../../services";
 
 export const CatalogDetails = ({
   catalog,
@@ -29,7 +29,9 @@ export const CatalogDetails = ({
     const getThemes = async () => {
       try {
         setLoading(true);
-        const data = await fetchCatalogThemes(catalog.id);
+        const data = await ServiceManager.catalogs.fetchCatalogThemes(
+          catalog.id
+        );
         setThemes(data);
       } catch (err) {
         setError(t("staff.catalogs.errorFetchingCatalogs"));

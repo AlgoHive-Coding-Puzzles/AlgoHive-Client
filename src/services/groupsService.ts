@@ -1,116 +1,57 @@
-import { ApiClient } from "../config/ApiClient";
+import { BaseService } from "./BaseService";
 import { Group } from "../models/Group";
 
-export async function fetchGroupsFromScope(scopeId: string): Promise<Group[]> {
-  try {
-    const response = await ApiClient.get(`/groups/scope/${scopeId}`);
-
-    if (response.status !== 200) {
-      throw new Error(`Error: ${response.status}`);
-    }
-
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching groups:", error);
-    throw error;
+export class GroupsService extends BaseService {
+  /** [GET] /groups/scope/{scopeID} */
+  public async fetchGroupsFromScope(scopeID: string): Promise<Group[]> {
+    return this.get<Group[]>(`/groups/scope/${scopeID}`);
   }
-}
 
-export async function createGroup(
-  scopeId: string,
-  name: string,
-  description: string
-): Promise<void> {
-  try {
-    const response = await ApiClient.post("/groups/", {
-      scope_id: scopeId,
+  /** [POST] /groups/ */
+  public async create(
+    scopeID: string,
+    name: string,
+    description: string
+  ): Promise<void> {
+    return this.post<void>("/groups/", {
+      scope_id: scopeID,
       name,
       description,
     });
-
-    if (response.status !== 201) {
-      throw new Error(`Error: ${response.status}`);
-    }
-  } catch (error) {
-    console.error("Error creating group:", error);
-    throw error;
   }
-}
 
-export async function getGroupById(groupId: string): Promise<Group> {
-  try {
-    const response = await ApiClient.get(`/groups/${groupId}`);
-
-    if (response.status !== 200) {
-      throw new Error(`Error: ${response.status}`);
-    }
-
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching group details:", error);
-    throw error;
+  /** [GET] /groups/{groupID} */
+  public async fetchByID(groupID: string): Promise<Group> {
+    return this.get<Group>(`/groups/${groupID}`);
   }
-}
 
-export async function updateGroup(
-  groupId: string,
-  name: string,
-  description: string
-): Promise<void> {
-  try {
-    const response = await ApiClient.put(`/groups/${groupId}`, {
+  /** [PUT] /groups/{groupID} */
+  public async update(
+    groupID: string,
+    name: string,
+    description: string
+  ): Promise<void> {
+    return this.put<void>(`/groups/${groupID}`, {
       name,
       description,
     });
+  }
 
-    if (response.status !== 204) {
-      throw new Error(`Error: ${response.status}`);
-    }
-  } catch (error) {
-    console.error("Error updating group:", error);
-    throw error;
+  /** [DELETE] /groups/{groupID} */
+  public async remove(groupID: string): Promise<void> {
+    return this.delete<void>(`/groups/${groupID}`);
+  }
+
+  /** [GET] /groups/me */
+  public async fetchAllUserPermissions(): Promise<Group[]> {
+    return this.get<Group[]>("/groups/me");
+  }
+
+  /** [GET] /user/groups */
+  public async fetchUserGroups(): Promise<Group[]> {
+    return this.get<Group[]>("/user/groups");
   }
 }
 
-export async function deleteGroup(groupId: string): Promise<void> {
-  try {
-    const response = await ApiClient.delete(`/groups/${groupId}`);
-
-    if (response.status !== 204) {
-      throw new Error(`Error: ${response.status}`);
-    }
-  } catch (error) {
-    console.error("Error deleting group:", error);
-    throw error;
-  }
-}
-
-export async function fetchStaffGroups(): Promise<Group[]> {
-  try {
-    const response = await ApiClient.get("/groups/me");
-
-    if (response.status !== 200) {
-      throw new Error(`Error: ${response.status}`);
-    }
-
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching staff groups:", error);
-    throw error;
-  }
-}
-
-export async function fetchUserGroups(): Promise<Group[]> {
-  try {
-    const response = await ApiClient.get("/user/groups");
-
-    if (response.status !== 200) {
-      throw new Error(`Error: ${response.status}`);
-    }
-
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching user groups:", error);
-    throw error;
-  }
-}
+// Create singleton instance
+export const groupsService = new GroupsService();

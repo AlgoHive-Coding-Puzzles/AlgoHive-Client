@@ -7,9 +7,9 @@ import { Message } from "primereact/message";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { Tag } from "primereact/tag";
 
-import { fetchUserCompetitionTries } from "../../../../services/competitionsService";
 import { User } from "../../../../models/User";
 import { Try } from "../../../../models/Try";
+import { ServiceManager } from "../../../../services";
 
 interface ParticipantTriesProps {
   visible: boolean;
@@ -37,7 +37,7 @@ export default function ParticipantTries({
   const loadTries = async () => {
     try {
       setLoading(true);
-      const data = await fetchUserCompetitionTries(
+      const data = await ServiceManager.competitions.fetchTriesByUserID(
         competitionId,
         participant?.id || ""
       );

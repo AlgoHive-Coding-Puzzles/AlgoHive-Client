@@ -3,8 +3,8 @@ import { t } from "i18next";
 import { confirmDialog } from "primereact/confirmdialog";
 import { Toast } from "primereact/toast";
 import { User } from "../../models/User";
-import { resetPassword } from "../../services/usersService";
 import { Role } from "../../models/Role";
+import { ServiceManager } from "../../services";
 
 /**
  * Custom hook for managing users in tables
@@ -171,7 +171,7 @@ export const useUserManagement = (fetchData: () => Promise<void>) => {
       acceptClassName: "p-button-info",
       accept: async () => {
         try {
-          await resetPassword(user.id);
+          await ServiceManager.auth.resetPassword(user.id);
           toast.current?.show({
             severity: "success",
             summary: t("common.states.success"),

@@ -20,17 +20,8 @@ import { useAuth } from "../../../../../contexts/AuthContext";
 import { useUserManagement } from "../../../../../lib/hooks/useUserManagement";
 import { Role } from "../../../../../models/Role";
 import { User } from "../../../../../models/User";
-import { fetchRoles } from "../../../../../services/rolesService";
-import {
-  fetchUsers,
-  updateTargetUserProfile,
-  updateUserRoles,
-  createStaffUser,
-  toggleBlockUser,
-  resetPassword,
-  deleteUser,
-} from "../../../../../services/usersService";
 import { isStaff, roleIsOwner } from "../../../../../utils/permissions";
+import { ServiceManager } from "../../../../../services";
 
 interface UsersTableAdminProps {
   toast: RefObject<Toast | null>;
@@ -54,8 +45,8 @@ export default function UsersTableAdmin({ toast }: UsersTableAdminProps) {
       setLoading(true);
       // Load users and roles in parallel
       const [usersData, rolesData] = await Promise.all([
-        fetchUsers(),
-        fetchRoles(),
+        ServiceManager.users.fetchAll(),
+        ServiceManager.roles.fetchAll(),
       ]);
 
       // Filter out non-staff users and owner roles
@@ -97,15 +88,14 @@ export default function UsersTableAdmin({ toast }: UsersTableAdminProps) {
     try {
       if (editMode && selectedUser) {
         // Update existing user logic would go here
-        await updateTargetUserProfile(
+        await ServiceManager.users.updateUser(
           selectedUser.id,
           formFields.first_name,
           formFields.last_name,
-          formFields.email
+          formFields.email,
+          formFields.selectedRoles || [],
+          []
         );
-
-        // Update roles if changed
-        await updateUserRoles(selectedUser.id, formFields.selectedRoles || []);
 
         toast.current?.show({
           severity: "success",
@@ -115,7 +105,7 @@ export default function UsersTableAdmin({ toast }: UsersTableAdminProps) {
         });
       } else {
         // Create new staff user
-        await createStaffUser(
+        await ServiceManager.users.createStaff(
           formFields.first_name,
           formFields.last_name,
           formFields.email,
@@ -163,7 +153,7 @@ export default function UsersTableAdmin({ toast }: UsersTableAdminProps) {
     }
 
     try {
-      await toggleBlockUser(user.id);
+      await ServiceManager.users.toggleBlock(user.id);
       await fetchData();
 
       toast.current?.show({
@@ -188,7 +178,7 @@ export default function UsersTableAdmin({ toast }: UsersTableAdminProps) {
   // Handle reset password for user
   const handleResetPassword = async (user: User) => {
     try {
-      await resetPassword(user.id);
+      await ServiceManager.auth.resetPassword(user.id);
       toast.current?.show({
         severity: "success",
         summary: t("common.states.success"),
@@ -220,7 +210,7 @@ export default function UsersTableAdmin({ toast }: UsersTableAdminProps) {
     }
 
     try {
-      await deleteUser(userId);
+      await ServiceManager.users.remove(userId);
       await fetchData();
       toast.current?.show({
         severity: "success",

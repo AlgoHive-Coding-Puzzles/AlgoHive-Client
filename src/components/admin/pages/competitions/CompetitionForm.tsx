@@ -9,22 +9,9 @@ import { MultiSelect } from "primereact/multiselect";
 import { Checkbox } from "primereact/checkbox";
 import { Toast } from "primereact/toast";
 
-import {
-  createCompetition,
-  updateCompetition,
-} from "../../../../services/competitionsService";
-import {
-  fetchCatalogs,
-  fetchCatalogThemes,
-} from "../../../../services/catalogsService";
-import {
-  addGroupToCompetition,
-  removeGroupFromCompetition,
-  fetchCompetitionGroups,
-} from "../../../../services/competitionsService";
 import { Competition } from "../../../../models/Competition";
 import { Catalog } from "../../../../models/Catalogs";
-import { fetchScopes } from "../../../../services/scopesService";
+import { ServiceManager } from "../../../../services";
 
 interface CompetitionFormProps {
   visible: boolean;
@@ -64,8 +51,8 @@ export default function CompetitionForm({
   const loadData = async () => {
     try {
       const [scopes, catalogs] = await Promise.all([
-        fetchScopes(),
-        fetchCatalogs(),
+        ServiceManager.scopes.fetchAll(),
+        ServiceManager.catalogs.fetchCatalogs(),
       ]);
 
       const groups = [];
@@ -120,7 +107,9 @@ export default function CompetitionForm({
     // Load themes when a catalog is selected
     const loadThemes = async () => {
       if (selectedCatalog) {
-        const data = await fetchCatalogThemes(selectedCatalog.id);
+        const data = await ServiceManager.catalogs.fetchCatalogThemes(
+          selectedCatalog.id
+        );
         setThemes(data.map((theme) => theme.name));
       }
     };
@@ -134,7 +123,7 @@ export default function CompetitionForm({
 
   const loadCompetitionGroups = async (competitionId: string) => {
     try {
-      const data = await fetchCompetitionGroups(competitionId);
+      const data = await ServiceManager.competitions.fetchGroups(competitionId);
       setGroups(
         data.map((group) => ({
           id: group.id,
@@ -199,46 +188,54 @@ export default function CompetitionForm({
     try {
       setSubmitting(true);
 
-      const competitionData = {
-        title,
-        description,
-        catalog_theme: selectedTheme,
-        catalog_id: selectedCatalog.id,
-        show: isVisible,
-        finished: isFinished,
-        groups_ids: groups.map((group) => group.id),
-      };
-
       if (mode === "create") {
-        await createCompetition(competitionData);
+        ServiceManager.competitions.create(
+          title,
+          description,
+          selectedTheme,
+          selectedCatalog.id,
+          isVisible,
+          isFinished,
+          groups.map((group) => group.id)
+        );
         showToast(
           "success",
           t("staffTabs.competitions.messages.createSuccess")
         );
       } else if (competition) {
-        await updateCompetition(competition.id, competitionData);
+        await ServiceManager.competitions.update(
+          competition.id,
+          title,
+          description,
+          selectedTheme,
+          selectedCatalog.id,
+          isVisible,
+          isFinished,
+          groups.map((group) => group.id)
+        );
+
         showToast(
           "success",
           t("staffTabs.competitions.messages.updateSuccess")
         );
 
-        // Update groups
-        const currentGroupIds = competition.groups?.map((g) => g.id) || [];
-        const newGroupIds = groups.map((g) => g.id);
+        // // Update groups
+        // const currentGroupIds = competition.groups?.map((g) => g.id) || [];
+        // const newGroupIds = groups.map((g) => g.id);
 
-        // Groups to add
-        for (const group of groups) {
-          if (!currentGroupIds.includes(group.id)) {
-            await addGroupToCompetition(competition.id, group.id);
-          }
-        }
+        // // Groups to add
+        // for (const group of groups) {
+        //   if (!currentGroupIds.includes(group.id)) {
+        //     await addGroupToCompetition(competition.id, group.id);
+        //   }
+        // }
 
-        // Groups to remove
-        for (const groupId of currentGroupIds) {
-          if (!newGroupIds.includes(groupId)) {
-            await removeGroupFromCompetition(competition.id, groupId);
-          }
-        }
+        // // Groups to remove
+        // for (const groupId of currentGroupIds) {
+        //   if (!newGroupIds.includes(groupId)) {
+        //     await removeGroupFromCompetition(competition.id, groupId);
+        //   }
+        // }
       }
 
       onSuccess();

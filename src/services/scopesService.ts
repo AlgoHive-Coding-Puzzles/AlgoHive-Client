@@ -1,113 +1,59 @@
-import { ApiClient } from "../config/ApiClient";
+import { BaseService } from "./BaseService";
 import { Scope } from "../models/Scope";
 
-export async function fetchScopes(): Promise<Scope[]> {
-  try {
-    const response = await ApiClient.get("/scopes/user");
-
-    if (response.status !== 200) {
-      throw new Error(`Error: ${response.status}`);
-    }
-
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching scopes:", error);
-    throw error;
+export class ScopesService extends BaseService {
+  /** [GET] /scopes/ */
+  public async fetchAll(): Promise<Scope[]> {
+    return this.get<Scope[]>("/scopes/");
   }
-}
 
-export async function getScopeById(id: string): Promise<Scope> {
-  try {
-    const response = await ApiClient.get(`/scopes/${id}`);
-
-    if (response.status !== 200) {
-      throw new Error(`Error: ${response.status}`);
-    }
-
-    return response.data;
-  } catch (error) {
-    console.error(`Error fetching scope with id ${id}:`, error);
-    throw error;
-  }
-}
-
-export async function createScope(
-  name: string,
-  description: string,
-  catalogs_ids: string[]
-): Promise<Scope> {
-  try {
-    const response = await ApiClient.post("/scopes/", {
+  /** [POST] /scopes/ */
+  public async create(
+    name: string,
+    description: string,
+    catalogs_ids: string[]
+  ): Promise<Scope> {
+    return this.post<Scope>("/scopes/", {
       name,
       description,
       catalogs_ids,
     });
-
-    if (response.status !== 201) {
-      throw new Error(`Error: ${response.status}`);
-    }
-
-    return response.data;
-  } catch (error) {
-    console.error("Error creating scope:", error);
-    throw error;
   }
-}
 
-export async function updateScope(
-  id: string,
-  name: string,
-  description: string,
-  catalogs_ids: string[]
-): Promise<Scope> {
-  try {
-    const response = await ApiClient.put(`/scopes/${id}`, {
+  /** [GET] /scopes/{scopeID} */
+  public async fetchByID(scopeID: string): Promise<Scope> {
+    return this.get<Scope>(`/scopes/${scopeID}`);
+  }
+
+  /** [PUT] /scopes/{scopeID} */
+  public async update(
+    scopeID: string,
+    name: string,
+    description: string,
+    catalogs_ids: string[]
+  ): Promise<Scope> {
+    return this.put<Scope>(`/scopes/${scopeID}`, {
       name,
       description,
       catalogs_ids,
     });
+  }
 
-    if (response.status !== 200) {
-      throw new Error(`Error: ${response.status}`);
-    }
+  /** [DELETE] /scopes/{scopeID} */
+  public async remove(scopeID: string): Promise<void> {
+    return this.delete<void>(`/scopes/${scopeID}`);
+  }
 
-    return response.data;
-  } catch (error) {
-    console.error("Error updating scope:", error);
-    throw error;
+  /** [GET] /scopes/me */
+  public async fetchAllFromUser(): Promise<Scope[]> {
+    return this.get<Scope[]>("/scopes/me");
+  }
+
+  /** [GET] /scopes/roles?roles= */
+  public async fetchScopesFromRoles(roles: string[]): Promise<Scope[]> {
+    return this.get<Scope[]>(`/scopes/roles?roles=${roles.join(",")}`);
   }
 }
 
-export async function deleteScope(id: string): Promise<void> {
-  try {
-    const response = await ApiClient.delete(`/scopes/${id}`);
-
-    if (response.status !== 204) {
-      if (response.status === 409) {
-        throw new Error("Scope is in use and cannot be deleted.");
-      } else {
-        throw new Error(`Error: ${response.status}`);
-      }
-    }
-  } catch (error) {
-    console.error("Error deleting scope:", error);
-    throw error;
-  }
-}
-
-export async function fetchScopesFromRoles(roles: string[]): Promise<Scope[]> {
-  try {
-    const response = await ApiClient.get(
-      `/scopes/roles?roles=${roles.join(",")}`
-    );
-
-    if (response.status !== 200) {
-      throw new Error(`Error: ${response.status}`);
-    }
-
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching scopes:", error);
-    throw error;
-  }
-}
+// Create singleton instance
+export const scopesService = new ScopesService();

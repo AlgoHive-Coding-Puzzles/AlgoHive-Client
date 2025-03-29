@@ -1,16 +1,8 @@
 import { useEffect, useState, useRef } from "react";
 import { Scope } from "../../../models/Scope";
-import {
-  fetchScopes,
-  createScope,
-  updateScope,
-  deleteScope,
-  getScopeById,
-} from "../../../services/scopesService";
 import { Message } from "primereact/message";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { Toast } from "primereact/toast";
-import { fetchCatalogs } from "../../../services/catalogsService";
 import { t } from "i18next";
 import ScopeCard from "../../../components/admin/pages/scopes/ScopeCard";
 import CreateScopeForm from "../../../components/admin/pages/scopes/CreateScopeForm";
@@ -18,6 +10,7 @@ import EditScopeDialog from "../../../components/admin/pages/scopes/EditScopeDia
 import ScopeDetailsDialog from "../../../components/admin/pages/scopes/ScopeDetailsDialog";
 import DeleteScopeDialog from "../../../components/admin/pages/scopes/DeleteScopeDialog";
 import { InputText } from "primereact/inputtext";
+import { ServiceManager } from "../../../services";
 
 export default function ScopesPage() {
   const [scopes, setScopes] = useState<Scope[]>([]);
@@ -47,8 +40,8 @@ export default function ScopesPage() {
     try {
       setLoading(true);
       const [fetchedScopes, catalogs] = await Promise.all([
-        fetchScopes(),
-        fetchCatalogs(),
+        ServiceManager.scopes.fetchAll(),
+        ServiceManager.catalogs.fetchCatalogs(),
       ]);
 
       setScopes(fetchedScopes);
@@ -81,7 +74,7 @@ export default function ScopesPage() {
 
     try {
       setCreatingScope(true);
-      await createScope(name, description, selectedApiIds);
+      await ServiceManager.scopes.create(name, description, selectedApiIds);
       await fetchScopesData();
 
       toast.current?.show({
@@ -121,7 +114,7 @@ export default function ScopesPage() {
 
     try {
       setUpdatingScope(true);
-      await updateScope(id, name, description, catalogs_ids);
+      await ServiceManager.scopes.update(id, name, description, catalogs_ids);
       await fetchScopesData();
 
       toast.current?.show({
@@ -149,7 +142,7 @@ export default function ScopesPage() {
 
     try {
       setDeletingScope(true);
-      await deleteScope(selectedScope.id);
+      await ServiceManager.scopes.remove(selectedScope.id);
       await fetchScopesData();
 
       toast.current?.show({
@@ -190,7 +183,7 @@ export default function ScopesPage() {
   const openDetailsDialog = async (scope: Scope) => {
     try {
       // Fetch the latest scope data to ensure we have all relationships
-      const fetchedScope = await getScopeById(scope.id);
+      const fetchedScope = await ServiceManager.scopes.fetchByID(scope.id);
       setSelectedScope(fetchedScope);
       setDetailsDialogVisible(true);
     } catch (err) {

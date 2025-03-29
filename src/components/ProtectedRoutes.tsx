@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate, useLocation, Outlet } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
 interface ProtectedRoutesProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   target?: "staff" | "participant" | "all";
   allowedRoles?: string[];
 }
@@ -34,26 +34,32 @@ const ProtectedRoutes = ({
 
   // Redirect if not authenticated
   if (!isAuthenticated) {
-    return <Navigate to="/" state={{ from: location.pathname }} replace />;
+    return <Navigate to="/login" state={{ from: location.pathname }} replace />;
   }
 
   // Redirect if user is not staff
   if (
-    target == "staff" &&
+    target === "staff" &&
     user &&
     user.groups &&
     user.groups.length > 0 &&
-    (user.roles == null || user.roles.length == 0)
+    (user.roles == null || user.roles.length === 0)
   ) {
     return <Navigate to="/unauthorized" replace />;
   }
 
-  // // Redirect if user is not a participant
-  if (target == "participant" && user && user.roles && user.roles.length > 0) {
+  // Redirect if user is not a participant
+  if (target === "participant" && user && user.roles && user.roles.length > 0) {
     return <Navigate to="/unauthorized" replace />;
   }
 
-  return <>{children}</>;
+  // If children are provided, render them directly
+  if (children) {
+    return <>{children}</>;
+  }
+
+  // Otherwise, use Outlet for nested routes
+  return <Outlet />;
 };
 
 export default ProtectedRoutes;

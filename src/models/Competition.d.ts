@@ -14,3 +14,13 @@ export interface Competition {
   groups?: Group[];
   tries: Try[];
 }
+
+export interface CompetitionStatistics {
+  competition_id: string;
+  title: string;
+  total_users: number;
+  active_users: number;
+  completion_rate: number;
+  average_score: number;
+  highest_score: number;
+}

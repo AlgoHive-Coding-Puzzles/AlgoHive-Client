@@ -6,16 +6,7 @@ import {
   useState,
   useRef,
 } from "react";
-import {
-  fetchUsersFromRoles,
-  deleteUser,
-  createUser,
-  toggleBlockUser,
-  resetPassword,
-  updateTargetUserProfile,
-  importUsersFromXLSX,
-  deleteUsers,
-} from "../../../../../services/usersService";
+
 import { t } from "i18next";
 
 import { ProgressSpinner } from "primereact/progressspinner";
@@ -37,7 +28,7 @@ import {
 import { useUserManagement } from "../../../../../lib/hooks/useUserManagement";
 import { Scope } from "../../../../../models/Scope";
 import { User } from "../../../../../models/User";
-import { fetchScopesFromRoles } from "../../../../../services/scopesService";
+import { ServiceManager } from "../../../../../services";
 
 interface UsersTableStaffProps {
   rolesIds: string[];
@@ -69,8 +60,8 @@ export default function UsersTableStaff({
       setLoading(true);
       // Fetch users and scopes in parallel for better performance
       const [userData, scopesData] = await Promise.all([
-        fetchUsersFromRoles(rolesIds),
-        fetchScopesFromRoles(rolesIds),
+        ServiceManager.users.fetchUsersFromRoles(rolesIds),
+        ServiceManager.scopes.fetchScopesFromRoles(rolesIds),
       ]);
 
       setUsers(userData);
@@ -109,12 +100,13 @@ export default function UsersTableStaff({
 
     try {
       if (editMode && selectedUser) {
-        // Update existing user logic
-        await updateTargetUserProfile(
+        await ServiceManager.users.updateUser(
           selectedUser.id,
           formFields.first_name,
           formFields.last_name,
-          formFields.email
+          formFields.email,
+          [],
+          []
         );
 
         toast?.current?.show({
@@ -133,7 +125,7 @@ export default function UsersTableStaff({
           });
           return;
         }
-        await createUser(
+        await ServiceManager.users.create(
           formFields.first_name,
           formFields.last_name,
           formFields.email,
@@ -168,7 +160,7 @@ export default function UsersTableStaff({
   // Handle block/unblock user
   const handleToggleBlockUser = async (user: User) => {
     try {
-      await toggleBlockUser(user.id);
+      await ServiceManager.users.toggleBlock(user.id);
       await fetchData();
       toast?.current?.show({
         severity: "success",
@@ -192,7 +184,7 @@ export default function UsersTableStaff({
   // Handle reset password for user
   const handleResetPassword = async (user: User) => {
     try {
-      await resetPassword(user.id);
+      await ServiceManager.auth.resetPassword(user.id);
       toast?.current?.show({
         severity: "success",
         summary: t("common.states.success"),
@@ -225,7 +217,7 @@ export default function UsersTableStaff({
     try {
       setLoading(true);
       const file = event.target.files[0];
-      await importUsersFromXLSX(selectedGroup, file);
+      await ServiceManager.users.importUsersFromXLSX(selectedGroup, file);
 
       toast?.current?.show({
         severity: "success",
@@ -265,7 +257,9 @@ export default function UsersTableStaff({
       acceptClassName: "p-button-danger",
       accept: async () => {
         try {
-          await deleteUsers(selectedUsers.map((user) => user.id));
+          await ServiceManager.users.removeBulk(
+            selectedUsers.map((user) => user.id)
+          );
 
           toast?.current?.show({
             severity: "success",
@@ -510,7 +504,9 @@ export default function UsersTableStaff({
                   onEdit={openEditUserDialog}
                   onToggleBlock={handleToggleBlockUser}
                   onResetPassword={handleResetPassword}
-                  onDelete={(user) => confirmDeleteUser(user, deleteUser)}
+                  onDelete={(user) =>
+                    confirmDeleteUser(user, ServiceManager.users.remove)
+                  }
                 />
               )}
               header={t("common.fields.actions")}

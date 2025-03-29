@@ -7,9 +7,8 @@ import Navbar from "../../components/users/Navbar";
 import { useAuth } from "../../contexts/AuthContext";
 import { useEffect, useRef, useState } from "react";
 import { Toast } from "primereact/toast";
-import { changePassword } from "../../services/usersService";
 import { Group } from "../../models/Group";
-import { fetchUserGroups } from "../../services/groupsService";
+import { ServiceManager } from "../../services";
 
 const AccountPage = () => {
   const { t } = useTranslation();
@@ -27,7 +26,7 @@ const AccountPage = () => {
   useEffect(() => {
     const fetchGroups = async () => {
       try {
-        const groups = await fetchUserGroups();
+        const groups = await ServiceManager.groups.fetchUserGroups();
         setGroups(groups);
       } catch (error) {
         console.error("Error fetching groups:", error);
@@ -62,7 +61,7 @@ const AccountPage = () => {
     try {
       setLoading(true);
       // Call the API to change the password
-      await changePassword(oldPassword, newPassword);
+      await ServiceManager.users.changePassword(oldPassword, newPassword);
       toast.current?.show({
         severity: "success",
         summary: t("common.states.success"),

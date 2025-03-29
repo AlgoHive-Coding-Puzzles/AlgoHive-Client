@@ -2,20 +2,12 @@ import { useEffect, useMemo, useState, useRef } from "react";
 import "./Groups.css";
 import { Scope } from "../../../models/Scope";
 import { useAuth } from "../../../contexts/AuthContext";
-import { fetchScopesFromRoles } from "../../../services/scopesService";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { t } from "i18next";
 import { Message } from "primereact/message";
 import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
 import { Role } from "../../../models/Role";
 import { Group } from "../../../models/Group";
-import {
-  fetchGroupsFromScope,
-  createGroup,
-  getGroupById,
-  updateGroup,
-  deleteGroup,
-} from "../../../services/groupsService";
 import { Toast } from "primereact/toast";
 import { InputText } from "primereact/inputtext";
 import CreateGroupForm from "../../../components/admin/pages/groups/CreateGroupForm";
@@ -23,6 +15,7 @@ import GroupCard from "../../../components/admin/pages/groups/GroupCard";
 import EditGroupDialog from "../../../components/admin/pages/groups/EditGroupDialog";
 import GroupDetailsDialog from "../../../components/admin/pages/groups/GroupDetailsDialog";
 import DeleteGroupDialog from "../../../components/admin/pages/groups/DeleteGroupDialog";
+import { ServiceManager } from "../../../services";
 
 /**
  * Groups management page component
@@ -64,7 +57,9 @@ export default function GroupsPage() {
         const rolesIds: string[] =
           user && user.roles ? user.roles.map((role: Role) => role.id) : [];
 
-        let scopesData = await fetchScopesFromRoles(rolesIds);
+        let scopesData = await ServiceManager.scopes.fetchScopesFromRoles(
+          rolesIds
+        );
         if (scopesData.length === null) scopesData = [];
 
         setScopes(scopesData);
@@ -112,7 +107,9 @@ export default function GroupsPage() {
     if (scopeId) {
       try {
         setLoading(true);
-        const fetchedGroups = await fetchGroupsFromScope(scopeId);
+        const fetchedGroups = await ServiceManager.groups.fetchGroupsFromScope(
+          scopeId
+        );
         setGroups(fetchedGroups);
         setFilteredGroups(fetchedGroups);
       } catch (err) {
@@ -158,7 +155,7 @@ export default function GroupsPage() {
 
     try {
       setCreatingGroup(true);
-      await createGroup(selectedScope, name, description);
+      await ServiceManager.groups.create(selectedScope, name, description);
 
       // Refresh groups list
       await loadGroups(selectedScope);
@@ -202,7 +199,7 @@ export default function GroupsPage() {
 
     try {
       setUpdatingGroup(true);
-      await updateGroup(id, name, description);
+      await ServiceManager.groups.update(id, name, description);
 
       // Refresh groups list if scope is selected
       if (selectedScope) {
@@ -237,7 +234,7 @@ export default function GroupsPage() {
 
     try {
       setDeletingGroup(true);
-      await deleteGroup(selectedGroup.id);
+      await ServiceManager.groups.remove(selectedGroup.id);
 
       // Refresh groups list if scope is selected
       if (selectedScope) {
@@ -270,7 +267,7 @@ export default function GroupsPage() {
   const openDetailsDialog = async (group: Group) => {
     try {
       // Fetch the latest group data to ensure we have all relationships
-      const fetchedGroup = await getGroupById(group.id);
+      const fetchedGroup = await ServiceManager.groups.fetchByID(group.id);
       setSelectedGroup(fetchedGroup);
       setDetailsDialogVisible(true);
     } catch (err) {

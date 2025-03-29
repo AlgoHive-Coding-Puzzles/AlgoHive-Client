@@ -6,13 +6,13 @@ import { Button } from "primereact/button";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { ConfirmDialog } from "primereact/confirmdialog";
 
-import { fetchCompetitions } from "../../../services/competitionsService";
 import CompetitionsList from "../../../components/admin/pages/competitions/CompetitionsList";
 import CompetitionForm from "../../../components/admin/pages/competitions/CompetitionForm";
 import CompetitionDetails from "../../../components/admin/pages/competitions/CompetitionDetails";
 
 import "./Competitions.css";
 import { Competition } from "../../../models/Competition";
+import { ServiceManager } from "../../../services";
 
 export default function CompetitionsPage() {
   const { t } = useTranslation();
@@ -34,7 +34,7 @@ export default function CompetitionsPage() {
   const fetchCompetitionsData = async () => {
     try {
       setLoading(true);
-      const fetchedCompetitions = await fetchCompetitions();
+      const fetchedCompetitions = await ServiceManager.competitions.fetchAll();
       setCompetitions(fetchedCompetitions);
     } catch (error) {
       console.error("Error loading data:", error);

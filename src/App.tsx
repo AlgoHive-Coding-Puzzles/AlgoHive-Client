@@ -26,9 +26,15 @@ const AppRoutes = () => {
 
   return (
     <Routes>
+      {/* Public routes */}
       <Route path="/login" element={<LoginPage />} />
       <Route path="/reset-password" element={<ResetPasswordPage />} />
       <Route path="/" element={<Users />} />
+      <Route path="/how-to-play" element={<HowToPlay />} />
+      <Route path="/support" element={<SupportPage />} />
+      <Route path="/license" element={<LicensePage />} />
+
+      {/* Staff portal with its own protection */}
       <Route
         path="/staff_portal"
         element={
@@ -46,54 +52,26 @@ const AppRoutes = () => {
         }
       />
 
-      <Route
-        path="/account"
-        element={
-          <ProtectedRoutes target="all">
-            <AccountPage />
-          </ProtectedRoutes>
-        }
-      />
-
-      <Route
-        path="/competitions/:competition_id?"
-        element={
-          <ProtectedRoutes target="all">
-            <CompetitionPage />
-          </ProtectedRoutes>
-        }
-      />
-
-      <Route
-        path="/competition/:competition_id/puzzle/:puzzle_index/input"
-        element={
-          <ProtectedRoutes target="all">
-            <PuzzleInputPage />
-          </ProtectedRoutes>
-        }
-      />
-
-      <Route
-        path="/competition/:competition_id/puzzle/:puzzle_index"
-        element={
-          <ProtectedRoutes target="all">
-            <PuzzlePage />
-          </ProtectedRoutes>
-        }
-      />
-
-      <Route
-        path="/competition/:competition_id/leaderboard"
-        element={
-          <ProtectedRoutes target="all">
-            <LeaderboardPage />
-          </ProtectedRoutes>
-        }
-      />
-
-      <Route path="/how-to-play" element={<HowToPlay />} />
-      <Route path="/support" element={<SupportPage />} />
-      <Route path="/license" element={<LicensePage />} />
+      {/* All authenticated user protected routes */}
+      <Route element={<ProtectedRoutes target="all" />}>
+        <Route path="/account" element={<AccountPage />} />
+        <Route
+          path="/competitions/:competition_id?"
+          element={<CompetitionPage />}
+        />
+        <Route
+          path="/competition/:competition_id/puzzle/:puzzle_index/input"
+          element={<PuzzleInputPage />}
+        />
+        <Route
+          path="/competition/:competition_id/puzzle/:puzzle_index"
+          element={<PuzzlePage />}
+        />
+        <Route
+          path="/competition/:competition_id/leaderboard"
+          element={<LeaderboardPage />}
+        />
+      </Route>
     </Routes>
   );
 };

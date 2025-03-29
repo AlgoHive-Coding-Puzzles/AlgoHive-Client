@@ -1,18 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { Role } from "../../../models/Role";
-import {
-  createRole,
-  deleteRole,
-  fetchRoles,
-  getRoleById,
-  updateRole,
-} from "../../../services/rolesService";
-
 import { t } from "i18next";
 import { Message } from "primereact/message";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { Toast } from "primereact/toast";
-import { fetchScopes } from "../../../services/scopesService";
 import { InputText } from "primereact/inputtext";
 import { hasPermission, Permission } from "../../../utils/permissions";
 import RoleCard from "../../../components/admin/pages/roles/RoleCard";
@@ -20,6 +11,7 @@ import CreateRoleForm from "../../../components/admin/pages/roles/CreateRoleForm
 import EditRoleDialog from "../../../components/admin/pages/roles/EditRoleDialog";
 import RoleDetailsDialog from "../../../components/admin/pages/roles/RoleDetailsDialog";
 import DeleteRoleDialog from "../../../components/admin/pages/roles/DeleteRoleDialog";
+import { ServiceManager } from "../../../services";
 
 export default function RolesPage() {
   const [roles, setRoles] = useState<Role[]>([]);
@@ -49,8 +41,8 @@ export default function RolesPage() {
     try {
       setLoading(true);
       const [fetchedRoles, scopes] = await Promise.all([
-        fetchRoles(),
-        fetchScopes(),
+        ServiceManager.roles.fetchAll(),
+        ServiceManager.scopes.fetchAll(),
       ]);
 
       setRoles(fetchedRoles);
@@ -83,7 +75,7 @@ export default function RolesPage() {
 
     try {
       setCreatingRole(true);
-      await createRole(name, permissions, scopeIds);
+      await ServiceManager.roles.create(name, permissions, scopeIds);
       await fetchRolesData();
 
       toast.current?.show({
@@ -123,7 +115,7 @@ export default function RolesPage() {
 
     try {
       setUpdatingRole(true);
-      await updateRole(id, name, permissions, scopeIds);
+      await ServiceManager.roles.update(id, name, permissions, scopeIds);
       await fetchRolesData();
 
       toast.current?.show({
@@ -151,7 +143,7 @@ export default function RolesPage() {
 
     try {
       setDeletingRole(true);
-      await deleteRole(selectedRole.id);
+      await ServiceManager.roles.remove(selectedRole.id);
       await fetchRolesData();
 
       toast.current?.show({
@@ -182,7 +174,7 @@ export default function RolesPage() {
   const openDetailsDialog = async (role: Role) => {
     try {
       // Fetch the latest role data to ensure we have all relationships
-      const fetchedRole = await getRoleById(role.id);
+      const fetchedRole = await ServiceManager.roles.fetchRoleById(role.id);
       setSelectedRole(fetchedRole);
       setDetailsDialogVisible(true);
     } catch (err) {

@@ -9,7 +9,7 @@ import { Toast } from "primereact/toast";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "../../components/LanguageSwitcher";
 import { Dialog } from "primereact/dialog";
-import { requestPasswordReset } from "../../services/usersService";
+import { ServiceManager } from "../../services";
 
 const LoginPage = () => {
   const { t } = useTranslation();
@@ -61,7 +61,8 @@ const LoginPage = () => {
   const handleForgotPassword = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await requestPasswordReset(resetEmail);
+      // await requestPasswordReset(resetEmail);
+      ServiceManager.auth.resetPassword(resetEmail);
 
       toast.current?.show({
         severity: "success",

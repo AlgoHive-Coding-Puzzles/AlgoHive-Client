@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import AnimatedContainer from "./AnimatedContainer";
 import { Competition } from "../models/Competition";
-import { fetchUserCompetitions } from "../services/competitionsService";
 import { t } from "i18next";
 import { MeteorsCard } from "./MeteorsCard";
 import { useAuth } from "../contexts/AuthContext";
 import CirclePattern from "./CirclePattern";
 import { cn } from "../utils/utils";
+import { ServiceManager } from "../services";
 
 interface UsersListCompetitionsProps {
   className?: string;
@@ -23,7 +23,8 @@ const UsersListCompetitions: React.FC<UsersListCompetitionsProps> = ({
   useEffect(() => {
     const fetchAllCompetitions = async () => {
       try {
-        const fetchedCompetitions = await fetchUserCompetitions();
+        const fetchedCompetitions =
+          await ServiceManager.competitions.fetchAllFromUser();
         setCompetitions(fetchedCompetitions);
       } catch (error) {
         console.error("Error fetching competitions:", error);
