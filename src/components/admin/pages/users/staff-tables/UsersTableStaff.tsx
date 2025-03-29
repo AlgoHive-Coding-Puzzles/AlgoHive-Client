@@ -184,7 +184,7 @@ export default function UsersTableStaff({
   // Handle reset password for user
   const handleResetPassword = async (user: User) => {
     try {
-      await ServiceManager.auth.resetPassword(user.id);
+      await ServiceManager.users.resetTargetUserPassword(user.id);
       toast?.current?.show({
         severity: "success",
         summary: t("common.states.success"),

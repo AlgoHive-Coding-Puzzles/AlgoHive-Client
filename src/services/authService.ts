@@ -1,16 +1,40 @@
 import { BaseService } from "./BaseService";
 import { User } from "../models/User";
+import { Role } from "../models/Role";
+import { Group } from "../models/Group";
 
 interface LoginResponse {
-  user: User;
-  access_token: string;
-  refresh_token: string;
+  user_id: string;
+  email: string;
+  first_name: string;
+  last_name: string;
+  permissions: number;
+  blocked: boolean;
+  last_connected: string;
+  roles: Role[];
+  groups: Group[];
+}
+
+interface AuthCheckResponse {
+  user: User & {
+    user_id: string;
+  };
+  valid: boolean;
+  hasDefaultPassword: boolean;
 }
 
 export class AuthService extends BaseService {
   /** [POST] /auth/login */
-  public async login(email: string, password: string): Promise<LoginResponse> {
-    return this.post<LoginResponse>("/auth/login", { email, password });
+  public async login(
+    email: string,
+    password: string,
+    remember_me: boolean
+  ): Promise<LoginResponse> {
+    return this.post<LoginResponse>("/auth/login", {
+      email,
+      password,
+      remember_me,
+    });
   }
 
   /** [POST] /auth/logout */
@@ -19,24 +43,18 @@ export class AuthService extends BaseService {
   }
 
   /** [POST] /auth/reset-password */
-  public async resetPassword(email: string): Promise<void> {
-    return this.post<void>("/auth/reset-password", { email });
+  public async resetPassword(password: string, token: string): Promise<void> {
+    return this.post<void>("/auth/reset-password", { password, token });
   }
 
-  /** [POST] /auth/confirm-reset-password */
-  public async confirmResetPassword(
-    token: string,
-    newPassword: string
-  ): Promise<void> {
-    return this.post<void>("/auth/confirm-reset-password", {
-      token,
-      password: newPassword,
-    });
+  /** [POST] /auth/request-reset */
+  public async requestPasswordReset(email: string): Promise<void> {
+    return this.post<void>("/auth/request-reset", { email });
   }
 
   /** [GET] /auth/me */
-  public async checkAuth(): Promise<User> {
-    return this.get<User>("/auth/me");
+  public async checkAuth(): Promise<AuthCheckResponse> {
+    return this.get<AuthCheckResponse>("/auth/check");
   }
 }
 

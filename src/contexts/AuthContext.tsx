@@ -7,7 +7,7 @@ import {
 } from "react";
 import axios from "axios";
 import { User } from "../models/User";
-import { ApiClient } from "../config/ApiClient";
+import { ServiceManager } from "../services";
 
 interface AuthContextType {
   user: User | null;
@@ -49,22 +49,22 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     rememberMe: boolean
   ) => {
     try {
-      const response = await ApiClient.post("/auth/login", {
+      const response = await ServiceManager.auth.login(
         email,
         password,
-        rememberMe,
-      });
+        rememberMe
+      );
 
       setUser({
-        id: response.data.user_id,
-        email: response.data.email,
-        first_name: response.data.first_name,
-        last_name: response.data.last_name,
-        permissions: response.data.permissions,
-        blocked: response.data.blocked,
-        last_connected: response.data.last_connected,
-        roles: response.data.roles,
-        groups: response.data.groups,
+        id: response.user_id,
+        email: response.email,
+        first_name: response.first_name,
+        last_name: response.last_name,
+        permissions: response.permissions,
+        blocked: response.blocked,
+        last_connected: response.last_connected,
+        roles: response.roles,
+        groups: response.groups,
       });
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.status === 401) {
@@ -79,7 +79,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const logout = async () => {
     try {
       // Call the API to remove the cookie
-      await ApiClient.post("/auth/logout");
+      await ServiceManager.auth.logout();
       setUser(null);
       setHasDefaultPassword(false);
     } catch (error) {
@@ -93,36 +93,25 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     try {
       setIsLoading(true);
       // The cookie will be sent automatically with the request
-      const response = await ApiClient.get("/auth/check");
+      const response = await ServiceManager.auth.checkAuth();
 
-      if (!response.data) {
+      if (response.valid === false) {
         setUser(null);
         return false;
       }
 
-      // Check if the response is valid
-      if (response.data.error) {
-        setUser(null);
-        return false;
-      }
-
-      if (response.data.valid === false) {
-        setUser(null);
-        return false;
-      }
-
-      setHasDefaultPassword(response.data.hasDefaultPassword);
+      setHasDefaultPassword(response.hasDefaultPassword);
 
       setUser({
-        id: response.data.user.user_id,
-        email: response.data.user.email,
-        first_name: response.data.user.first_name,
-        last_name: response.data.user.last_name,
-        permissions: response.data.user.permissions,
-        blocked: response.data.user.blocked,
-        last_connected: response.data.user.last_connected,
-        roles: response.data.user.roles,
-        groups: response.data.user.groups,
+        id: response.user.user_id,
+        email: response.user.email,
+        first_name: response.user.first_name,
+        last_name: response.user.last_name,
+        permissions: response.user.permissions,
+        blocked: response.user.blocked,
+        last_connected: response.user.last_connected,
+        roles: response.user.roles,
+        groups: response.user.groups,
       });
       return true;
     } catch (error) {

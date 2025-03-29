@@ -4,7 +4,7 @@ import { Password } from "primereact/password";
 import { Button } from "primereact/button";
 import { Toast } from "primereact/toast";
 import { useTranslation } from "react-i18next";
-import { ApiClient } from "../../config/ApiClient";
+import { ServiceManager } from "../../services";
 
 const ResetPasswordPage = () => {
   const { t } = useTranslation();
@@ -43,10 +43,7 @@ const ResetPasswordPage = () => {
     }
 
     try {
-      await ApiClient.post("/auth/reset-password", {
-        token,
-        password,
-      });
+      await ServiceManager.auth.resetPassword(token, password);
 
       toast.current?.show({
         severity: "success",

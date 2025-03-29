@@ -171,7 +171,7 @@ export const useUserManagement = (fetchData: () => Promise<void>) => {
       acceptClassName: "p-button-info",
       accept: async () => {
         try {
-          await ServiceManager.auth.resetPassword(user.id);
+          await ServiceManager.auth.resetTargetUserPassword(user.id);
           toast.current?.show({
             severity: "success",
             summary: t("common.states.success"),

@@ -120,6 +120,28 @@ export class UsersService extends BaseService {
       formData
     );
   }
+
+  /** [PUT] /user/resetpass/{userID} */
+  public async resetTargetUserPassword(userID: string): Promise<void> {
+    return this.put<void>(`/user/resetpass/${userID}`);
+  }
+
+  /** [POST] /support */
+  public async sendSupportRequest(
+    name: string,
+    email: string,
+    subject: string,
+    message: string,
+    issue_type: string
+  ): Promise<void> {
+    return this.post<void>("/support", {
+      name,
+      email,
+      subject,
+      message,
+      issue_type,
+    });
+  }
 }
 
 // Create singleton instance

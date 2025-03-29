@@ -1,12 +1,13 @@
 import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
-import { ApiClient, WebSocketClient } from "../../config/ApiClient";
+import { WebSocketClient } from "../../config/ApiClient";
 import { Try } from "../../models/Try";
 import AnimatedContainer from "../../components/AnimatedContainer";
 import CirclePattern from "../../components/CirclePattern";
 import Navbar from "../../components/users/Navbar";
 import Footer from "../../components/Footer";
 import { useTranslation } from "react-i18next";
+import { ServiceManager } from "../../services";
 
 interface UserScore {
   user_id: string;
@@ -56,8 +57,10 @@ export default function LeaderboardPage() {
   useEffect(() => {
     const fetchCompetitionDetails = async () => {
       try {
-        const response = await ApiClient.get(`/competitions/${competitionId}`);
-        setCompetitionName(response.data.title);
+        const competition = await ServiceManager.competitions.fetchByID(
+          competitionId
+        );
+        setCompetitionName(competition.title);
       } catch (error) {
         console.error("Error fetching competition details:", error);
       }
@@ -69,12 +72,12 @@ export default function LeaderboardPage() {
   useEffect(() => {
     const fetchTries = async () => {
       try {
-        const response = await ApiClient.get(
-          `/competitions/${competitionId}/tries/ldb`
+        const tries = await ServiceManager.competitions.fetchLeaderboardTries(
+          competitionId
         );
 
-        setTries(response.data);
-        aggregateUserScores(response.data);
+        setTries(tries);
+        aggregateUserScores(tries);
       } catch (error) {
         console.error("Error fetching tries:", error);
       }

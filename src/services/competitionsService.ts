@@ -1,6 +1,5 @@
 import { BaseService } from "./BaseService";
 import { Competition, CompetitionStatistics } from "../models/Competition";
-import { Puzzle } from "../models/Catalogs";
 import { Try } from "../models/Try";
 import { Group } from "../models/Group";
 
@@ -19,13 +18,6 @@ export class CompetitionsService extends BaseService {
   /** [GET] /competitions/user */
   public async fetchAllFromUser(): Promise<Competition[]> {
     return this.get<Competition[]>("/competitions/user");
-  }
-
-  /** [GET] /competitions/group/{groupID} */
-  public async fetchCompetitionsByGroup(
-    groupID: string
-  ): Promise<Competition[]> {
-    return this.get<Competition[]>(`/competitions/group/${groupID}`);
   }
 
   /** [POST] /competitions/ */
@@ -79,11 +71,6 @@ export class CompetitionsService extends BaseService {
   /** [DELETE] /competitions/${competitionID} */
   public async remove(competitionID: string): Promise<void> {
     return this.delete<void>(`/competitions/${competitionID}`);
-  }
-
-  /** [GET] /competitions/{competitionID}/puzzles */
-  public async fetchPuzzles(competitionID: string): Promise<Puzzle[]> {
-    return this.get<Puzzle[]>(`/competitions/${competitionID}/puzzles`);
   }
 
   /** [POST] /competitions/{competitionID}/puzzles/{puzzleID}/submit */
@@ -202,6 +189,11 @@ export class CompetitionsService extends BaseService {
     a.download = `competition_${competitionID}_data.xlsx`;
     a.click();
     window.URL.revokeObjectURL(url);
+  }
+
+  /** [GET] /competitions/${competitionID}/tries/ldb */
+  public async fetchLeaderboardTries(competitionID: string): Promise<Try[]> {
+    return this.get<Try[]>(`/competitions/${competitionID}/tries/ldb`);
   }
 }
 

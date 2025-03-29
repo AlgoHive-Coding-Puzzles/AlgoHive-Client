@@ -62,7 +62,7 @@ const LoginPage = () => {
     e.preventDefault();
     try {
       // await requestPasswordReset(resetEmail);
-      ServiceManager.auth.resetPassword(resetEmail);
+      ServiceManager.auth.resetTargetUserPassword(resetEmail);
 
       toast.current?.show({
         severity: "success",

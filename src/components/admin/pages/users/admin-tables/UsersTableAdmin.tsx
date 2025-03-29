@@ -178,7 +178,7 @@ export default function UsersTableAdmin({ toast }: UsersTableAdminProps) {
   // Handle reset password for user
   const handleResetPassword = async (user: User) => {
     try {
-      await ServiceManager.auth.resetPassword(user.id);
+      await ServiceManager.auth.resetTargetUserPassword(user.id);
       toast.current?.show({
         severity: "success",
         summary: t("common.states.success"),
