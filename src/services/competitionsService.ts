@@ -201,3 +201,19 @@ export const checkPuzzlePermission = async (
   );
   return response.data.has_permission;
 };
+
+export const exportCompetitionDataExcel = async (
+  competitionId: string
+): Promise<void> => {
+  const response = await ApiClient.get(
+    `/competitions/${competitionId}/export`,
+    { responseType: "blob" }
+  );
+  const blob = new Blob([response.data], { type: "application/vnd.ms-excel" });
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `competition_${competitionId}_data.xlsx`;
+  a.click();
+  window.URL.revokeObjectURL(url);
+};

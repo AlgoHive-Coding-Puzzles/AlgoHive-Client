@@ -25,8 +25,8 @@ import "./competition.css";
 import { Badge } from "primereact/badge";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
-import BackButton from "../../components/ui/back-button";
 import Footer from "../../components/Footer";
+import OrangeBlackButton from "../../components/ui/button";
 
 export default function CompetitionPage() {
   const { user } = useAuth();
@@ -115,23 +115,21 @@ export default function CompetitionPage() {
                     {t("puzzles.selectPuzzle")}
                   </p>
 
-                  <div className="w-full flex justify-center mt-10">
-                    <BackButton
+                  <div className="w-full flex flex-col sm:flex-row justify-center mt-10 gap-6">
+                    <OrangeBlackButton
                       onClickAction={() => {
-                        setSelectedCompetition(null);
+                        window.location.href = "/competitions";
                       }}
                       text={t("puzzles.backToCompetitions")}
+                      icon="pi-arrow-left"
                     />
-                  </div>
-                  <div className="w-full flex justify-center mt-4">
-                    <button
-                      className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-                      onClick={() => {
+                    <OrangeBlackButton
+                      onClickAction={() => {
                         window.location.href = `/competition/${selectedCompetition.id}/leaderboard`;
                       }}
-                    >
-                      View Leaderboard
-                    </button>
+                      text={t("puzzles.leaderboard")}
+                      icon="pi-users"
+                    />
                   </div>
                   <div className={`lg:mt-28 mt-24`}>
                     {theme && theme.puzzles && (

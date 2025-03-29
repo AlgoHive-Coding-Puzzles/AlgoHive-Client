@@ -354,7 +354,8 @@
         "show": "Afficher",
         "hide": "Masquer",
         "addGroup": "Ajouter un groupe",
-        "removeGroup": "Retirer un groupe"
+        "removeGroup": "Retirer un groupe",
+        "downloadReport": "Télécharger le rapport"
       },
       "tries": {
         "viewTries": "Voir les essais",
@@ -548,6 +549,7 @@
     "selectPuzzle": "Sélectionnez une énigme pour commencer",
     "backToCompetition": "Retour à la compétition",
     "backToCompetitions": "Retour aux compétitions",
+    "leaderboard": "Voir le classement",
     "difficulty": {
       "easy": "Facile",
       "medium": "Moyen",

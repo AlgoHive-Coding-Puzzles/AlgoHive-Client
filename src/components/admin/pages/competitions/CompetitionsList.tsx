@@ -7,6 +7,7 @@ import { Card } from "primereact/card";
 import { InputText } from "primereact/inputtext";
 import { useState } from "react";
 import { Competition } from "../../../../models/Competition";
+import { exportCompetitionDataExcel } from "../../../../services/competitionsService";
 
 interface CompetitionsListProps {
   competitions: Competition[];
@@ -21,6 +22,10 @@ export default function CompetitionsList({
 }: CompetitionsListProps) {
   const { t } = useTranslation();
   const [globalFilter, setGlobalFilter] = useState<string>("");
+
+  const downloadExcelReport = async (competitionID: string) => {
+    exportCompetitionDataExcel(competitionID);
+  };
 
   const statusTemplate = (rowData: Competition) => {
     return (
@@ -66,6 +71,12 @@ export default function CompetitionsList({
           className="p-button-rounded p-button-success p-button-sm"
           onClick={() => onEdit(rowData)}
           tooltip={t("common.actions.edit")}
+        />
+        <Button
+          icon="pi pi-download"
+          className="p-button-rounded p-button-warning p-button-sm"
+          onClick={() => downloadExcelReport(rowData.id)}
+          tooltip={t("staffTabs.competitions.actions.downloadReport")}
         />
       </div>
     );

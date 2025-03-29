@@ -356,7 +356,8 @@
         "show": "Show",
         "hide": "Hide",
         "addGroup": "Add Group",
-        "removeGroup": "Remove Group"
+        "removeGroup": "Remove Group",
+        "downloadReport": "Download Report"
       },
       "tries": {
         "viewTries": "View Tries",
@@ -549,6 +550,7 @@
     "selectPuzzle": "Select a puzzle to start solving",
     "backToCompetition": "Back to competition",
     "backToCompetitions": "Back to competition list",
+    "leaderboard": "View Leaderboard",
     "difficulty": {
       "easy": "Easy",
       "medium": "Medium",
