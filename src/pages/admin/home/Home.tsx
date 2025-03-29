@@ -44,8 +44,8 @@ export default function HomePage() {
   useEffect(() => {
     if (user) {
       setActiveRoles(user.roles.length);
-      setFirstName(user.firstname);
-      setLastName(user.lastname);
+      setFirstName(user.first_name);
+      setLastName(user.last_name);
       setEmail(user.email);
     }
   }, [newPassword, user]);
@@ -192,7 +192,8 @@ export default function HomePage() {
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div>
             <h1 className="text-3xl font-bold text-white mb-2">
-              {t("staffTabs.home.welcome")}, {user?.firstname} {user?.lastname}!
+              {t("staffTabs.home.welcome")}, {user?.first_name}{" "}
+              {user?.last_name}!
             </h1>
             <p className="text-blue-200">
               {t("staffTabs.home.lastLogin")}:{" "}
@@ -203,7 +204,9 @@ export default function HomePage() {
           </div>
           <div className="mt-4 md:mt-0 flex items-center gap-4">
             <Avatar
-              label={`${user?.firstname.charAt(0)}${user?.lastname.charAt(0)}`}
+              label={`${user?.first_name.charAt(0)}${user?.last_name.charAt(
+                0
+              )}`}
               size="large"
               shape="circle"
               className="bg-indigo-700 text-white font-bold"
@@ -449,13 +452,13 @@ export default function HomePage() {
 
           <div className="mb-3">
             <label
-              htmlFor="firstName"
+              htmlFor="first_name"
               className="block text-sm font-medium mb-1"
             >
               {t("common.fields.firstName")}
             </label>
             <InputText
-              id="firstName"
+              id="first_name"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
               className="w-full"

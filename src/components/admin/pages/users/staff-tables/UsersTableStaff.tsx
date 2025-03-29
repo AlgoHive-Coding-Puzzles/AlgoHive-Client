@@ -112,8 +112,8 @@ export default function UsersTableStaff({
         // Update existing user logic
         await updateTargetUserProfile(
           selectedUser.id,
-          formFields.firstName,
-          formFields.lastName,
+          formFields.first_name,
+          formFields.last_name,
           formFields.email
         );
 
@@ -134,8 +134,8 @@ export default function UsersTableStaff({
           return;
         }
         await createUser(
-          formFields.firstName,
-          formFields.lastName,
+          formFields.first_name,
+          formFields.last_name,
           formFields.email,
           selectedGroup
         );
@@ -346,8 +346,8 @@ export default function UsersTableStaff({
 
   // Define table columns
   const columns = [
-    { field: "firstname", header: t("common.fields.firstName") },
-    { field: "lastname", header: t("common.fields.lastName") },
+    { field: "first_name", header: t("common.fields.firstName") },
+    { field: "last_name", header: t("common.fields.lastName") },
     { field: "email", header: t("common.fields.email") },
     { field: "last_connected", header: t("common.fields.lastConnection") },
   ];
@@ -370,15 +370,6 @@ export default function UsersTableStaff({
         className="w-full mb-4"
         style={{ borderRadius: "8px" }}
       />
-    );
-  }
-
-  if (users && users.length === 0) {
-    return (
-      <div className="flex flex-col items-center justify-center p-12 bg-white rounded-lg shadow">
-        <i className="pi pi-inbox text-5xl text-gray-400 mb-4"></i>
-        <p className="text-gray-600 text-xl">{t("common.states.empty")}</p>
-      </div>
     );
   }
 

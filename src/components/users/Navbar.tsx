@@ -72,7 +72,7 @@ const Navbar: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
   const acountNav = [
     {
       id: "account",
-      title: t("users.menus.welcome") + " " + user?.firstname,
+      title: t("users.menus.welcome") + " " + user?.first_name,
     },
     {
       id: "competitions",

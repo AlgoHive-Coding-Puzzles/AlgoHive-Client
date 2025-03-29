@@ -165,6 +165,7 @@ function InputAnswer({
           onKeyDown={handleKeyDown}
           disabled={loading || disabled || !!cooldown}
           aria-label={t("puzzles.input.answer")}
+          max={9999999999999.99}
         />
         <Button
           label={t("puzzles.input.submit")}

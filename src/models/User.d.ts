@@ -1,8 +1,8 @@
 export interface User {
   id: string;
   email: string;
-  firstname: string;
-  lastname: string;
+  first_name: string;
+  last_name: string;
   permissions: number;
   blocked: boolean;
   last_connected: string;

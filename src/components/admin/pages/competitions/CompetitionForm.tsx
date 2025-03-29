@@ -206,22 +206,17 @@ export default function CompetitionForm({
         catalog_id: selectedCatalog.id,
         show: isVisible,
         finished: isFinished,
+        groups_ids: groups.map((group) => group.id),
       };
 
-      let result;
       if (mode === "create") {
-        result = await createCompetition(competitionData);
+        await createCompetition(competitionData);
         showToast(
           "success",
           t("staffTabs.competitions.messages.createSuccess")
         );
-
-        // Add selected groups to the competition
-        for (const group of groups) {
-          await addGroupToCompetition(result.id, group.id);
-        }
       } else if (competition) {
-        result = await updateCompetition(competition.id, competitionData);
+        await updateCompetition(competition.id, competitionData);
         showToast(
           "success",
           t("staffTabs.competitions.messages.updateSuccess")

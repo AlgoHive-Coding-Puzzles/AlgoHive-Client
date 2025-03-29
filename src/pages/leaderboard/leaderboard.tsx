@@ -70,8 +70,9 @@ export default function LeaderboardPage() {
     const fetchTries = async () => {
       try {
         const response = await ApiClient.get(
-          `/competitions/${competitionId}/tries`
+          `/competitions/${competitionId}/tries/ldb`
         );
+
         setTries(response.data);
         aggregateUserScores(response.data);
       } catch (error) {
@@ -158,7 +159,7 @@ export default function LeaderboardPage() {
 
     triesData.forEach((tryItem) => {
       const userId = tryItem.user_id;
-      const username = `${tryItem.user?.firstname} ${tryItem.user?.lastname}`;
+      const username = `${tryItem.user?.first_name} ${tryItem.user?.last_name}`;
       const group =
         tryItem.user && tryItem.user?.groups
           ? tryItem.user?.groups.map((g) => g.name).join(", ")

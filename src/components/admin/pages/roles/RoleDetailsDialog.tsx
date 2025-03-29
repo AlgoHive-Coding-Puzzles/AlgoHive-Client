@@ -140,7 +140,7 @@ const RoleDetailsDialog: React.FC<RoleDetailsDialogProps> = ({
             {role.users.slice(0, 10).map((user) => (
               <Chip
                 key={user.id}
-                label={`${user.firstname} ${user.lastname}`}
+                label={`${user.first_name} ${user.last_name}`}
                 className="bg-purple-700 text-white"
               />
             ))}

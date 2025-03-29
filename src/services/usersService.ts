@@ -34,15 +34,15 @@ export async function fetchUsersFromRoles(roles: string[]): Promise<User[]> {
 }
 
 export async function createStaffUser(
-  firstname: string,
-  lastname: string,
+  first_name: string,
+  last_name: string,
   email: string,
   roles: string[]
 ) {
   try {
     const response = await ApiClient.post("/user/roles", {
-      firstname,
-      lastname,
+      first_name,
+      last_name,
       email,
       roles,
     });
@@ -60,15 +60,15 @@ export async function createStaffUser(
 
 // /user/group/{group_id}
 export async function createUser(
-  firstname: string,
-  lastname: string,
+  first_name: string,
+  last_name: string,
   email: string,
   groupeId: string
 ) {
   try {
     const response = await ApiClient.post(`/user/groups`, {
-      firstname,
-      lastname,
+      first_name,
+      last_name,
       email,
       groups: [groupeId],
     });
@@ -132,14 +132,14 @@ export async function updateUserRoles(
 }
 
 export async function updateUserProfile(
-  firstname: string,
-  lastname: string,
+  first_name: string,
+  last_name: string,
   email: string
 ) {
   try {
     const response = await ApiClient.put("/user/profile", {
-      firstname,
-      lastname,
+      first_name,
+      last_name,
       email,
     });
 
@@ -156,14 +156,14 @@ export async function updateUserProfile(
 
 export async function updateTargetUserProfile(
   userId: string,
-  firstname: string,
-  lastname: string,
+  first_name: string,
+  last_name: string,
   email: string
 ) {
   try {
     const response = await ApiClient.put(`/user/${userId}`, {
-      firstname,
-      lastname,
+      first_name,
+      last_name,
       email,
     });
 

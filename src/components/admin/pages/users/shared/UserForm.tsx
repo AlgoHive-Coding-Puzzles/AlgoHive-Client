@@ -6,8 +6,8 @@ import { MultiSelect } from "primereact/multiselect";
 import { t } from "i18next";
 
 export interface UserFormFields {
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   email: string;
   selectedRoles?: string[];
   selectedGroup?: string | null;
@@ -79,26 +79,26 @@ const UserForm: React.FC<UserFormProps> = ({
       onHide={onHide}
     >
       <div className="field mt-4">
-        <label htmlFor="firstname" className="font-bold">
+        <label htmlFor="first_name" className="font-bold">
           {t("common.fields.firstName")}
         </label>
         <InputText
-          id="firstname"
-          value={fields.firstName}
-          onChange={(e) => onFieldChange("firstName", e.target.value)}
+          id="first_name"
+          value={fields.first_name}
+          onChange={(e) => onFieldChange("first_name", e.target.value)}
           required
           className="mt-1"
         />
       </div>
 
       <div className="field mt-4">
-        <label htmlFor="lastname" className="font-bold">
+        <label htmlFor="last_name" className="font-bold">
           {t("common.fields.lastName")}
         </label>
         <InputText
-          id="lastname"
-          value={fields.lastName}
-          onChange={(e) => onFieldChange("lastName", e.target.value)}
+          id="last_name"
+          value={fields.last_name}
+          onChange={(e) => onFieldChange("last_name", e.target.value)}
           required
           className="mt-1"
         />

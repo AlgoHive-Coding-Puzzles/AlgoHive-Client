@@ -15,7 +15,7 @@ const SupportPage = () => {
   const { user } = useAuth();
 
   const [name, setName] = useState(
-    user ? `${user.firstname} ${user.lastname}` : ""
+    user ? `${user.first_name} ${user.last_name}` : ""
   );
   const [email, setEmail] = useState(user ? user.email : "");
   const [subject, setSubject] = useState("");

@@ -18,8 +18,8 @@ export const useUserManagement = (fetchData: () => Promise<void>) => {
 
   // Form fields state
   const [formFields, setFormFields] = useState({
-    firstName: "",
-    lastName: "",
+    first_name: "",
+    last_name: "",
     email: "",
     selectedRoles: [] as string[],
     selectedGroup: null as string | null,
@@ -28,8 +28,8 @@ export const useUserManagement = (fetchData: () => Promise<void>) => {
   // Reset form to initial state
   const resetForm = () => {
     setFormFields({
-      firstName: "",
-      lastName: "",
+      first_name: "",
+      last_name: "",
       email: "",
       selectedRoles: [],
       selectedGroup: null,
@@ -53,8 +53,8 @@ export const useUserManagement = (fetchData: () => Promise<void>) => {
   const openEditUserDialog = (user: User) => {
     setSelectedUser(user);
     setFormFields({
-      firstName: user.firstname,
-      lastName: user.lastname,
+      first_name: user.first_name,
+      last_name: user.last_name,
       email: user.email,
       selectedRoles:
         user.roles
@@ -68,7 +68,7 @@ export const useUserManagement = (fetchData: () => Promise<void>) => {
 
   // Validate form
   const validateForm = (requireRoles: boolean = false) => {
-    if (!formFields.firstName.trim()) {
+    if (!formFields.first_name.trim()) {
       toast.current?.show({
         severity: "warn",
         summary: t("common.states.validationError"),
@@ -78,7 +78,7 @@ export const useUserManagement = (fetchData: () => Promise<void>) => {
       return false;
     }
 
-    if (!formFields.lastName.trim()) {
+    if (!formFields.last_name.trim()) {
       toast.current?.show({
         severity: "warn",
         summary: t("common.states.validationError"),
@@ -132,7 +132,7 @@ export const useUserManagement = (fetchData: () => Promise<void>) => {
   ) => {
     confirmDialog({
       message: t("staffTabs.users.deleteUserMsg", {
-        user: `${user.firstname} ${user.lastname}`,
+        user: `${user.first_name} ${user.last_name}`,
       }),
       header: t("staffTabs.users.deleteUser"),
       icon: "pi pi-exclamation-triangle",
@@ -164,7 +164,7 @@ export const useUserManagement = (fetchData: () => Promise<void>) => {
   const confirmResetPassword = (user: User) => {
     confirmDialog({
       message: t("staffTabs.users.confirmations.resetPassword", {
-        user: `${user.firstname} ${user.lastname}`,
+        user: `${user.first_name} ${user.last_name}`,
       }),
       header: t("common.confirmations.resetPassword"),
       icon: "pi pi-exclamation-triangle",

@@ -321,12 +321,12 @@ export default function CompetitionDetails({
                     >
                       <Column field="id" header="ID" style={{ width: "20%" }} />
                       <Column
-                        field="firstname"
+                        field="first_name"
                         header={t("common.fields.firstName")}
                         style={{ width: "25%" }}
                       />
                       <Column
-                        field="lastname"
+                        field="lastn_ame"
                         header={t("common.fields.lastName")}
                         style={{ width: "25%" }}
                       />

@@ -99,8 +99,8 @@ export default function UsersTableAdmin({ toast }: UsersTableAdminProps) {
         // Update existing user logic would go here
         await updateTargetUserProfile(
           selectedUser.id,
-          formFields.firstName,
-          formFields.lastName,
+          formFields.first_name,
+          formFields.last_name,
           formFields.email
         );
 
@@ -116,8 +116,8 @@ export default function UsersTableAdmin({ toast }: UsersTableAdminProps) {
       } else {
         // Create new staff user
         await createStaffUser(
-          formFields.firstName,
-          formFields.lastName,
+          formFields.first_name,
+          formFields.last_name,
           formFields.email,
           formFields.selectedRoles || []
         );
@@ -293,17 +293,17 @@ export default function UsersTableAdmin({ toast }: UsersTableAdminProps) {
         tableStyle={{ minWidth: "50rem" }}
         emptyMessage={t("staff.users.noUsers")}
         className="p-datatable-sm p-datatable-gridlines"
-        sortField="lastname"
+        sortField="last_name"
         sortOrder={1}
         removableSort
       >
         <Column
-          field="firstname"
+          field="first_name"
           header={t("common.fields.firstName")}
           sortable
         />
         <Column
-          field="lastname"
+          field="last_name"
           header={t("common.fields.lastName")}
           sortable
         />

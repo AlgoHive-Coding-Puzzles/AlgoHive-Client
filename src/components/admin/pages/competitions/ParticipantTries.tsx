@@ -83,7 +83,7 @@ export default function ParticipantTries({
   return (
     <Dialog
       header={t("staffTabs.competitions.statistics.viewTriesFor", {
-        name: `${participant?.firstname} ${participant?.lastname}`,
+        name: `${participant?.first_name} ${participant?.last_name}`,
       })}
       visible={visible}
       onHide={onHide}

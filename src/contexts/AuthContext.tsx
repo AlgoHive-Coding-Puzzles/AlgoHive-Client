@@ -58,8 +58,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       setUser({
         id: response.data.user_id,
         email: response.data.email,
-        firstname: response.data.firstname,
-        lastname: response.data.lastname,
+        first_name: response.data.first_name,
+        last_name: response.data.last_name,
         permissions: response.data.permissions,
         blocked: response.data.blocked,
         last_connected: response.data.last_connected,
@@ -116,8 +116,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       setUser({
         id: response.data.user.user_id,
         email: response.data.user.email,
-        firstname: response.data.user.firstname,
-        lastname: response.data.user.lastname,
+        first_name: response.data.user.first_name,
+        last_name: response.data.user.last_name,
         permissions: response.data.user.permissions,
         blocked: response.data.user.blocked,
         last_connected: response.data.user.last_connected,

@@ -97,7 +97,7 @@ const GroupDetailsDialog: React.FC<GroupDetailsDialogProps> = ({
             <ul className="list-disc pl-5">
               {group.users.map((user: User) => (
                 <li key={user.id} className="mb-1">
-                  {user.firstname} {user.lastname}
+                  {user.first_name} {user.last_name}
                 </li>
               ))}
             </ul>

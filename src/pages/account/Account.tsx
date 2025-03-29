@@ -117,7 +117,7 @@ const AccountPage = () => {
                     <Input
                       className="w-full px-5 py-3"
                       placeholder="Username"
-                      value={user?.firstname}
+                      value={user?.first_name}
                       disabled
                     />
                   </div>
@@ -130,7 +130,7 @@ const AccountPage = () => {
                     <Input
                       className="w-full px-5 py-3"
                       placeholder="Username"
-                      value={user?.lastname}
+                      value={user?.last_name}
                       disabled
                     />
                   </div>
