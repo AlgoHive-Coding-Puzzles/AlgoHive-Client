@@ -100,14 +100,14 @@ export default function UsersTableStaff({
 
     try {
       if (editMode && selectedUser) {
-        await ServiceManager.users.updateUser(
-          selectedUser.id,
-          formFields.first_name,
-          formFields.last_name,
-          formFields.email,
-          [],
-          []
-        );
+        const user = {
+          ...selectedUser,
+          first_name: formFields.first_name,
+          last_name: formFields.last_name,
+          email: formFields.email,
+        };
+
+        await ServiceManager.users.updateUser(user, [], []);
 
         toast?.current?.show({
           severity: "success",
@@ -152,6 +152,27 @@ export default function UsersTableStaff({
         detail: editMode
           ? t("staffTabs.users.asStaff.messages.errorUpdating")
           : t("staffTabs.users.asStaff.messages.errorCreating"),
+        life: 3000,
+      });
+    }
+  };
+
+  const handleDeleteUser = async (userID: string) => {
+    try {
+      await ServiceManager.users.remove(userID);
+      toast?.current?.show({
+        severity: "success",
+        summary: t("common.states.success"),
+        detail: t("staffTabs.users.asStaff.messages.userDeleted"),
+        life: 3000,
+      });
+      await fetchData();
+    } catch (err) {
+      console.error("Error deleting user:", err);
+      toast?.current?.show({
+        severity: "error",
+        summary: t("common.states.error"),
+        detail: t("staffTabs.users.asStaff.messages.errorDeleting"),
         life: 3000,
       });
     }
@@ -504,9 +525,7 @@ export default function UsersTableStaff({
                   onEdit={openEditUserDialog}
                   onToggleBlock={handleToggleBlockUser}
                   onResetPassword={handleResetPassword}
-                  onDelete={(user) =>
-                    confirmDeleteUser(user, ServiceManager.users.remove)
-                  }
+                  onDelete={(user) => confirmDeleteUser(user, handleDeleteUser)}
                 />
               )}
               header={t("common.fields.actions")}

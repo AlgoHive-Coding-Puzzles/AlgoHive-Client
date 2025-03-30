@@ -88,11 +88,15 @@ export default function UsersTableAdmin({ toast }: UsersTableAdminProps) {
     try {
       if (editMode && selectedUser) {
         // Update existing user logic would go here
+        const user = {
+          ...selectedUser,
+          first_name: formFields.first_name,
+          last_name: formFields.last_name,
+          email: formFields.email,
+        };
+
         await ServiceManager.users.updateUser(
-          selectedUser.id,
-          formFields.first_name,
-          formFields.last_name,
-          formFields.email,
+          user,
           formFields.selectedRoles || [],
           []
         );
@@ -178,7 +182,7 @@ export default function UsersTableAdmin({ toast }: UsersTableAdminProps) {
   // Handle reset password for user
   const handleResetPassword = async (user: User) => {
     try {
-      await ServiceManager.auth.resetTargetUserPassword(user.id);
+      await ServiceManager.users.resetTargetUserPassword(user.id);
       toast.current?.show({
         severity: "success",
         summary: t("common.states.success"),
@@ -215,7 +219,7 @@ export default function UsersTableAdmin({ toast }: UsersTableAdminProps) {
       toast.current?.show({
         severity: "success",
         summary: t("common.states.success"),
-        detail: t("staffTabs.users.messages.userDeleted"),
+        detail: t("staffTabs.users.asStaff.messages.userDeleted"),
         life: 3000,
       });
     } catch (err) {
@@ -223,7 +227,7 @@ export default function UsersTableAdmin({ toast }: UsersTableAdminProps) {
       toast.current?.show({
         severity: "error",
         summary: t("common.states.error"),
-        detail: t("staffTabs.users.messages.errorDeleting"),
+        detail: t("staffTabs.users.asStaff.messages.errorDeleting"),
         life: 3000,
       });
     }

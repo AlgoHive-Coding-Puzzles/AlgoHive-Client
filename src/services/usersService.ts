@@ -87,17 +87,12 @@ export class UsersService extends BaseService {
 
   /** [PUT] /user/{userID} */
   public async updateUser(
-    userID: string,
-    first_name: string,
-    last_name: string,
-    email: string,
+    user: User,
     roles_ids: string[],
     groups_ids: string[]
   ): Promise<User> {
-    return this.put<User>(`/user/${userID}`, {
-      first_name,
-      last_name,
-      email,
+    return this.put<User>(`/user/${user.id}`, {
+      user,
       roles_ids,
       groups_ids,
     });
