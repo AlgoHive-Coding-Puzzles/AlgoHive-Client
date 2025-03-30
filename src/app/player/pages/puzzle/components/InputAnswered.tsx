@@ -9,6 +9,10 @@ interface InputAnsweredProps {
   solution: string;
 }
 
+/**
+ * Component to display the user's answered solution
+ * Shows different visual feedback based on device type
+ */
 function InputAnswered({ solution }: InputAnsweredProps) {
   const isMobile = useIsMobile();
   const { t } = useTranslation(["common", "puzzles"]);

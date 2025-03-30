@@ -3,8 +3,8 @@ import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import { Toast } from "primereact/toast";
+import { Button } from "primereact/button";
 
-import GetInputTemplate from "@player/pages/puzzle/components/GetInputButton";
 import InputTemplate from "@player/pages/puzzle/components/InputTemplate";
 import InputAnswered from "@player/pages/puzzle/components/InputAnswered";
 import AnimatedContainer from "@shared/components/AnimatedContainer";
@@ -24,6 +24,20 @@ import { useAuth } from "@contexts/AuthContext";
 
 import "./PuzzlePage.css";
 
+/**
+ * Maximum time to poll for tries before giving up
+ */
+const MAX_POLLING_TIME = 30000; // 30 seconds
+
+/**
+ * Polling interval for checking new tries
+ */
+const POLLING_INTERVAL = 1000; // 1 second
+
+/**
+ * PuzzlePage component
+ * Handles the display and interaction of puzzle content, including steps, input, and answer submission
+ */
 export default function PuzzlePage() {
   const { user } = useAuth();
   const { puzzle_index, competition_id } = useParams<{
@@ -33,8 +47,9 @@ export default function PuzzlePage() {
 
   const isMobile = useIsMobile();
   const { t } = useTranslation(["common", "puzzles"]);
+  const toast = useRef<Toast | null>(null);
 
-  // Derived state with useMemo
+  // Derived state with useMemo to prevent recalculations
   const questNumber = useMemo(
     () => parseInt(puzzle_index || "0") - 1,
     [puzzle_index]
@@ -45,17 +60,14 @@ export default function PuzzlePage() {
   const [competition, setCompetition] = useState<Competition | null>(null);
   const [puzzle, setPuzzle] = useState<Puzzle | null>(null);
   const [tries, setTries] = useState<Try[]>([]);
-  const [refresh, setRefresh] = useState("");
+  const [refreshTrigger, setRefreshTrigger] = useState("");
   const [loading, setLoading] = useState(true);
   const [inputRequesting, setInputRequesting] = useState(false);
   const [pollingForTry, setPollingForTry] = useState(false);
   const pollingTimerRef = useRef<NodeJS.Timeout | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  // Toast state
-  const toast = useRef<Toast | null>(null);
-
-  // Memoized derived values
+  // Memoized derived values to prevent unnecessary calculations
   const firstTry = useMemo(() => tries[0] || null, [tries]);
   const secondTry = useMemo(() => tries[1] || null, [tries]);
   const hasCompletedFirstStep = useMemo(() => !!firstTry?.end_time, [firstTry]);
@@ -69,98 +81,143 @@ export default function PuzzlePage() {
     if (puzzle) {
       document.title = `${prettyPrintTitle(puzzle.name)} - AlgoHive`;
     }
+    return () => {
+      document.title = "AlgoHive";
+    };
   }, [puzzle]);
 
-  // Data fetching effect
-  useEffect(() => {
-    const fetchData = async () => {
-      if (!competitionId || isNaN(questNumber)) {
-        setError("Invalid competition or puzzle identifier");
-        setLoading(false);
+  /**
+   * Fetch all necessary data for the puzzle page
+   */
+  const fetchPageData = useCallback(async () => {
+    if (!competitionId || isNaN(questNumber)) {
+      setError("Invalid competition or puzzle identifier");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setError(null);
+
+      // Fetch competition details
+      const competitionData = await ServiceManager.competitions.fetchByID(
+        competitionId
+      );
+      if (!competitionData) {
+        setError("Competition not found");
         return;
       }
 
-      try {
-        setLoading(true);
-        setError(null);
+      // Check user permission for this puzzle
+      const response = await ServiceManager.competitions.checkPuzzlePermission(
+        competitionData.id,
+        questNumber
+      );
 
-        // Fetch competition details
-        // const competitionData = await fetchCompetitionDetails(competitionId);
-        const competitionData = await ServiceManager.competitions.fetchByID(
-          competitionId
-        );
-        if (!competitionData) {
-          setError("Competition not found");
-          return;
-        }
-
-        const hasPermission =
-          await ServiceManager.competitions.checkPuzzlePermission(
-            competitionData.id,
-            questNumber
-          );
-
-        if (!hasPermission) {
-          window.location.href = `/competitions/${competitionId}`;
-          return;
-        }
-
-        // Fetch puzzle details
-        const puzzleData = await ServiceManager.catalogs.fetchPuzzleDetails(
-          competitionData.catalog_id,
-          competitionData.catalog_theme,
-          questNumber.toString()
-        );
-        if (!puzzleData) {
-          setError("Puzzle not found");
-          return;
-        }
-
-        // Fetch tries if user is authenticated
-        const triesData = user
-          ? await ServiceManager.competitions.fetchPuzzleTries(
-              competitionData.id,
-              puzzleData.id,
-              questNumber
-            )
-          : [];
-
-        // Sort tries by start time
-        const sortedTries = triesData.sort(
-          (a, b) =>
-            new Date(a.start_time).getTime() - new Date(b.start_time).getTime()
-        );
-
-        // Update state with fetched data
-        setCompetition(competitionData);
-        setPuzzle(puzzleData);
-        setTries(sortedTries);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setError("Failed to load puzzle data");
-      } finally {
-        setLoading(false);
+      if (!response.has_permission) {
+        window.location.href = `/competitions/${competitionId}`;
+        return;
       }
-    };
 
-    fetchData();
-  }, [competitionId, questNumber, user, refresh]);
+      // Fetch puzzle details
+      const puzzleData = await ServiceManager.catalogs.fetchPuzzleDetails(
+        competitionData.catalog_id,
+        competitionData.catalog_theme,
+        questNumber.toString()
+      );
+      if (!puzzleData) {
+        setError("Puzzle not found");
+        return;
+      }
 
-  // Polling function to check for new tries
-  const startPollingForNewTry = useCallback(async () => {
+      // Fetch tries if user is authenticated
+      let triesData: Try[] = [];
+      if (user) {
+        triesData = await ServiceManager.competitions.fetchPuzzleTries(
+          competitionData.id,
+          puzzleData.id,
+          questNumber
+        );
+      }
+
+      // Sort tries by start time
+      const sortedTries = triesData.sort(
+        (a, b) =>
+          new Date(a.start_time).getTime() - new Date(b.start_time).getTime()
+      );
+
+      // Update state with fetched data
+      setCompetition(competitionData);
+      setPuzzle(puzzleData);
+      setTries(sortedTries);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setError("Failed to load puzzle data");
+    } finally {
+      setLoading(false);
+    }
+  }, [competitionId, questNumber, user]);
+
+  // Data fetching effect with dependency cleanup
+  useEffect(() => {
+    fetchPageData();
+  }, [fetchPageData, refreshTrigger]);
+
+  /**
+   * Start polling for new tries
+   * This is only used when the user requests input for the first step
+   * and there's currently no first try available
+   */
+  const startPollingForNewTry = useCallback(() => {
+    // Only poll if we're waiting for the first try and it doesn't exist yet
+    const shouldPoll = !firstTry;
+
+    // Don't start polling if we don't need to
+    if (!shouldPoll) {
+      setPollingForTry(false);
+      return;
+    }
+
     // Stop any existing polling
     if (pollingTimerRef.current) {
       clearInterval(pollingTimerRef.current);
+      pollingTimerRef.current = null;
     }
 
     setPollingForTry(true);
 
     // Keep track of the initial try count for comparison
     const initialTryCount = tries.length;
+    const pollStartTime = Date.now();
 
     // Start polling at intervals
     pollingTimerRef.current = setInterval(async () => {
-      if (!competitionId || isNaN(questNumber) || !user || !puzzle) return;
+      if (!competitionId || isNaN(questNumber) || !user || !puzzle) {
+        setPollingForTry(false);
+        if (pollingTimerRef.current) {
+          clearInterval(pollingTimerRef.current);
+          pollingTimerRef.current = null;
+        }
+        return;
+      }
+
+      // Timeout safety - stop polling after MAX_POLLING_TIME
+      if (Date.now() - pollStartTime > MAX_POLLING_TIME) {
+        setPollingForTry(false);
+        if (pollingTimerRef.current) {
+          clearInterval(pollingTimerRef.current);
+          pollingTimerRef.current = null;
+        }
+        // Show timeout message
+        toast.current?.show({
+          severity: "warn",
+          summary: t("puzzles:input.pollingTimeout"),
+          detail: t("puzzles:input.refreshPage"),
+          life: 5000,
+        });
+        return;
+      }
 
       try {
         // Fetch latest tries
@@ -189,17 +246,17 @@ export default function PuzzlePage() {
       } catch (error) {
         console.error("Error polling for tries:", error);
       }
-    }, 1000); // Poll every 2 seconds
+    }, POLLING_INTERVAL);
 
-    // Safety timeout to stop polling after 30 seconds
+    // Safety timeout to stop polling after MAX_POLLING_TIME - handled in the interval check as well
     setTimeout(() => {
       if (pollingTimerRef.current) {
         clearInterval(pollingTimerRef.current);
         pollingTimerRef.current = null;
         setPollingForTry(false);
       }
-    }, 30000);
-  }, [tries.length, competitionId, questNumber, user, puzzle]);
+    }, MAX_POLLING_TIME + 100); // Add a small buffer
+  }, [tries.length, competitionId, questNumber, user, puzzle, t, firstTry]);
 
   // Clean up interval on component unmount
   useEffect(() => {
@@ -210,9 +267,12 @@ export default function PuzzlePage() {
     };
   }, []);
 
-  // Event handlers with useCallback
+  /**
+   * Handle input request button click
+   * Opens a new tab with input page and only starts polling if we're getting the first try
+   */
   const handleInputRequest = useCallback(() => {
-    if (!window) return;
+    if (typeof window === "undefined") return;
 
     // Set requesting state to true to show feedback
     setInputRequesting(true);
@@ -223,19 +283,38 @@ export default function PuzzlePage() {
     const newTab = window.open(inputUrl, "_blank");
     if (newTab) newTab.focus();
 
-    // Start polling for the new Try after a short delay
-    // (giving time for the API to create the Try)
-    // If the step is 1, we can start polling immediately
-    if (!firstTry) {
-      setTimeout(() => {
-        setInputRequesting(false);
-        startPollingForNewTry();
-      }, 1000);
-    } else {
+    // Only start polling if we're waiting for the first try and don't have it yet
+    const shouldPoll = !firstTry;
+
+    // Add a short delay to give time for the API to respond
+    setTimeout(() => {
       setInputRequesting(false);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [startPollingForNewTry]);
+
+      // Only poll if necessary (for first try)
+      if (shouldPoll) {
+        startPollingForNewTry();
+      }
+    }, 1000);
+  }, [startPollingForNewTry, firstTry]);
+
+  /**
+   * Navigate to the next puzzle
+   * Used when the user completes both steps of a puzzle
+   */
+  const navigateToNextPuzzle = useCallback(() => {
+    if (!puzzle_index || !competitionId) return;
+
+    const nextPuzzleNumber = parseInt(puzzle_index) + 1;
+    window.location.href = `/competition/${competitionId}/puzzle/${nextPuzzleNumber}`;
+  }, [puzzle_index, competitionId]);
+
+  /**
+   * Navigate back to the competition page
+   */
+  const navigateToCompetition = useCallback(() => {
+    if (!competitionId) return;
+    window.location.href = `/competitions/${competitionId}`;
+  }, [competitionId]);
 
   // Render loading state
   if (loading) {
@@ -310,7 +389,6 @@ export default function PuzzlePage() {
             {hasCompletedFirstStep ? (
               <InputAnswered solution={firstTry.last_answer || ""} />
             ) : (
-              // InputTemplate(1)
               <InputTemplate
                 step={1}
                 firstTry={firstTry}
@@ -318,7 +396,7 @@ export default function PuzzlePage() {
                 inputRequesting={inputRequesting}
                 pollingForTry={pollingForTry}
                 handleInputRequest={handleInputRequest}
-                setRefresh={setRefresh}
+                setRefresh={setRefreshTrigger}
                 competition={competition}
                 puzzle={puzzle}
                 questNumber={questNumber}
@@ -336,7 +414,6 @@ export default function PuzzlePage() {
                 {hasCompletedSecondStep ? (
                   <InputAnswered solution={secondTry.last_answer || ""} />
                 ) : (
-                  // InputTemplate(2)
                   <InputTemplate
                     step={2}
                     firstTry={firstTry}
@@ -344,7 +421,7 @@ export default function PuzzlePage() {
                     inputRequesting={inputRequesting}
                     pollingForTry={pollingForTry}
                     handleInputRequest={handleInputRequest}
-                    setRefresh={setRefresh}
+                    setRefresh={setRefreshTrigger}
                     competition={competition}
                     puzzle={puzzle}
                     questNumber={questNumber}
@@ -353,6 +430,7 @@ export default function PuzzlePage() {
               </>
             )}
 
+            {/* Both parts complete section */}
             {hasCompletedFirstStep && hasCompletedSecondStep && (
               <>
                 <div className="text-lg text-surface-950 dark:text-surface-0 font-semibold mt-10 bg-gradient-to-r from-amber-400 to-red-900 bg-clip-text text-transparent">
@@ -363,31 +441,37 @@ export default function PuzzlePage() {
                   {t("puzzles:input.canStillAccess")}
                 </div>
 
-                <GetInputTemplate
-                  inputRequesting={inputRequesting}
-                  pollingForTry={pollingForTry}
-                  handleInputRequest={handleInputRequest}
+                {/* Simple GetInputButton with no polling after completion */}
+                <Button
+                  label={t("puzzles:input.getInput")}
+                  className="w-full max-w-xs"
+                  onClick={() => {
+                    const currentUrl = window.location.href;
+                    const inputUrl = `${currentUrl}/input`;
+                    window.open(inputUrl, "_blank");
+                  }}
+                  icon="pi pi-download"
+                  size="small"
+                  style={{
+                    backgroundColor: "#101018",
+                    color: "#fff",
+                    border: "0.8px solid #fff",
+                  }}
                 />
               </>
             )}
 
+            {/* Navigation buttons */}
             <div className="w-full flex justify-start my-20 gap-10">
               <BackButton
-                onClickAction={() =>
-                  (window.location.href = `/competitions/${competitionId}`)
-                }
+                onClickAction={navigateToCompetition}
                 text={t("puzzles:backToCompetition")}
               />
 
               {hasCompletedFirstStep && hasCompletedSecondStep && (
                 <button
                   className="p-[3px] relative"
-                  onClick={() => {
-                    if (!puzzle_index) return;
-                    window.location.href = `/competition/${competitionId}/puzzle/${
-                      parseInt(puzzle_index) + 1
-                    }`;
-                  }}
+                  onClick={navigateToNextPuzzle}
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg" />
                   <div className="px-8 py-2 bg-black rounded-[6px] relative group transition duration-200 text-white hover:bg-transparent">

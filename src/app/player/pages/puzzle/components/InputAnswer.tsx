@@ -6,12 +6,14 @@ import { Button } from "primereact/button";
 import { Toast } from "primereact/toast";
 
 import { ServiceManager } from "@/services";
-
 import useIsMobile from "@/lib/hooks/useIsMobile";
 
 import { Competition, Puzzle } from "@/models";
 
-const getSecondsToPretty = (seconds: number) => {
+/**
+ * Convert seconds to a human-readable format (e.g., "2m 30s")
+ */
+const getSecondsToPretty = (seconds: number): string => {
   const minutes = Math.floor(seconds / 60);
   const remainingSeconds = seconds % 60;
   return `${minutes}m ${remainingSeconds}s`;
@@ -26,6 +28,10 @@ interface InputAnswerProps {
   disabled?: boolean;
 }
 
+/**
+ * Component for puzzle answer submission
+ * Handles solution input, validation, submission, and error/cooldown states
+ */
 function InputAnswer({
   competition,
   puzzle,
@@ -35,13 +41,13 @@ function InputAnswer({
   disabled,
 }: InputAnswerProps) {
   const isMobile = useIsMobile();
-  const [solution, setSolution] = useState<number>();
+  const [solution, setSolution] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
-  const [cooldown, setCooldown] = useState<number>();
+  const [cooldown, setCooldown] = useState<number | undefined>();
   const toast = useRef<Toast>(null);
   const { t } = useTranslation(["common", "puzzles"]);
 
-  // Update cooldown timer
+  // Update cooldown timer with cleanup
   useEffect(() => {
     if (!cooldown) return;
 
@@ -52,15 +58,16 @@ function InputAnswer({
       });
     }, 1000);
 
+    // Cleanup interval on unmount or when cooldown ends
     return () => clearInterval(timer);
   }, [cooldown]);
 
-  // Handle input change
+  // Handle input change with memoization
   const handleChange = useCallback((e: InputNumberChangeEvent) => {
     setSolution(e.value as number);
   }, []);
 
-  // Handle form submission
+  // Handle form submission with proper error handling
   const handleSubmit = useCallback(async () => {
     if (solution === undefined || solution === null) {
       toast.current?.show({
@@ -83,6 +90,7 @@ function InputAnswer({
         step
       );
 
+      // Handle rate limiting
       if (response.error && response.wait_time_seconds) {
         console.log(
           "Rate limit exceeded. Please wait:",
@@ -99,6 +107,7 @@ function InputAnswer({
         return;
       }
 
+      // Handle correct/incorrect answers
       if (response.is_correct) {
         toast.current?.show({
           severity: "success",
@@ -119,13 +128,18 @@ function InputAnswer({
         });
       }
     } catch (error) {
-      // If the code is 429
-      if (error instanceof Error && error.message.includes("429")) {
-        const axiosError = error as unknown as {
-          response?: { data?: { wait_time_seconds: number } };
-        };
-        if (axiosError.response?.data?.wait_time_seconds) {
-          setCooldown(axiosError.response?.data?.wait_time_seconds);
+      // Improved type checking for error handling
+      const axiosError = error as {
+        response?: { data?: { wait_time_seconds: number }; status?: number };
+      };
+
+      // Handle rate limiting errors (HTTP 429)
+      if (
+        axiosError?.response?.status === 429 ||
+        (error instanceof Error && error.message.includes("429"))
+      ) {
+        if (axiosError?.response?.data?.wait_time_seconds) {
+          setCooldown(axiosError.response.data.wait_time_seconds);
           console.log(
             "Rate limit exceeded. Please wait:",
             axiosError.response.data.wait_time_seconds
@@ -139,15 +153,16 @@ function InputAnswer({
           life: 3000,
         });
         return;
-      } else {
-        toast.current?.show({
-          severity: "error",
-          summary: t("puzzles:input.failed"),
-          detail: t("puzzles:input.error"),
-          life: 3000,
-        });
-        console.error("Error submitting answer:", error);
       }
+
+      // General error handling
+      toast.current?.show({
+        severity: "error",
+        summary: t("puzzles:input.failed"),
+        detail: t("puzzles:input.error"),
+        life: 3000,
+      });
+      console.error("Error submitting answer:", error);
     } finally {
       setLoading(false);
     }
@@ -162,14 +177,14 @@ function InputAnswer({
     t,
   ]);
 
-  // Handle keyboard submission
+  // Handle keyboard submission (Enter key)
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
-      if (e.key === "Enter" && !loading) {
+      if (e.key === "Enter" && !loading && !disabled && !cooldown) {
         handleSubmit();
       }
     },
-    [handleSubmit, loading]
+    [handleSubmit, loading, disabled, cooldown]
   );
 
   return (

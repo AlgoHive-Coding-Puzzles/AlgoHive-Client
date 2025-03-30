@@ -114,8 +114,8 @@ export class CompetitionsService extends BaseService {
   public async checkPuzzlePermission(
     competitionID: string,
     puzzleIndex: number
-  ): Promise<{ is_allowed: boolean }> {
-    return this.get<{ is_allowed: boolean }>(
+  ): Promise<{ has_permission: boolean }> {
+    return this.get<{ has_permission: boolean }>(
       `/competitions/${competitionID}/permission/puzzles/${puzzleIndex}`
     );
   }

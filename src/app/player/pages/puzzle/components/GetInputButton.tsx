@@ -8,7 +8,11 @@ interface GetInputButtonProps {
   handleInputRequest: () => void;
 }
 
-const GetInputTemplate = ({
+/**
+ * Button component that handles requesting input for puzzles
+ * Shows different states based on the current input requesting status
+ */
+const GetInputButton = ({
   inputRequesting,
   pollingForTry,
   handleInputRequest,
@@ -42,4 +46,4 @@ const GetInputTemplate = ({
   );
 };
 
-export default GetInputTemplate;
+export default GetInputButton;

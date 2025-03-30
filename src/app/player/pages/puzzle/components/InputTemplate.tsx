@@ -1,25 +1,30 @@
-import { t } from "i18next";
+import { memo } from "react";
+import { useTranslation } from "react-i18next";
 
 import { Tooltip } from "primereact/tooltip";
 
-import GetInputTemplate from "@player/pages/puzzle/components/GetInputButton";
+import GetInputButton from "@player/pages/puzzle/components/GetInputButton";
 import InputAnswer from "@player/pages/puzzle/components/InputAnswer";
 
 import { Competition, Puzzle, Try } from "@/models";
 
 interface InputTemplateProps {
   step: 1 | 2;
-  firstTry: Try;
-  secondTry: Try;
+  firstTry: Try | null;
+  secondTry: Try | null;
   inputRequesting: boolean;
   pollingForTry: boolean;
   handleInputRequest: () => void;
-  setRefresh: React.Dispatch<React.SetStateAction<string>>;
+  setRefresh: (refreshValue: string) => void;
   competition: Competition;
   puzzle: Puzzle;
   questNumber: number;
 }
 
+/**
+ * Template for input handling of puzzle steps
+ * Manages the flow of requesting input and submitting answers
+ */
 const InputTemplate = ({
   step,
   firstTry,
@@ -32,24 +37,29 @@ const InputTemplate = ({
   puzzle,
   questNumber,
 }: InputTemplateProps) => {
+  const { t } = useTranslation(["common", "puzzles"]);
+
   const currentStepTry = step === 1 ? firstTry : secondTry;
   const hasRequestedInput = !!currentStepTry;
 
+  // Only show polling message when step is 1 (first step) and polling is active
+  const showPollingMessage = step === 1 && pollingForTry;
+
   return (
-    <div className="flex flex-col gap-5 ">
-      <GetInputTemplate
+    <div className="flex flex-col gap-5">
+      <GetInputButton
         inputRequesting={inputRequesting}
         pollingForTry={pollingForTry}
         handleInputRequest={handleInputRequest}
       />
 
-      {pollingForTry && (
+      {showPollingMessage && (
         <div className="text-xs text-center text-blue-300">
-          Waiting for your input to be ready...
+          {t("puzzles:input.waitingForInput")}
         </div>
       )}
 
-      {/** Orange line */}
+      {/** Orange divider line */}
       <div className="w-44 h-1 bg-orange-500 rounded my-4" />
 
       <div
@@ -76,4 +86,5 @@ const InputTemplate = ({
   );
 };
 
-export default InputTemplate;
+// Memoize the component to prevent unnecessary re-renders
+export default memo(InputTemplate);
