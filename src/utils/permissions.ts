@@ -1,6 +1,5 @@
 import { t } from "i18next";
-import { Role } from "../models/Role";
-import { User } from "../models/User";
+import { Role, User } from "@/models";
 
 // Permissions allow a specific role to override the default permissions
 export enum Permission {

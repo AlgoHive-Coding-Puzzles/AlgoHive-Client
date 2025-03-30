@@ -1,10 +1,11 @@
 import { useState, useRef } from "react";
 import { t } from "i18next";
+
 import { confirmDialog } from "primereact/confirmdialog";
 import { Toast } from "primereact/toast";
-import { User } from "../../models/User";
-import { Role } from "../../models/Role";
-import { ServiceManager } from "../../services";
+import { ServiceManager } from "@/services";
+
+import { User, Role } from "@/models";
 
 /**
  * Custom hook for managing users in tables

@@ -1,7 +1,5 @@
 import { BaseService } from "./BaseService";
-import { Competition, CompetitionStatistics } from "../models/Competition";
-import { Try } from "../models/Try";
-import { Group } from "../models/Group";
+import { Try, Group, Competition, CompetitionStatistics } from "@/models";
 
 interface RateLimitResponse {
   is_correct?: boolean;

@@ -1,24 +1,28 @@
-import { Route, Routes } from "react-router-dom";
 import { lazy, Suspense } from "react";
+import { Route, Routes } from "react-router-dom";
 
-import LoginPage from "./pages/login/login";
-import { AuthProvider, useAuth } from "./contexts/AuthContext";
-import { ActivePageProvider } from "./contexts/ActivePageContext";
-import { isStaff } from "./utils/permissions";
-import ProtectedRoutes from "./components/ProtectedRoutes";
-import Users from "./pages/home/Home";
-import AccountPage from "./pages/account/Account";
-import HowToPlay from "./pages/how-to-play/how-to-play";
-import SupportPage from "./pages/support/support";
-import CompetitionPage from "./pages/competition/competition";
-import PuzzlePage from "./pages/puzzle/puzzle";
-import PuzzleInputPage from "./pages/puzzle_input/puzzle_input";
-import ResetPasswordPage from "./pages/reset-password/reset-password";
-import LicensePage from "./pages/license/license";
-import LeaderboardPage from "./pages/leaderboard/leaderboard";
+import ResetPasswordPage from "@shared/pages/reset-password/reset-password";
+import HowToPlay from "@shared/pages/how-to-play/how-to-play";
+import AccountPage from "@shared/pages/account/Account";
+import SupportPage from "@shared/pages/support/support";
+import LicensePage from "@shared/pages/license/license";
+import LoginPage from "@shared/pages/login/login";
+import Users from "@shared/pages/home/Home";
+
+import ProtectedRoutes from "@shared/ProtectedRoutes";
 
 // Lazy load Admin component to improve load time
-const Admin = lazy(() => import("./pages/admin/Admin"));
+const Admin = lazy(() => import("./app/admin/pages/Admin"));
+
+import PuzzleInputPage from "@player/pages/puzzle_input/puzzle_input";
+import CompetitionPage from "@player/pages/competition/competition";
+import LeaderboardPage from "@player/pages/leaderboard/leaderboard";
+import PuzzlePage from "@player/pages/puzzle/puzzle";
+
+import { isStaff } from "@utils/permissions";
+
+import { AuthProvider, useAuth } from "@contexts/AuthContext";
+import { ActivePageProvider } from "@contexts/ActivePageContext";
 
 // Main router component that handles authentication logic
 const AppRoutes = () => {

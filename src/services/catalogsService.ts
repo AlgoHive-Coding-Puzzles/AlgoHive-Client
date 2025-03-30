@@ -1,5 +1,5 @@
 import { BaseService } from "./BaseService";
-import { Catalog, Puzzle, Theme } from "../models/Catalogs";
+import { Catalog, Puzzle, Theme } from "@/models";
 
 export class CatalogsService extends BaseService {
   /** [GET] /catalogs/ */

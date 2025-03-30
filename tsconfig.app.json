@@ -6,6 +6,19 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@player/*": ["src/app/player/*"],
+      "@admin/*": ["src/app/admin/*"],
+      "@shared/*": ["src/app/shared/*"],
+      "@services/*": ["src/services/*"],
+      "@utils/*": ["src/utils/*"],
+      "@models/*": ["src/models/*"],
+      "@hooks/*": ["src/lib/hooks/*"],
+      "@contexts/*": ["src/lib/contexts/*"],
+      "@assets/*": ["src/assets/*"]
+    },
 
     /* Bundler mode */
     "moduleResolution": "bundler",

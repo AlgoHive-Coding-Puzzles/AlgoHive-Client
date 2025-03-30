@@ -1,5 +1,5 @@
 import { BaseService } from "./BaseService";
-import { Role } from "../models/Role";
+import { Role } from "@/models";
 
 export class RolesService extends BaseService {
   /** [GET] /roles/ */

@@ -1,7 +1,5 @@
 import { BaseService } from "./BaseService";
-import { User } from "../models/User";
-import { Role } from "../models/Role";
-import { Group } from "../models/Group";
+import { User, Role, Group } from "@/models";
 
 interface LoginResponse {
   user_id: string;
