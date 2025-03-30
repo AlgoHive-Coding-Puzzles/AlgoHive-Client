@@ -55,8 +55,8 @@ const AccountPage = () => {
     if (newPassword !== confirmPassword) {
       toast.current?.show({
         severity: "error",
-        summary: t("common.states.error"),
-        detail: t("users.account.passwordMismatch"),
+        summary: t("common:states.error"),
+        detail: t("auth:passwordMismatch"),
         life: 3000,
       });
       return;
@@ -68,16 +68,16 @@ const AccountPage = () => {
       await ServiceManager.users.changePassword(oldPassword, newPassword);
       toast.current?.show({
         severity: "success",
-        summary: t("common.states.success"),
-        detail: t("users.account.passwordChanged"),
+        summary: t("common:states.success"),
+        detail: t("auth:passwordChanged"),
         life: 3000,
       });
     } catch (error) {
       console.error("Error changing password:", error);
       toast.current?.show({
         severity: "error",
-        summary: t("common.states.error"),
-        detail: t("users.account.passwordChangeFailed"),
+        summary: t("common:states.error"),
+        detail: t("auth:passwordChangeFailed"),
         life: 3000,
       });
     } finally {
@@ -98,7 +98,7 @@ const AccountPage = () => {
             <div className="p-6 mt-10 md:p-12 rounded-2xl lg:rounded-4xl bg-white/5 backdrop-blur-[48px] md:max-w-[calc(100%-3rem)] lg:max-w-none mx-auto shadow-[0px_2px_5px_0px_rgba(255,255,255,0.06)_inset,0px_12px_20px_0px_rgba(0,0,0,0.06)]">
               <div className="py-6 border-b border-white/12 flex flex-col gap-10">
                 <h4 className="text-3xl font-bold text-surface-0">
-                  {t("users.accountSettings")}
+                  {t("auth:accountSettings")}
                 </h4>
                 <div className="flex flex-col sm:flex-row gap-2 items-start">
                   <div className="sm:flex-[0.45] text-lg text-surface-0 font-medium">
@@ -108,13 +108,13 @@ const AccountPage = () => {
                         handleLogout();
                       }}
                     >
-                      {t("common.actions.logout")}
+                      {t("common:actions.logout")}
                     </button>
                   </div>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-2 items-start">
                   <div className="sm:flex-[0.45] text-lg text-surface-0 font-medium">
-                    {t("common.fields.firstName")}
+                    {t("common:fields.firstName")}
                   </div>
                   <div className="sm:flex-[0.55] w-full">
                     <Input
@@ -127,7 +127,7 @@ const AccountPage = () => {
                 </div>
                 <div className="flex flex-col sm:flex-row gap-2 items-start">
                   <div className="sm:flex-[0.45] text-lg text-surface-0 font-medium">
-                    {t("common.fields.lastName")}
+                    {t("common:fields.lastName")}
                   </div>
                   <div className="sm:flex-[0.55] w-full">
                     <Input
@@ -140,7 +140,7 @@ const AccountPage = () => {
                 </div>
                 <div className="flex flex-col sm:flex-row gap-2 items-start">
                   <div className="sm:flex-[0.45] text-lg text-surface-0 font-medium">
-                    {t("common.fields.email")}
+                    {t("common:fields.email")}
                   </div>
                   <div className="sm:flex-[0.55] w-full">
                     <Input
@@ -153,7 +153,7 @@ const AccountPage = () => {
                 </div>
                 <div className="flex flex-col sm:flex-row gap-2 items-start">
                   <div className="sm:flex-[0.45] text-lg text-surface-0 font-medium">
-                    {t("common.fields.groups")}
+                    {t("common:fields.groups")}
                   </div>
                   <div className="sm:flex-[0.55] w-full">
                     <Input
@@ -169,7 +169,7 @@ const AccountPage = () => {
               <div className="py-10 border-b border-white/12 flex flex-col gap-10">
                 <div className="flex flex-col sm:flex-row gap-2 items-start">
                   <div className="sm:flex-[0.45] text-lg text-surface-0 font-medium">
-                    {t("common.fields.changePassword")}
+                    {t("common:fields.changePassword")}
                   </div>
                   <div className="sm:flex-[0.55] w-full">
                     <Input
@@ -183,7 +183,7 @@ const AccountPage = () => {
                 </div>
                 <div className="flex flex-col sm:flex-row gap-2 items-start">
                   <div className="sm:flex-[0.45] text-lg text-surface-0 font-medium">
-                    {t("common.fields.confirmPassword")}
+                    {t("common:fields.confirmPassword")}
                   </div>
                   <div className="sm:flex-[0.55] w-full">
                     <Input
@@ -197,7 +197,7 @@ const AccountPage = () => {
                 </div>
                 <div className="flex flex-col sm:flex-row gap-2 items-start">
                   <div className="sm:flex-[0.45] text-lg text-surface-0 font-medium">
-                    {t("common.fields.currentPassword")}
+                    {t("common:fields.currentPassword")}
                   </div>
                   <div className="sm:flex-[0.55] w-full">
                     <Input
@@ -219,10 +219,10 @@ const AccountPage = () => {
                   {loading ? (
                     <div className="flex items-center gap-2">
                       <div className="w-4 h-4 border-2 border-white rounded-full animate-spin border-t-transparent"></div>
-                      {t("common.states.loading")}
+                      {t("common:states.loading")}
                     </div>
                   ) : (
-                    t("common.actions.save")
+                    t("common:actions.save")
                   )}
                 </button>
               </div>

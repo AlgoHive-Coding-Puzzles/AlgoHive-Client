@@ -46,7 +46,7 @@ const UserActions: React.FC<UserActionsProps> = ({
         icon="pi pi-pencil"
         className="p-button-rounded p-button-success p-button-sm"
         onClick={() => onEdit(user)}
-        tooltip={t("common.actions.edit")}
+        tooltip={t("common:actions.edit")}
         tooltipOptions={{ position: "top" }}
       />
       {showBlockButton && (
@@ -58,8 +58,8 @@ const UserActions: React.FC<UserActionsProps> = ({
           onClick={() => onToggleBlock(user)}
           tooltip={
             user.blocked
-              ? t("common.actions.unblock")
-              : t("common.actions.block")
+              ? t("common:actions.unblock")
+              : t("common:actions.block")
           }
           tooltipOptions={{ position: "top" }}
         />
@@ -68,7 +68,7 @@ const UserActions: React.FC<UserActionsProps> = ({
         icon="pi pi-key"
         className="p-button-rounded p-button-info p-button-sm"
         onClick={() => onResetPassword(user)}
-        tooltip={t("staffTabs.users.asAdmin.resetPassword")}
+        tooltip={t("admin:users:asAdmin.resetPassword")}
         tooltipOptions={{ position: "top" }}
       />
       <Button
@@ -76,7 +76,7 @@ const UserActions: React.FC<UserActionsProps> = ({
         className="p-button-rounded p-button-danger p-button-sm"
         onClick={() => onDelete(user)}
         disabled={isUserOwner && (isSameUser ? true : false)}
-        tooltip={t("common.actions.delete")}
+        tooltip={t("common:actions.delete")}
         tooltipOptions={{ position: "top" }}
       />
     </div>

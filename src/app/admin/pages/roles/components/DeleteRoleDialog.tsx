@@ -28,13 +28,13 @@ const DeleteRoleDialog: React.FC<DeleteRoleDialogProps> = ({
   const footerContent = (
     <div className="flex justify-end gap-2">
       <Button
-        label={t("common.actions.cancel")}
+        label={t("common:actions.cancel")}
         icon="pi pi-times"
         onClick={onHide}
         className="p-button-text"
       />
       <Button
-        label={t("common.actions.delete")}
+        label={t("common:actions.delete")}
         icon="pi pi-trash"
         onClick={onConfirm}
         className="p-button-danger"
@@ -46,7 +46,7 @@ const DeleteRoleDialog: React.FC<DeleteRoleDialogProps> = ({
 
   return (
     <Dialog
-      header={t("staffTabs.roles.deleteRole")}
+      header={t("admin:roles:deleteRole")}
       visible={visible}
       style={{ width: "450px" }}
       onHide={onHide}
@@ -56,14 +56,14 @@ const DeleteRoleDialog: React.FC<DeleteRoleDialogProps> = ({
     >
       <div className="align-items-center p-5 text-center">
         <i className="pi pi-exclamation-triangle text-5xl text-yellow-500 mb-4" />
-        <h4 className="mb-2">{t("staffTabs.roles.confirmDelete")}</h4>
+        <h4 className="mb-2">{t("admin:roles:confirmDelete")}</h4>
         <p className="mb-0">
-          {t("staffTabs.roles.confirmDeleteMessage", { name: role.name })}
+          {t("admin:roles:confirmDeleteMessage", { name: role.name })}
         </p>
         {role.users && role.users.length > 0 && (
           <div className="mt-3 p-3 border-1 border-yellow-500 bg-yellow-100 text-yellow-700 rounded">
             <i className="pi pi-exclamation-circle mr-2" />
-            {t("staffTabs.roles.warningUsersAssigned", {
+            {t("admin:roles:warningUsersAssigned", {
               count: role.users.length,
               users: role.users.length > 1 ? "users" : "user",
             })}

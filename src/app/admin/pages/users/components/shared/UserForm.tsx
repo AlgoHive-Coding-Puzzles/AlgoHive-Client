@@ -50,13 +50,13 @@ const UserForm: React.FC<UserFormProps> = ({
   const userDialogFooter = (
     <div className="flex justify-end gap-2">
       <Button
-        label={t("common.actions.cancel")}
+        label={t("common:actions.cancel")}
         icon="pi pi-times"
         className="p-button-text"
         onClick={onHide}
       />
       <Button
-        label={t("common.actions.save")}
+        label={t("common:actions.save")}
         icon="pi pi-check"
         className="p-button-primary"
         onClick={onSave}
@@ -80,7 +80,7 @@ const UserForm: React.FC<UserFormProps> = ({
     >
       <div className="field mt-4">
         <label htmlFor="first_name" className="font-bold">
-          {t("common.fields.firstName")}
+          {t("common:fields.firstName")}
         </label>
         <InputText
           id="first_name"
@@ -93,7 +93,7 @@ const UserForm: React.FC<UserFormProps> = ({
 
       <div className="field mt-4">
         <label htmlFor="last_name" className="font-bold">
-          {t("common.fields.lastName")}
+          {t("common:fields.lastName")}
         </label>
         <InputText
           id="last_name"
@@ -106,7 +106,7 @@ const UserForm: React.FC<UserFormProps> = ({
 
       <div className="field mt-4">
         <label htmlFor="email" className="font-bold">
-          {t("common.fields.email")}
+          {t("common:fields.email")}
         </label>
         <InputText
           id="email"
@@ -121,14 +121,14 @@ const UserForm: React.FC<UserFormProps> = ({
       {showRoles && (
         <div className="field mt-4">
           <label htmlFor="roles" className="font-bold">
-            {t("common.fields.roles")}
+            {t("common:fields.roles")}
           </label>
           <MultiSelect
             id="roles"
             value={fields.selectedRoles}
             options={roleOptions}
             onChange={(e) => onFieldChange("selectedRoles", e.value)}
-            placeholder={t("common.selects.roles")}
+            placeholder={t("common:selects.roles")}
             display="chip"
             className="w-full mt-1"
           />

@@ -19,7 +19,7 @@ interface AppDockProps {
 
 export default function AppDock({ setPage }: AppDockProps) {
   const { user } = useAuth();
-  const { i18n, t } = useTranslation();
+  const { i18n, t } = useTranslation(["common", "navigation"]);
   const { logout } = useAuth();
   const [displayTerminal, setDisplayTerminal] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -57,7 +57,7 @@ export default function AppDock({ setPage }: AppDockProps) {
 
   const dockItems = [
     {
-      label: t("navigation.staff.terminal"),
+      label: t("navigation:dock:terminal"),
       icon: () => createIconContainer("pi pi-angle-right", "#262626"),
       command: () => {
         setDisplayTerminal(true);

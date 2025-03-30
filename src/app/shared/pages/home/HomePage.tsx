@@ -17,7 +17,7 @@ import Shape5 from "@assets/shapes/shape-5.svg";
 import "./HomePage.css";
 
 export default function Users() {
-  const { t } = useTranslation();
+  const { t } = useTranslation(["common", "home"]);
 
   const redirectToCompetition = (competition: Competition) => {
     window.location.href = `/competitions/${competition.id}`;
@@ -34,15 +34,15 @@ export default function Users() {
             <Navbar className="relative" />
             <div className="px-6 lg:px-12 mt-10 lg:mt-20 relative z-4">
               <h1 className=" leading-tight text-white text-4xl lg:text-7xl font-semibold lg:px-3">
-                <span className="text-amber-600">{t("users.are")} </span>{" "}
-                {t("users.youReady")}{" "}
+                <span className="text-amber-600">{t("home:are")} </span>{" "}
+                {t("home:youReady")}{" "}
                 <span className="hidden lg:inline-flex w-[25rem] justify-between p-2 border border-white/12 rounded-full">
                   <img src={Shape2} alt="" />
                   <img src={Shape3} alt="" />
                   <img src={Shape4} alt="" />
                   <img src={Shape5} alt="" />
                 </span>{" "}
-                {t("users.toExplore")}
+                {t("home:toExplore")}
               </h1>
             </div>
           </div>

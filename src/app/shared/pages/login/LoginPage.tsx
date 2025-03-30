@@ -50,11 +50,11 @@ const LoginPage = () => {
       navigate(from, { replace: true });
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
-      setError(t("login.invalidEmailOrPassword"));
+      setError(t("auth:login.invalidEmailOrPassword"));
       toast.current?.show({
         severity: "error",
-        summary: t("login.error"),
-        detail: t("login.invalidCredentials"),
+        summary: t("auth:login.error"),
+        detail: t("auth:login.invalidCredentials"),
         life: 3000,
       });
     } finally {
@@ -70,8 +70,8 @@ const LoginPage = () => {
 
       toast.current?.show({
         severity: "success",
-        summary: t("login.resetPassword.success"),
-        detail: t("login.resetPassword.successMessage"),
+        summary: t("auth:resetPassword.success"),
+        detail: t("auth:resetPassword.successMessage"),
         life: 3000,
       });
       setShowForgotDialog(false);
@@ -80,8 +80,8 @@ const LoginPage = () => {
       console.error("Error resetting password:", error);
       toast.current?.show({
         severity: "error",
-        summary: t("login.error"),
-        detail: t("login.resetPassword.error"),
+        summary: t("auth:login.error"),
+        detail: t("auth:resetPassword.error"),
         life: 3000,
       });
     }
@@ -99,7 +99,7 @@ const LoginPage = () => {
           {/* Right section (login) - top on mobile */}
           <div className="w-full md:w-1/2 p-6 md:p-10 flex flex-col justify-center rounded-b-lg md:rounded-b-none md:rounded-r-lg border-2 border-white bg-transparent order-1 md:order-2">
             <h1 className="text-2xl font-semibold mb-4 text-center">
-              {t("login.title")}
+              {t("auth:login.title")}
             </h1>
             {error && (
               <p className="text-red-500 text-sm text-center mb-2">{error}</p>
@@ -107,7 +107,7 @@ const LoginPage = () => {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label htmlFor="email" className="block text-sm font-medium">
-                  {t("login.email")}
+                  {t("auth:login.email")}
                 </label>
                 <InputText
                   id="email"
@@ -120,7 +120,7 @@ const LoginPage = () => {
               </div>
               <div>
                 <label htmlFor="password" className="block text-sm font-medium">
-                  {t("login.password")}
+                  {t("auth:login.password")}
                 </label>
                 <Password
                   id="password"
@@ -140,19 +140,19 @@ const LoginPage = () => {
                     checked={rememberMe}
                     onChange={(e) => setRememberMe(e.target.checked)}
                   />
-                  <label htmlFor="remember">{t("login.remember")}</label>
+                  <label htmlFor="remember">{t("auth:login.remember")}</label>
                 </div>
                 <a
                   className="text-blue-500"
                   onClick={() => setShowForgotDialog(true)}
                   style={{ cursor: "pointer" }}
                 >
-                  {t("login.forgot")}
+                  {t("auth:login.forgot")}
                 </a>
               </div>
               <Button
                 type="submit"
-                label={t("login.submit")}
+                label={t("auth:login.submit")}
                 className="w-full p-button-primary"
                 loading={loading}
                 disabled={loading}
@@ -160,8 +160,8 @@ const LoginPage = () => {
             </form>
             <Divider className="my-4" />
             <p className="text-center text-sm mt-4">
-              {t("login.noAccount")}{" "}
-              <a className="text-blue-500">{t("login.askAdmin")}</a>
+              {t("auth:login.noAccount")}{" "}
+              <a className="text-blue-500">{t("auth:login.askAdmin")}</a>
             </p>
           </div>
 
@@ -171,38 +171,46 @@ const LoginPage = () => {
             style={{ backgroundColor: "rgba(255, 255, 255, 0.7)" }}
           >
             <h2 className="text-2xl md:text-3xl font-bold mb-4">
-              {t("login.welcome")}{" "}
-              <span className="text-amber-400">{t("app.name")}</span>
+              {t("auth:login.welcome")}{" "}
+              <span className="text-amber-400">{t("common:app.name")}</span>
             </h2>
-            <p className="mb-6">{t("login.tagline")}</p>
+            <p className="mb-6">{t("auth:login.tagline")}</p>
             <div className="space-y-4">
               <div className="flex items-center">
                 <span className="text-xl mr-2">🐝</span>
                 <div>
-                  <h3 className="font-semibold">{t("login.feature1.title")}</h3>
-                  <p className="text-sm">{t("login.feature1.desc")}</p>
+                  <h3 className="font-semibold">
+                    {t("auth:login.feature1.title")}
+                  </h3>
+                  <p className="text-sm">{t("auth:login.feature1.desc")}</p>
                 </div>
               </div>
               <div className="flex items-center">
                 <span className="text-xl mr-2">🧩</span>
                 <div>
-                  <h3 className="font-semibold">{t("login.feature2.title")}</h3>
-                  <p className="text-sm">{t("login.feature2.desc")}</p>
+                  <h3 className="font-semibold">
+                    {t("auth:login.feature2.title")}
+                  </h3>
+                  <p className="text-sm">{t("auth:login.feature2.desc")}</p>
                 </div>
               </div>
               <div className="flex items-center">
                 <span className="text-xl mr-2">🏆</span>
                 <div>
-                  <h3 className="font-semibold">{t("login.feature3.title")}</h3>
-                  <p className="text-sm">{t("login.feature3.desc")}</p>
+                  <h3 className="font-semibold">
+                    {t("auth:login.feature3.title")}
+                  </h3>
+                  <p className="text-sm">{t("auth:login.feature3.desc")}</p>
                 </div>
               </div>
               <div className="flex items-center">
                 <span className="text-xl mr-2">🌐</span>
                 <div>
-                  <h3 className="font-semibold">{t("login.feature4.title")}</h3>
+                  <h3 className="font-semibold">
+                    {t("auth:login.feature4.title")}
+                  </h3>
                   <span className="text-sm">
-                    {t("login.feature4.desc")} <LanguageSwitcher />
+                    {t("auth:login.feature4.desc")} <LanguageSwitcher />
                   </span>
                 </div>
               </div>
@@ -213,17 +221,17 @@ const LoginPage = () => {
       <Dialog
         visible={showForgotDialog}
         onHide={() => setShowForgotDialog(false)}
-        header={t("login.resetPassword.title")}
+        header={t("auth:resetPassword.title")}
         className="w-[90vw] md:w-[500px]"
       >
         <div className="mb-4 text-sm text-gray-600">
-          {t("login.resetPassword.desc")}
+          {t("auth:resetPassword.desc")}
         </div>
 
         <form onSubmit={handleForgotPassword} className="space-y-4">
           <div>
             <label htmlFor="resetEmail" className="block text-sm font-medium">
-              {t("login.email")}
+              {t("auth:login.email")}
             </label>
             <InputText
               id="resetEmail"
@@ -236,7 +244,7 @@ const LoginPage = () => {
           </div>
           <Button
             type="submit"
-            label={t("login.resetPassword.submit")}
+            label={t("auth:resetPassword.submit")}
             className="w-full p-button-primary"
           />
         </form>

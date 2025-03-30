@@ -22,7 +22,7 @@ import { useActivePage } from "@contexts/ActivePageContext";
 import { useAuth } from "@contexts/AuthContext";
 
 export default function DashboardPage() {
-  const { t } = useTranslation();
+  const { t } = useTranslation(["common", "staffTabs"]);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const toast = useRef<Toast>(null);
@@ -53,8 +53,8 @@ export default function DashboardPage() {
     if (newPassword !== confirmPassword) {
       toast.current?.show({
         severity: "error",
-        summary: t("staffTabs.home.messages.error"),
-        detail: t("staffTabs.home.messages.passwordMismatch"),
+        summary: t("admin:dashboard:messages.error"),
+        detail: t("auth:passwordMismatch"),
       });
       return;
     }
@@ -62,8 +62,8 @@ export default function DashboardPage() {
     if (newPassword.length < 8) {
       toast.current?.show({
         severity: "error",
-        summary: t("staffTabs.home.messages.error"),
-        detail: t("staffTabs.home.messages.passwordTooShort"),
+        summary: t("admin:dashboard:messages.error"),
+        detail: t("auth:passwordTooShort"),
       });
       return;
     }
@@ -74,8 +74,8 @@ export default function DashboardPage() {
 
       toast.current?.show({
         severity: "success",
-        summary: t("staffTabs.home.messages.success"),
-        detail: t("staffTabs.home.messages.passwordResetSuccess"),
+        summary: t("admin:dashboard:messages.success"),
+        detail: t("admin:dashboard:messages.passwordResetSuccess"),
       });
 
       setNewPassword("");
@@ -83,8 +83,8 @@ export default function DashboardPage() {
     } catch (error) {
       toast.current?.show({
         severity: "error",
-        summary: t("staffTabs.home.messages.error"),
-        detail: t("staffTabs.home.messages.passwordResetError"),
+        summary: t("admin:dashboard:messages.error"),
+        detail: t("admin:dashboard:messages.passwordResetError"),
       });
       console.error(error);
     } finally {
@@ -94,8 +94,8 @@ export default function DashboardPage() {
 
   const confirmLogout = () => {
     confirmDialog({
-      message: t("staffTabs.home.messages.confirmLogout"),
-      header: t("staffTabs.home.logoutHeader"),
+      message: t("admin:dashboard:messages.confirmLogout"),
+      header: t("admin:dashboard:logoutHeader"),
       icon: "pi pi-exclamation-triangle",
       accept: () => {
         logout();
@@ -106,7 +106,7 @@ export default function DashboardPage() {
 
   const passwordHeader = (
     <div className="flex flex-wrap align-items-center gap-2">
-      <span className="font-bold">{t("staffTabs.home.passwordStrength")}</span>
+      <span className="font-bold">{t("admin:dashboard:passwordStrength")}</span>
     </div>
   );
 
@@ -132,7 +132,7 @@ export default function DashboardPage() {
       }).format(date);
     } catch (e) {
       console.error("Error parsing date:", e);
-      return t("staffTabs.home.neverConnected");
+      return t("admin:dashboard:neverConnected");
     }
   };
 
@@ -142,8 +142,8 @@ export default function DashboardPage() {
     if (!firstName.trim()) {
       toast.current?.show({
         severity: "error",
-        summary: t("staffTabs.home.messages.error"),
-        detail: t("staffTabs.users.messages.firstNameRequired"),
+        summary: t("admin:dashboard:messages.error"),
+        detail: t("admin:users:messages.firstNameRequired"),
       });
       return;
     }
@@ -151,8 +151,8 @@ export default function DashboardPage() {
     if (!lastName.trim()) {
       toast.current?.show({
         severity: "error",
-        summary: t("staffTabs.home.messages.error"),
-        detail: t("staffTabs.users.messages.lastNameRequired"),
+        summary: t("admin:dashboard:messages.error"),
+        detail: t("admin:users:messages.lastNameRequired"),
       });
       return;
     }
@@ -164,16 +164,16 @@ export default function DashboardPage() {
       // Show success message
       toast.current?.show({
         severity: "success",
-        summary: t("staffTabs.home.messages.success"),
-        detail: t("staffTabs.home.messages.profileUpdateSuccess"),
+        summary: t("admin:dashboard:messages.success"),
+        detail: t("admin:dashboard:messages.profileUpdateSuccess"),
       });
 
       // Optionally, refresh user data
     } catch (error) {
       toast.current?.show({
         severity: "error",
-        summary: t("staffTabs.home.messages.error"),
-        detail: t("staffTabs.home.messages.profileUpdateError"),
+        summary: t("admin:dashboard:messages.error"),
+        detail: t("admin:dashboard:messages.profileUpdateError"),
       });
       console.error(error);
     } finally {
@@ -191,14 +191,14 @@ export default function DashboardPage() {
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div>
             <h1 className="text-3xl font-bold text-white mb-2">
-              {t("staffTabs.home.welcome")}, {user?.first_name}{" "}
+              {t("admin:dashboard:welcome")}, {user?.first_name}{" "}
               {user?.last_name}!
             </h1>
             <p className="text-blue-200">
-              {t("staffTabs.home.lastLogin")}:{" "}
+              {t("admin:dashboard:lastLogin")}:{" "}
               {user?.last_connected
                 ? formatLastConnected(user.last_connected)
-                : t("staffTabs.home.neverConnected")}
+                : t("admin:dashboard:neverConnected")}
             </p>
           </div>
           <div className="mt-4 md:mt-0 flex items-center gap-4">
@@ -212,14 +212,14 @@ export default function DashboardPage() {
             />
 
             <Button
-              label={t("staffTabs.home.logout")}
+              label={t("admin:dashboard:logout")}
               icon="pi pi-sign-out"
               onClick={confirmLogout}
               className="p-button-text p-button-danger"
               style={{ backgroundColor: "rgba(255, 255, 255, 1)" }}
             />
             <Button
-              label={t("staffTabs.home.leaveStaffPortal")}
+              label={t("admin:dashboard:leaveStaffPortal")}
               icon="pi pi-arrow-left"
               onClick={() => navigate("/")}
               className="p-button-text p-button-secondary"
@@ -233,10 +233,10 @@ export default function DashboardPage() {
         {/* Profile Section */}
         <Card
           className="lg:col-span-2 shadow-lg"
-          title={t("staffTabs.home.profileInfo")}
+          title={t("admin:dashboard:profileInfo")}
         >
           <TabView>
-            <TabPanel header={t("common.fields.roles")}>
+            <TabPanel header={t("common:fields.roles")}>
               <div className="mt-4 flex flex-wrap gap-2">
                 {user?.roles.length ? (
                   user.roles.map((role) => (
@@ -248,9 +248,7 @@ export default function DashboardPage() {
                     />
                   ))
                 ) : (
-                  <p className="text-gray-500">
-                    {t("staffTabs.roles.noRoles")}
-                  </p>
+                  <p className="text-gray-500">{t("admon:roles:noRoles")}</p>
                 )}
               </div>
             </TabPanel>
@@ -260,13 +258,13 @@ export default function DashboardPage() {
 
           <div className="mt-4">
             <h3 className="text-xl font-semibold mb-3">
-              {t("staffTabs.home.accountInfo")}
+              {t("admin:dashboard:accountInfo")}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="flex items-center">
                 <i className="pi pi-envelope mr-2 text-blue-700"></i>
                 <span className="font-medium mr-2">
-                  {t("common.fields.email")}:
+                  {t("common:fields.email")}:
                 </span>
                 <span>{user?.email}</span>
               </div>
@@ -278,14 +276,14 @@ export default function DashboardPage() {
               <div className="flex items-center">
                 <i className="pi pi-shield mr-2 text-blue-700"></i>
                 <span className="font-medium mr-2">
-                  {t("staffTabs.home.status")}:
+                  {t("admin:dashboard:status")}:
                 </span>
                 <span
                   className={user?.blocked ? "text-red-500" : "text-green-500"}
                 >
                   {user?.blocked
-                    ? t("staffTabs.users.blocked")
-                    : t("staffTabs.users.active")}
+                    ? t("admin:users:blocked")
+                    : t("admin:users:active")}
                 </span>
               </div>
             </div>
@@ -293,13 +291,13 @@ export default function DashboardPage() {
         </Card>
 
         {/* Password Reset Section */}
-        <Card title={t("staffTabs.home.resetPassword")} className="shadow-lg">
+        <Card title={t("admin:dashboard:resetPassword")} className="shadow-lg">
           <div className="mb-4">
             <label
               htmlFor="oldpassword"
               className="block text-sm font-medium mb-1"
             >
-              {t("staffTabs.home.oldPassword")}
+              {t("admin:dashboard:oldPassword")}
             </label>
             <Password
               id="oldpassword"
@@ -316,7 +314,7 @@ export default function DashboardPage() {
               htmlFor="new-password"
               className="block text-sm font-medium mb-1"
             >
-              {t("staffTabs.home.newPassword")}
+              {t("admin:dashboard:newPassword")}
             </label>
             <Password
               id="new-password"
@@ -326,10 +324,10 @@ export default function DashboardPage() {
               className="w-full"
               header={passwordHeader}
               footer={passwordFooter}
-              promptLabel={t("staffTabs.home.enterPassword")}
-              weakLabel={t("staffTabs.home.weak")}
-              mediumLabel={t("staffTabs.home.medium")}
-              strongLabel={t("staffTabs.home.strong")}
+              promptLabel={t("admin:dashboard:enterPassword")}
+              weakLabel={t("admin:dashboard:weak")}
+              mediumLabel={t("admin:dashboard:medium")}
+              strongLabel={t("admin:dashboard:strong")}
             />
           </div>
 
@@ -338,7 +336,7 @@ export default function DashboardPage() {
               htmlFor="confirm-password"
               className="block text-sm font-medium mb-1"
             >
-              {t("staffTabs.home.confirmPassword")}
+              {t("admin:dashboard:confirmPassword")}
             </label>
             <Password
               id="confirm-password"
@@ -353,14 +351,12 @@ export default function DashboardPage() {
               }`}
             />
             {confirmPassword && newPassword !== confirmPassword && (
-              <small className="p-error">
-                {t("staffTabs.home.messages.passwordMismatch")}
-              </small>
+              <small className="p-error">{t("auth:passwordMismatch")}</small>
             )}
           </div>
 
           <Button
-            label={t("staffTabs.home.updatePassword")}
+            label={t("admin:dashboard:updatePassword")}
             icon="pi pi-lock"
             loading={isChangingPass}
             disabled={
@@ -380,12 +376,12 @@ export default function DashboardPage() {
         <Card className="shadow-lg">
           <div className="flex justify-between items-center mb-3">
             <div className="text-xl font-semibold">
-              {t("staffTabs.home.activeRoles")}
+              {t("admin:dashboard:activeRoles")}
             </div>
             <Badge value={activeRoles} severity="info" />
           </div>
           <p className="text-gray-500">
-            {t("staffTabs.home.rolesDescription")}
+            {t("admin:dashboard:rolesDescription")}
           </p>
 
           <div className="flex flex-wrap gap-2 mt-4">
@@ -403,24 +399,24 @@ export default function DashboardPage() {
         <Card className="shadow-lg">
           <div className="flex justify-between items-center mb-3">
             <div className="text-xl font-semibold">
-              {t("staffTabs.home.quickActions")}
+              {t("admin:dashboard:quickActions")}
             </div>
           </div>
           <div className="flex flex-col gap-4">
             <Button
-              label={t("navigation.staff.users")}
+              label={t("navigation:dock.users")}
               icon="pi pi-users"
               className="p-button-sm p-button-outlined"
               onClick={() => setActivePage("users")}
             />
             <Button
-              label={t("navigation.staff.competitions")}
+              label={t("navigation:dock.competitions")}
               icon="pi pi-flag"
               className="p-button-sm p-button-outlined"
               onClick={() => setActivePage("groups")}
             />
             <Button
-              label={t("navigation.staff.catalogs")}
+              label={t("navigation:dock.catalogs")}
               icon="pi pi-book"
               className="p-button-sm p-button-outlined"
               onClick={() => setActivePage("competitions")}
@@ -431,7 +427,7 @@ export default function DashboardPage() {
                 className="block text-sm font-medium mb-1"
                 htmlFor="language"
               >
-                {t("staffTabs.home.language")}
+                {t("admin:dashboard:language")}
               </label>
               <Button id="language">
                 <LanguageSwitcher />
@@ -444,7 +440,7 @@ export default function DashboardPage() {
         <Card className="shadow-lg">
           <div className="flex justify-between items-center mb-3">
             <div className="text-xl font-semibold">
-              {t("staffTabs.home.updateProfile")}
+              {t("admin:dashboard:updateProfile")}
             </div>
             <Badge value="Edit" severity="info" />
           </div>
@@ -454,14 +450,14 @@ export default function DashboardPage() {
               htmlFor="first_name"
               className="block text-sm font-medium mb-1"
             >
-              {t("common.fields.firstName")}
+              {t("common:fields.firstName")}
             </label>
             <InputText
               id="first_name"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
               className="w-full"
-              placeholder={t("common.fields.firstName")}
+              placeholder={t("common:fields.firstName")}
             />
           </div>
 
@@ -470,14 +466,14 @@ export default function DashboardPage() {
               htmlFor="lastName"
               className="block text-sm font-medium mb-1"
             >
-              {t("common.fields.lastName")}
+              {t("common:fields.lastName")}
             </label>
             <InputText
               id="lastName"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
               className="w-full"
-              placeholder={t("common.fields.lastName")}
+              placeholder={t("common:fields.lastName")}
             />
           </div>
 
@@ -486,20 +482,20 @@ export default function DashboardPage() {
               htmlFor="lastName"
               className="block text-sm font-medium mb-1"
             >
-              {t("common.fields.email")}
+              {t("common:fields.email")}
             </label>
             <InputText
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full"
-              placeholder={t("common.fields.email")}
+              placeholder={t("common:fields.email")}
               autoComplete="off"
             />
           </div>
 
           <Button
-            label={t("staffTabs.home.saveChanges")}
+            label={t("admin:dashboard:saveChanges")}
             icon="pi pi-user-edit"
             loading={isUpdating}
             onClick={handleUpdateProfile}

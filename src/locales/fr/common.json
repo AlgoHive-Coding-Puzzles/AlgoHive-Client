@@ -1,0 +1,53 @@
+{
+  "app": {
+    "name": "AlgoHive",
+    "description": "Plateforme de challenges algorithmiques"
+  },
+  "actions": {
+    "create": "Créer",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "block": "Bloquer",
+    "unblock": "Débloquer",
+    "reset": "Réinitialiser",
+    "view": "Voir",
+    "close": "Fermer",
+    "logout": "Déconnexion",
+    "confirmDelete": "Confirmer la suppression"
+  },
+  "fields": {
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "email": "E-mail",
+    "name": "Nom",
+    "description": "Description",
+    "roles": "Rôles",
+    "groups": "Groupes",
+    "status": "Statut",
+    "actions": "Actions",
+    "password": "Mot de passe",
+    "lastConnection": "Dernière connexion",
+    "changePassword": "Changer le mot de passe",
+    "confirmPassword": "Confirmer le mot de passe",
+    "currentPassword": "Mot de passe actuel"
+  },
+  "selects": {
+    "scopes": "Sélectionner des périmètres",
+    "groups": "Sélectionner des groupes",
+    "roles": "Sélectionner des rôles",
+    "catalogs": "Sélectionner des catalogues",
+    "themes": "Sélectionner des thèmes",
+    "language": "Sélectionner la langue"
+  },
+  "states": {
+    "none": "Aucun",
+    "loading": "Chargement ...",
+    "empty": "Aucune donnée disponible",
+    "error": "Erreur",
+    "validationError": "Erreur de validation du formulaire",
+    "errorMessage": "Une erreur est survenue lors de la récupération des ressources.",
+    "success": "Succès"
+  }
+}

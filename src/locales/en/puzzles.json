@@ -1,0 +1,42 @@
+{
+  "clickToAccess": "Click to access the puzzle",
+  "notUnlocked": "This puzzle is not unlocked yet",
+  "selectPuzzle": "Select a puzzle to start solving",
+  "backToCompetition": "Back to competition",
+  "backToCompetitions": "Back to competition list",
+  "nextPuzzle": "Next Puzzle",
+  "leaderboard": "View Leaderboard",
+  "difficulty": {
+    "easy": "Easy",
+    "medium": "Medium",
+    "hard": "Hard",
+    "veryHard": "Very Hard",
+    "impossible": "Impossible"
+  },
+  "input": {
+    "yourAnswer": "Your submitted answer",
+    "wasAccepted": "Your puzzle answer was accepted",
+    "yourAnswerWas": "Your puzzle answer was",
+    "enterAnswer": "Enter your answer here",
+    "submit": "Submit",
+    "solution": "Solution cannot be empty.",
+    "correct": "Correct Answer",
+    "congratulations": "Congratulations! You found the right answer.",
+    "incorrect": "Incorrect Answer",
+    "tryAgain": "Try again!",
+    "failed": "Submission Failed",
+    "error": "An error occurred while submitting your answer.",
+    "answer": "Answer",
+    "loading": "Loading puzzle...",
+    "getInput": "Get your puzzle input",
+    "openingInput": "Opening input...",
+    "checkingInput": "Checking for input...",
+    "waitingInput": "Waiting for your input to be ready...",
+    "needInput": "You need to get your puzzle input first",
+    "bothPartsComplete": "** Both parts of this puzzle are complete! **",
+    "canStillAccess": "You can still access the input.",
+    "rateLimited": "Too Many Attempts",
+    "pleaseWait": "Please wait before trying again",
+    "cooldownMessage": "Please wait {{time}} before trying again"
+  }
+}

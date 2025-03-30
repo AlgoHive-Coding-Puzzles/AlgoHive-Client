@@ -9,7 +9,7 @@ import { Toast } from "primereact/toast";
 import { ServiceManager } from "@/services";
 
 const ResetPasswordPage = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation(["common", "login"]);
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
   const [password, setPassword] = useState("");
@@ -37,8 +37,8 @@ const ResetPasswordPage = () => {
     if (password !== confirmPassword) {
       toast.current?.show({
         severity: "error",
-        summary: t("login.resetPassword.error"),
-        detail: t("login.resetPassword.passwordsMismatch"),
+        summary: t("auth:resetPassword.error"),
+        detail: t("auth:.passwordsMismatch"),
         life: 3000,
       });
       return;
@@ -49,8 +49,8 @@ const ResetPasswordPage = () => {
 
       toast.current?.show({
         severity: "success",
-        summary: t("login.resetPassword.success"),
-        detail: t("login.resetPassword.resetSuccess"),
+        summary: t("auth:resetPassword.success"),
+        detail: t("auth:resetPassword.resetSuccess"),
         life: 3000,
       });
 
@@ -61,8 +61,8 @@ const ResetPasswordPage = () => {
       console.error("Error resetting password:", error);
       toast.current?.show({
         severity: "error",
-        summary: t("users.resetPassword.error"),
-        detail: t("resetPassword.errorMessage"),
+        summary: t("auth:resetPassword.error"),
+        detail: t("auth:resetPassword.errorMessage"),
         life: 3000,
       });
     }
@@ -77,7 +77,7 @@ const ResetPasswordPage = () => {
 
       <div className="w-full max-w-md p-6 bg-white/70 rounded-lg shadow-lg">
         <h1 className="text-2xl font-semibold mb-4 text-center">
-          {t("login.resetPassword.title")}
+          {t("auth:resetPassword.title")}
         </h1>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -86,7 +86,7 @@ const ResetPasswordPage = () => {
               htmlFor="password"
               className="block text-sm font-medium mb-1"
             >
-              {t("login.resetPassword.newPassword")}
+              {t("auth:resetPassword.newPassword")}
             </label>
             <Password
               id="password"
@@ -103,7 +103,7 @@ const ResetPasswordPage = () => {
               htmlFor="confirmPassword"
               className="block text-sm font-medium mb-1"
             >
-              {t("login.resetPassword.confirmNewPassword")}
+              {t("auth:resetPassword.confirmNewPassword")}
             </label>
             <Password
               id="confirmPassword"
@@ -118,7 +118,7 @@ const ResetPasswordPage = () => {
 
           <Button
             type="submit"
-            label={t("login.resetPassword.submit")}
+            label={t("auth:resetPassword.submit")}
             className="w-full p-button-primary"
             disabled={!isReady()}
           />

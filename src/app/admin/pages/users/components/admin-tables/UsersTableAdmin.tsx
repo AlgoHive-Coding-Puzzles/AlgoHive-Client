@@ -55,7 +55,7 @@ export default function UsersTableAdmin({ toast }: UsersTableAdminProps) {
       setLoading(false);
     } catch (err) {
       console.error("Error loading data:", err);
-      setError(t("common.states.errorMessage"));
+      setError(t("common:states.errorMessage"));
       setLoading(false);
     }
   };
@@ -103,8 +103,8 @@ export default function UsersTableAdmin({ toast }: UsersTableAdminProps) {
 
         toast.current?.show({
           severity: "success",
-          summary: t("common.states.success"),
-          detail: t("staffTabs.users.asAdmin.messages.userUpdated"),
+          summary: t("common:states.success"),
+          detail: t("admin:users:asAdmin.messages.userUpdated"),
           life: 3000,
         });
       } else {
@@ -118,8 +118,8 @@ export default function UsersTableAdmin({ toast }: UsersTableAdminProps) {
 
         toast.current?.show({
           severity: "success",
-          summary: t("common.states.success"),
-          detail: t("staffTabs.users.asAdmin.messages.userCreated"),
+          summary: t("common:states.success"),
+          detail: t("admin:users:asAdmin.messages.userCreated"),
           life: 3000,
         });
       }
@@ -134,10 +134,10 @@ export default function UsersTableAdmin({ toast }: UsersTableAdminProps) {
       console.error("Error saving user:", err);
       toast.current?.show({
         severity: "error",
-        summary: t("common.states.error"),
+        summary: t("common:states.error"),
         detail: editMode
-          ? t("staffTabs.users.asAdmin.messages.errorUpdating")
-          : t("staffTabs.users.asAdmin.messages.errorCreating"),
+          ? t("admin:users:asAdmin.messages.errorUpdating")
+          : t("admin:users:asAdmin.messages.errorCreating"),
         life: 3000,
       });
     }
@@ -149,8 +149,8 @@ export default function UsersTableAdmin({ toast }: UsersTableAdminProps) {
     if (roleIsOwner(user.roles?.find((role) => role))) {
       toast.current?.show({
         severity: "warn",
-        summary: t("common.states.warning"),
-        detail: t("staffTabs.users.messages.cannotBlockOwner"),
+        summary: t("common:states.warning"),
+        detail: t("admin:users:messages.cannotBlockOwner"),
         life: 3000,
       });
       return;
@@ -162,18 +162,18 @@ export default function UsersTableAdmin({ toast }: UsersTableAdminProps) {
 
       toast.current?.show({
         severity: "success",
-        summary: t("common.states.success"),
+        summary: t("common:states.success"),
         detail: user.blocked
-          ? t("staffTabs.users.messages.userUnblocked")
-          : t("staffTabs.users.messages.userBlocked"),
+          ? t("admin:users:messages.userUnblocked")
+          : t("admin:users:messages.userBlocked"),
         life: 3000,
       });
     } catch (err) {
       console.error("Error toggling user block status:", err);
       toast.current?.show({
         severity: "error",
-        summary: t("common.states.error"),
-        detail: t("staffTabs.users.messages.errorBlocking"),
+        summary: t("common:states.error"),
+        detail: t("admin:users:messages.errorBlocking"),
         life: 3000,
       });
     }
@@ -185,16 +185,16 @@ export default function UsersTableAdmin({ toast }: UsersTableAdminProps) {
       await ServiceManager.users.resetTargetUserPassword(user.id);
       toast.current?.show({
         severity: "success",
-        summary: t("common.states.success"),
-        detail: t("staffTabs.users.messages.passwordReset"),
+        summary: t("common:states.success"),
+        detail: t("admin:users:messages.passwordReset"),
         life: 3000,
       });
     } catch (err) {
       console.error("Error resetting password:", err);
       toast.current?.show({
         severity: "error",
-        summary: t("common.states.error"),
-        detail: t("staffTabs.users.messages.errorResettingPassword"),
+        summary: t("common:states.error"),
+        detail: t("admin:users:messages.errorResettingPassword"),
         life: 3000,
       });
     }
@@ -206,8 +206,8 @@ export default function UsersTableAdmin({ toast }: UsersTableAdminProps) {
     if (currentUser && currentUser.id === userId) {
       toast.current?.show({
         severity: "warn",
-        summary: t("common.states.warning"),
-        detail: t("staffTabs.users.messages.cannotDeleteOwnAccount"),
+        summary: t("common:states.warning"),
+        detail: t("admin:users:messages.cannotDeleteOwnAccount"),
         life: 3000,
       });
       return;
@@ -218,16 +218,16 @@ export default function UsersTableAdmin({ toast }: UsersTableAdminProps) {
       await fetchData();
       toast.current?.show({
         severity: "success",
-        summary: t("common.states.success"),
-        detail: t("staffTabs.users.asStaff.messages.userDeleted"),
+        summary: t("common:states.success"),
+        detail: t("admin:users:asStaff.messages.userDeleted"),
         life: 3000,
       });
     } catch (err) {
       console.error("Error deleting user:", err);
       toast.current?.show({
         severity: "error",
-        summary: t("common.states.error"),
-        detail: t("staffTabs.users.asStaff.messages.errorDeleting"),
+        summary: t("common:states.error"),
+        detail: t("admin:users:asStaff.messages.errorDeleting"),
         life: 3000,
       });
     }
@@ -244,7 +244,7 @@ export default function UsersTableAdmin({ toast }: UsersTableAdminProps) {
     return (
       <div className="flex flex-col items-center justify-center p-6">
         <ProgressSpinner style={{ width: "50px", height: "50px" }} />
-        <p className="mt-4 text-gray-600">{t("staff.common.loading")}</p>
+        <p className="mt-4 text-gray-600">{t("common:loading")}</p>
       </div>
     );
   }
@@ -268,10 +268,10 @@ export default function UsersTableAdmin({ toast }: UsersTableAdminProps) {
       {/* Header with title and add button */}
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold text-white">
-          {t("staffTabs.users.asAdmin.title")}
+          {t("admin:users:asAdmin.title")}
         </h1>
         <Button
-          label={t("staffTabs.users.asAdmin.new")}
+          label={t("admin:users:asAdmin.new")}
           icon="pi pi-plus"
           className="p-button-primary"
           onClick={openNewUserDialog}
@@ -285,7 +285,7 @@ export default function UsersTableAdmin({ toast }: UsersTableAdminProps) {
         rows={10}
         rowsPerPageOptions={[5, 10, 25, 50]}
         tableStyle={{ minWidth: "50rem" }}
-        emptyMessage={t("staff.users.noUsers")}
+        emptyMessage={t("admin:users:noUsers")}
         className="p-datatable-sm p-datatable-gridlines"
         sortField="last_name"
         sortOrder={1}
@@ -293,18 +293,18 @@ export default function UsersTableAdmin({ toast }: UsersTableAdminProps) {
       >
         <Column
           field="first_name"
-          header={t("common.fields.firstName")}
+          header={t("common:fields.firstName")}
           sortable
         />
         <Column
           field="last_name"
-          header={t("common.fields.lastName")}
+          header={t("common:fields.lastName")}
           sortable
         />
-        <Column field="email" header={t("common.fields.email")} sortable />
+        <Column field="email" header={t("common:fields.email")} sortable />
         <Column
           field="status"
-          header={t("common.fields.status")}
+          header={t("common:fields.status")}
           body={StatusTemplate}
           style={{ width: "10%" }}
           sortable
@@ -312,13 +312,13 @@ export default function UsersTableAdmin({ toast }: UsersTableAdminProps) {
         />
         <Column
           field="last_connected"
-          header={t("common.fields.lastConnection")}
+          header={t("common:fields.lastConnection")}
           body={LastConnectionTemplate}
           style={{ width: "20%" }}
         />
         <Column
           field="roles"
-          header={t("common.fields.roles")}
+          header={t("common:fields.roles")}
           body={RolesTemplate}
           style={{ width: "20%" }}
         />
@@ -333,7 +333,7 @@ export default function UsersTableAdmin({ toast }: UsersTableAdminProps) {
               onDelete={(user) => confirmDeleteUser(user, handleDeleteUser)}
             />
           )}
-          header={t("common.fields.actions")}
+          header={t("common:fields.actions")}
           style={{ width: "15%" }}
           exportable={false}
         />
@@ -347,7 +347,7 @@ export default function UsersTableAdmin({ toast }: UsersTableAdminProps) {
         editMode={editMode}
         fields={formFields}
         onFieldChange={updateFormField}
-        headerPrefix="staffTabs.users.asAdmin"
+        headerPrefix="admin:users:asAdmin"
         roleOptions={roleOptions}
         showRoles={true}
         isAdmin={true}

@@ -66,7 +66,7 @@ export default function UsersTableStaff({
       setUsers(userData);
       setScopes(scopesData);
     } catch (err) {
-      setError(t("common.states.errorMessage"));
+      setError(t("common:states.errorMessage"));
       console.error(err);
     } finally {
       setLoading(false);
@@ -110,16 +110,16 @@ export default function UsersTableStaff({
 
         toast?.current?.show({
           severity: "success",
-          summary: t("common.states.success"),
-          detail: t("staffTabs.users.asStaff.messages.userUpdated"),
+          summary: t("common:states.success"),
+          detail: t("admin:users:asStaff.messages.userUpdated"),
           life: 3000,
         });
       } else {
         if (!selectedGroup) {
           toast?.current?.show({
             severity: "error",
-            summary: t("common.states.validationError"),
-            detail: t("staffTabs.users.asStaff.messages.groupRequired"),
+            summary: t("common:states.validationError"),
+            detail: t("admin:users:asStaff.messages.groupRequired"),
             life: 3000,
           });
           return;
@@ -133,8 +133,8 @@ export default function UsersTableStaff({
 
         toast?.current?.show({
           severity: "success",
-          summary: t("common.states.success"),
-          detail: t("staffTabs.users.asStaff.messages.userCreated"),
+          summary: t("common:states.success"),
+          detail: t("admin:users:asStaff.messages.userCreated"),
           life: 3000,
         });
       }
@@ -147,10 +147,10 @@ export default function UsersTableStaff({
       console.error("Error saving user:", err);
       toast?.current?.show({
         severity: "error",
-        summary: t("common.states.error"),
+        summary: t("common:states.error"),
         detail: editMode
-          ? t("staffTabs.users.asStaff.messages.errorUpdating")
-          : t("staffTabs.users.asStaff.messages.errorCreating"),
+          ? t("admin:users:asStaff.messages.errorUpdating")
+          : t("admin:users:asStaff.messages.errorCreating"),
         life: 3000,
       });
     }
@@ -161,8 +161,8 @@ export default function UsersTableStaff({
       await ServiceManager.users.remove(userID);
       toast?.current?.show({
         severity: "success",
-        summary: t("common.states.success"),
-        detail: t("staffTabs.users.asStaff.messages.userDeleted"),
+        summary: t("common:states.success"),
+        detail: t("admin:users:asStaff.messages.userDeleted"),
         life: 3000,
       });
       await fetchData();
@@ -170,8 +170,8 @@ export default function UsersTableStaff({
       console.error("Error deleting user:", err);
       toast?.current?.show({
         severity: "error",
-        summary: t("common.states.error"),
-        detail: t("staffTabs.users.asStaff.messages.errorDeleting"),
+        summary: t("common:states.error"),
+        detail: t("admin:users:asStaff.messages.errorDeleting"),
         life: 3000,
       });
     }
@@ -184,18 +184,18 @@ export default function UsersTableStaff({
       await fetchData();
       toast?.current?.show({
         severity: "success",
-        summary: t("common.states.success"),
+        summary: t("common:states.success"),
         detail: user.blocked
-          ? t("staffTabs.users.messages.userUnblocked")
-          : t("staffTabs.users.messages.userBlocked"),
+          ? t("admin:users:messages.userUnblocked")
+          : t("admin:users:messages.userBlocked"),
         life: 3000,
       });
     } catch (err) {
       console.error("Error toggling user block status:", err);
       toast?.current?.show({
         severity: "error",
-        summary: t("common.states.error"),
-        detail: t("staffTabs.users.messages.errorBlocking"),
+        summary: t("common:states.error"),
+        detail: t("admin:users:messages.errorBlocking"),
         life: 3000,
       });
     }
@@ -207,16 +207,16 @@ export default function UsersTableStaff({
       await ServiceManager.users.resetTargetUserPassword(user.id);
       toast?.current?.show({
         severity: "success",
-        summary: t("common.states.success"),
-        detail: t("staffTabs.users.messages.passwordReset"),
+        summary: t("common:states.success"),
+        detail: t("admin:users:messages.passwordReset"),
         life: 3000,
       });
     } catch (err) {
       console.error("Error resetting password:", err);
       toast?.current?.show({
         severity: "error",
-        summary: t("common.states.error"),
-        detail: t("staffTabs.users.messages.errorResettingPassword"),
+        summary: t("common:states.error"),
+        detail: t("admin:users:messages.errorResettingPassword"),
         life: 3000,
       });
     }
@@ -241,8 +241,8 @@ export default function UsersTableStaff({
 
       toast?.current?.show({
         severity: "success",
-        summary: t("common.states.success"),
-        detail: t("staffTabs.users.import.success"),
+        summary: t("common:states.success"),
+        detail: t("admin:users:import.success"),
         life: 3000,
       });
 
@@ -257,8 +257,8 @@ export default function UsersTableStaff({
       console.error("Error importing users:", err);
       toast?.current?.show({
         severity: "error",
-        summary: t("common.states.error"),
-        detail: t("staffTabs.users.import.error"),
+        summary: t("common:states.error"),
+        detail: t("admin:users:import.error"),
         life: 3000,
       });
     } finally {
@@ -269,10 +269,10 @@ export default function UsersTableStaff({
   // Handle deleting multiple selected users
   const handleDeleteSelectedUsers = () => {
     confirmDialog({
-      message: t("staffTabs.users.asStaff.messages.deleteSelectedConfirm", {
+      message: t("admin:users:asStaff.messages.deleteSelectedConfirm", {
         count: selectedUsers.length,
       }),
-      header: t("common.actions.confirmDelete"),
+      header: t("common:actions.confirmDelete"),
       icon: "pi pi-exclamation-triangle",
       acceptClassName: "p-button-danger",
       accept: async () => {
@@ -283,8 +283,8 @@ export default function UsersTableStaff({
 
           toast?.current?.show({
             severity: "success",
-            summary: t("common.states.success"),
-            detail: t("staffTabs.users.asStaff.messages.usersDeleted"),
+            summary: t("common:states.success"),
+            detail: t("admin:users:asStaff.messages.usersDeleted"),
             life: 3000,
           });
 
@@ -295,8 +295,8 @@ export default function UsersTableStaff({
           console.error("Error deleting users:", err);
           toast?.current?.show({
             severity: "error",
-            summary: t("common.states.error"),
-            detail: t("staffTabs.users.asStaff.messages.errorDeleting"),
+            summary: t("common:states.error"),
+            detail: t("admin:users:asStaff.messages.errorDeleting"),
             life: 3000,
           });
         }
@@ -360,10 +360,10 @@ export default function UsersTableStaff({
 
   // Define table columns
   const columns = [
-    { field: "first_name", header: t("common.fields.firstName") },
-    { field: "last_name", header: t("common.fields.lastName") },
-    { field: "email", header: t("common.fields.email") },
-    { field: "last_connected", header: t("common.fields.lastConnection") },
+    { field: "first_name", header: t("common:fields.firstName") },
+    { field: "last_name", header: t("common:fields.lastName") },
+    { field: "email", header: t("common:fields.email") },
+    { field: "last_connected", header: t("common:fields.lastConnection") },
   ];
 
   // Render different UI states based on loading, error, and data availability
@@ -371,7 +371,7 @@ export default function UsersTableStaff({
     return (
       <div className="flex flex-col items-center justify-center p-6">
         <ProgressSpinner style={{ width: "50px", height: "50px" }} />
-        <p className="mt-4 text-gray-600">{t("common.states.loading")}</p>
+        <p className="mt-4 text-gray-600">{t("common:states.loading")}</p>
       </div>
     );
   }
@@ -406,14 +406,14 @@ export default function UsersTableStaff({
           htmlFor="scopes"
           className="block text-sm font-medium text-white mb-1"
         >
-          {t("common.selects.scopes")}
+          {t("common:selects.scopes")}
         </label>
         <Dropdown
           id="scopes"
           value={selectedScope}
           options={scopeOptions}
           onChange={(e) => handleScopeChange(e.value)}
-          placeholder={t("common.selects.scopes")}
+          placeholder={t("common:selects.scopes")}
           className="w-full"
         />
       </div>
@@ -425,14 +425,14 @@ export default function UsersTableStaff({
             htmlFor="groups"
             className="block text-sm font-medium text-white mb-1"
           >
-            {t("common.selects.groups")}
+            {t("common:selects.groups")}
           </label>
           <Dropdown
             id="groups"
             value={selectedGroup}
             options={groupOptions}
             onChange={(e) => setSelectedGroup(e.value)}
-            placeholder={t("common.selects.groups")}
+            placeholder={t("common:selects.groups")}
             className="w-full"
           />
         </div>
@@ -443,18 +443,18 @@ export default function UsersTableStaff({
         <>
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-bold text-white">
-              {t("staffTabs.users.asStaff.title")}
+              {t("admin:users:asStaff.title")}
             </h2>
             <div className="flex gap-2">
               <Button
-                label={t("staffTabs.users.import.button")}
+                label={t("admin:users:import.button")}
                 icon="pi pi-upload"
                 className="p-button-secondary"
                 onClick={triggerFileInput}
                 disabled={!selectedGroup}
               />
               <Button
-                label={t("staffTabs.users.asStaff.new")}
+                label={t("admin:users:asStaff.new")}
                 icon="pi pi-plus"
                 className="p-button-primary"
                 onClick={openNewUserDialog}
@@ -478,7 +478,7 @@ export default function UsersTableStaff({
             onSelectionChange={(e) => setSelectedUsers(e.value)}
             selectionMode="checkbox"
             tableStyle={{ minWidth: "50rem" }}
-            emptyMessage={t("staffTabs.users.asStaff.noUsersInGroup")}
+            emptyMessage={t("admin:users:asStaff.noUsersInGroup")}
             className="p-datatable-sm p-datatable-gridlines"
             sortField="lastname"
             sortOrder={1}
@@ -507,13 +507,13 @@ export default function UsersTableStaff({
             )}
             <Column
               field="status"
-              header={t("common.fields.status")}
+              header={t("common:fields.status")}
               body={StatusTemplate}
               style={{ width: "10%" }}
             />
             <Column
               field="groups"
-              header={t("common.fields.groups")}
+              header={t("common:fields.groups")}
               body={GroupsTemplate}
               style={{ width: "10%" }}
             />
@@ -527,7 +527,7 @@ export default function UsersTableStaff({
                   onDelete={(user) => confirmDeleteUser(user, handleDeleteUser)}
                 />
               )}
-              header={t("common.fields.actions")}
+              header={t("common:fields.actions")}
               style={{ width: "15%" }}
               exportable={false}
             />
@@ -543,7 +543,7 @@ export default function UsersTableStaff({
         editMode={editMode}
         fields={formFields}
         onFieldChange={updateFormField}
-        headerPrefix="staffTabs.users.asStaff"
+        headerPrefix="admin:users:asStaff"
       />
     </>
   );

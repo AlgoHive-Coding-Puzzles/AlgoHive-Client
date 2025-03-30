@@ -32,7 +32,7 @@ export default function PuzzlePage() {
   }>();
 
   const isMobile = useIsMobile();
-  const { t } = useTranslation();
+  const { t } = useTranslation(["common", "puzzles"]);
 
   // Derived state with useMemo
   const questNumber = useMemo(
@@ -243,7 +243,7 @@ export default function PuzzlePage() {
       <div className="flex justify-center items-center h-screen">
         <div className="text-center">
           <i className="pi pi-spinner pi-spin text-3xl"></i>
-          <p className="mt-2">{t("puzzles.input.loading")}</p>
+          <p className="mt-2">{t("puzzles:input.loading")}</p>
         </div>
       </div>
     );
@@ -356,11 +356,11 @@ export default function PuzzlePage() {
             {hasCompletedFirstStep && hasCompletedSecondStep && (
               <>
                 <div className="text-lg text-surface-950 dark:text-surface-0 font-semibold mt-10 bg-gradient-to-r from-amber-400 to-red-900 bg-clip-text text-transparent">
-                  {t("puzzles.input.bothPartsComplete")}
+                  {t("puzzles:input.bothPartsComplete")}
                 </div>
 
                 <div className="text-md text-surface-950 dark:text-surface-0 font-semibold mb-6 mt-2">
-                  {t("puzzles.input.canStillAccess")}
+                  {t("puzzles:input.canStillAccess")}
                 </div>
 
                 <GetInputTemplate
@@ -376,7 +376,7 @@ export default function PuzzlePage() {
                 onClickAction={() =>
                   (window.location.href = `/competitions/${competitionId}`)
                 }
-                text={t("puzzles.backToCompetition")}
+                text={t("puzzles:backToCompetition")}
               />
 
               {hasCompletedFirstStep && hasCompletedSecondStep && (
@@ -392,7 +392,9 @@ export default function PuzzlePage() {
                   <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg" />
                   <div className="px-8 py-2 bg-black rounded-[6px] relative group transition duration-200 text-white hover:bg-transparent">
                     <div className="flex items-center gap-2">
-                      <span className="relative z-10">Next puzzle</span>
+                      <span className="relative z-10">
+                        {t("puzzles:nextPuzzle")}
+                      </span>
                       <i className="pi pi-arrow-right" />
                     </div>
                     <span className="absolute inset-0 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg blur opacity-0 group-hover:opacity-100 transition duration-200" />

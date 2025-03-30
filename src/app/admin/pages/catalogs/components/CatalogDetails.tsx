@@ -37,7 +37,7 @@ export const CatalogDetails = ({
         );
         setThemes(data);
       } catch (err) {
-        setError(t("staff.catalogs.errorFetchingCatalogs"));
+        setError(t("admin:catalogs:errorFetchingCatalogs"));
         console.error(err);
       } finally {
         setLoading(false);
@@ -72,7 +72,7 @@ export const CatalogDetails = ({
         icon="pi pi-eye"
         className="p-button-rounded p-button-outlined p-button-sm"
         onClick={() => setSelectedPuzzle(puzzle)}
-        tooltip={t("staff.catalogs.viewPuzzle")}
+        tooltip={t("admin:catalogs:viewPuzzle")}
       />
     );
   };
@@ -99,7 +99,7 @@ export const CatalogDetails = ({
         </div>
         <Button
           icon="pi pi-arrow-left"
-          label={t("staff.catalogs.back")}
+          label={t("admin:catalogs:back")}
           className="p-button-primary"
           onClick={onBack}
         />
@@ -110,13 +110,13 @@ export const CatalogDetails = ({
       <Divider />
 
       <h3 className="text-xl font-semibold text-gray-800 mb-4">
-        {t("staff.catalogs.themes")}
+        {t("admin:catalogs:themes")}
       </h3>
 
       {loading && (
         <div className="flex flex-col items-center justify-center p-6">
           <ProgressSpinner style={{ width: "50px", height: "50px" }} />
-          <p className="mt-4 text-gray-600">{t("staff.catalogs.loading")}</p>
+          <p className="mt-4 text-gray-600">{t("admin:catalogs:loading")}</p>
         </div>
       )}
 
@@ -132,7 +132,7 @@ export const CatalogDetails = ({
       {!loading && !error && (!themes || themes.length === 0) && (
         <div className="flex flex-col items-center justify-center p-6 bg-gray-50 rounded">
           <i className="pi pi-folder-open text-5xl text-gray-400 mb-4"></i>
-          <p className="text-gray-600">{t("staff.catalogs.noThemes")}</p>
+          <p className="text-gray-600">{t("admin:catalogs:noThemes")}</p>
         </div>
       )}
 
@@ -146,7 +146,7 @@ export const CatalogDetails = ({
                   <span>{theme.name}</span>
                   <Tag
                     value={`${theme.enigmes_count} ${t(
-                      "staff.catalogs.puzzlesCount"
+                      "admin:catalogs:puzzlesCount"
                     )}`}
                     className="ml-2"
                   />
@@ -159,32 +159,32 @@ export const CatalogDetails = ({
                 rows={5}
                 rowsPerPageOptions={[5, 10, 25]}
                 tableStyle={{ minWidth: "50rem" }}
-                emptyMessage={t("staff.catalogs.notFound")}
+                emptyMessage={t("admin:catalogs:notFound")}
               >
                 <Column
                   field="name"
-                  header={t("common.fields.name")}
+                  header={t("common:fields.name")}
                   sortable
                 />
                 <Column
                   field="author"
-                  header={t("staff.catalogs.author")}
+                  header={t("admin:catalogs:author")}
                   sortable
                 />
                 <Column
                   field="difficulty"
-                  header={t("staff.catalogs.difficulty")}
+                  header={t("admin:catalogs:difficulty")}
                   body={difficultyTemplate}
                   sortable
                 />
                 <Column
                   field="language"
-                  header={t("staff.catalogs.language")}
+                  header={t("admin:catalogs:language")}
                   sortable
                 />
                 <Column
                   field="createdAt"
-                  header={t("staff.catalogs.createdAt")}
+                  header={t("admin:catalogs:createdAt")}
                   body={(rowData) => dateTemplate(rowData, "createdAt")}
                   sortable
                 />

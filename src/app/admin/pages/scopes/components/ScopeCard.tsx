@@ -37,12 +37,12 @@ const ScopeCard: React.FC<ScopeCardProps> = ({
         </div>
 
         <div className="text-white/80 mb-3 line-clamp-2 flex-grow">
-          {scope.description || t("staffTabs.scopes.noDescription")}
+          {scope.description || t("admin:scopes:noDescription")}
         </div>
 
         <div className="mb-3">
           <h3 className="text-sm font-medium text-white/90 mb-1">
-            {t("staffTabs.scopes.catalogs")}:
+            {t("admin:scopes:catalogs")}:
           </h3>
           <div className="flex flex-wrap gap-1">
             {scope.catalogs && scope.catalogs.length > 0 ? (
@@ -56,7 +56,7 @@ const ScopeCard: React.FC<ScopeCardProps> = ({
               ))
             ) : (
               <span className="text-gray-400 text-sm italic">
-                {t("staffTabs.scopes.noCatalogs")}
+                {t("admin:scopes:noCatalogs")}
               </span>
             )}
           </div>
@@ -65,21 +65,21 @@ const ScopeCard: React.FC<ScopeCardProps> = ({
         <div className="flex justify-end mt-auto gap-2">
           <Button
             icon="pi pi-eye"
-            tooltip={t("staffTabs.scopes.details")}
+            tooltip={t("admin:scopes:details")}
             onClick={onViewDetails}
             className="p-button p-button-info"
             size="small"
           />
           <Button
             icon="pi pi-pencil"
-            tooltip={t("common.actions.edit")}
+            tooltip={t("common:actions.edit")}
             onClick={onEdit}
             className="p-button p-button-warning"
             size="small"
           />
           <Button
             icon="pi pi-trash"
-            tooltip={t("common.actions.delete")}
+            tooltip={t("common:actions.delete")}
             onClick={onDelete}
             className="p-button p-button-danger"
             size="small"

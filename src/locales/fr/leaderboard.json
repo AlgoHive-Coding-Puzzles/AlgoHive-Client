@@ -1,0 +1,14 @@
+{
+  "title": "Classement",
+  "rank": "Rang",
+  "user": "Utilisateur",
+  "group": "Groupe",
+  "totalScore": "Score Total",
+  "currentPuzzle": "Énigme Actuelle",
+  "currentStep": "Étape Actuelle",
+  "totalAttempts": "Tentatives Totales",
+  "noEntries": "Aucune entrée dans le classement pour le moment",
+  "backToCompetition": "Retour à la Compétition",
+  "fullscreen": "Plein Écran",
+  "exitFullscreen": "Quitter le Plein Écran"
+}

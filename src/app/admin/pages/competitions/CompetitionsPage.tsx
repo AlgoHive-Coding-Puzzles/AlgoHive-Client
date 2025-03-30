@@ -15,10 +15,10 @@ import { ServiceManager } from "@/services";
 
 import { Competition } from "@/models";
 
-import "./Competitions.css";
+import "./CompetitionsPage.css";
 
 export default function CompetitionsPage() {
-  const { t } = useTranslation();
+  const { t } = useTranslation(["common", "staffTabs"]);
   const toast = useRef<Toast>(null);
 
   // State variables
@@ -41,7 +41,7 @@ export default function CompetitionsPage() {
       setCompetitions(fetchedCompetitions);
     } catch (error) {
       console.error("Error loading data:", error);
-      showToast("error", t("common.states.error"));
+      showToast("error", t("common:states.error"));
     } finally {
       setLoading(false);
     }
@@ -58,7 +58,7 @@ export default function CompetitionsPage() {
   ) => {
     toast.current?.show({
       severity,
-      summary: t(`common.states.${severity}`),
+      summary: t(`common:states.${severity}`),
       detail,
       life: 3000,
     });
@@ -93,7 +93,7 @@ export default function CompetitionsPage() {
         <div className="flex flex-col items-center justify-center p-6">
           <ProgressSpinner style={{ width: "50px", height: "50px" }} />
           <p className="mt-4 text-gray-600">
-            {t("staffTabs.competitions.loading")}
+            {t("admin:competitions:loading")}
           </p>
         </div>
       );
@@ -105,13 +105,13 @@ export default function CompetitionsPage() {
           <div className="flex flex-col items-center">
             <i className="pi pi-flag text-5xl text-gray-300 mb-4"></i>
             <h3 className="text-xl font-semibold text-gray-600">
-              {t("staffTabs.competitions.noCompetitions")}
+              {t("admin:competitions:noCompetitions")}
             </h3>
             <p className="text-gray-500 mb-4">
-              {t("staffTabs.competitions.create")} {t("common.states.empty")}
+              {t("admin:competitions:create")} {t("common:states.empty")}
             </p>
             <Button
-              label={t("staffTabs.competitions.create")}
+              label={t("admin:competitions:create")}
               icon="pi pi-plus"
               className="p-button-outlined"
               onClick={openCreateDialog}
@@ -125,10 +125,10 @@ export default function CompetitionsPage() {
       <>
         <div className="flex justify-between items-center mb-4">
           <h1 className="text-2xl font-bold text-white">
-            {t("navigation.staff.competitions")}
+            {t("navigation:dock.competitions")}
           </h1>
           <Button
-            label={t("staffTabs.competitions.create")}
+            label={t("admin:competitions:create")}
             icon="pi pi-plus"
             className="p-button-outlined"
             onClick={openCreateDialog}

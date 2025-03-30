@@ -25,7 +25,7 @@ export default function ParticipantTries({
   competitionId,
   participant,
 }: ParticipantTriesProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation(["common", "staffTabs"]);
   const [tries, setTries] = useState<Try[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -83,7 +83,7 @@ export default function ParticipantTries({
 
   return (
     <Dialog
-      header={t("staffTabs.competitions.statistics.viewTriesFor", {
+      header={t("admin:competitions:statistics.viewTriesFor", {
         name: `${participant?.first_name} ${participant?.last_name}`,
       })}
       visible={visible}
@@ -95,14 +95,11 @@ export default function ParticipantTries({
         <div className="flex flex-col items-center justify-center p-6">
           <ProgressSpinner style={{ width: "50px", height: "50px" }} />
           <p className="mt-4 text-gray-600">
-            {t("staffTabs.competitions.tries.loading")}
+            {t("admin:competitions:tries.loading")}
           </p>
         </div>
       ) : tries.length === 0 ? (
-        <Message
-          severity="info"
-          text={t("staffTabs.competitions.tries.noTries")}
-        />
+        <Message severity="info" text={t("admin:competitions:tries.noTries")} />
       ) : (
         <DataTable
           value={tries}
@@ -114,7 +111,7 @@ export default function ParticipantTries({
         >
           <Column
             field="puzzle_id"
-            header={t("staffTabs.competitions.tries.puzzle")}
+            header={t("admin:competitions:tries.puzzle")}
             sortable
           />
           <Column field="puzzle_lvl" header="Level" sortable />
@@ -126,25 +123,25 @@ export default function ParticipantTries({
           />
           <Column
             field="start_time"
-            header={t("staffTabs.competitions.tries.startTime")}
+            header={t("admin:competitions:tries.startTime")}
             body={(rowData) => formatDate(rowData.start_time)}
             sortable
           />
           <Column
             field="end_time"
-            header={t("staffTabs.competitions.tries.endTime")}
+            header={t("admin:competitions:tries.endTime")}
             body={(rowData) => formatDate(rowData.end_time)}
             sortable
           />
           <Column
             field="attempts"
-            header={t("staffTabs.competitions.tries.attempts")}
+            header={t("admin:competitions:tries.attempts")}
             body={attemptTemplate}
             sortable
           />
           <Column
             field="score"
-            header={t("staffTabs.competitions.tries.score")}
+            header={t("admin:competitions:tries.score")}
             body={scoreTemplate}
             sortable
           />

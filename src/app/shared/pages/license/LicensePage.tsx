@@ -20,88 +20,88 @@ export default function LicensePage() {
             <div className="p-6 mt-10 md:p-12 rounded-2xl lg:rounded-4xl bg-white/5 backdrop-blur-[48px] md:max-w-[calc(100%-3rem)] lg:max-w-none mx-auto shadow-[0px_2px_5px_0px_rgba(255,255,255,0.06)_inset,0px_12px_20px_0px_rgba(0,0,0,0.06)]">
               <div className="py-6 border-b border-white/12">
                 <h1 className="text-4xl font-bold text-surface-0">
-                  {t("license.title")}
+                  {t("license:title")}
                 </h1>
               </div>
 
               <div className="mt-8 space-y-12">
                 <section>
                   <h2 className="text-2xl font-semibold text-amber-500 mb-4">
-                    {t("license.openSource.title")}
+                    {t("license:openSource.title")}
                   </h2>
                   <p className="text-white/70 mb-4">
-                    {t("license.openSource.description")}
+                    {t("license:openSource.description")}
                   </p>
                   <ul className="list-disc list-inside space-y-2 text-white/70 ml-4">
-                    <li>{t("license.openSource.use")}</li>
-                    <li>{t("license.openSource.modify")}</li>
-                    <li>{t("license.openSource.distribute")}</li>
-                    <li>{t("license.openSource.selfHost")}</li>
+                    <li>{t("license:openSource.use")}</li>
+                    <li>{t("license:openSource.modify")}</li>
+                    <li>{t("license:openSource.distribute")}</li>
+                    <li>{t("license:openSource.selfHost")}</li>
                   </ul>
                 </section>
 
                 <section>
                   <h2 className="text-2xl font-semibold text-amber-500 mb-4">
-                    {t("license.privacy.title")}
+                    {t("license:privacy.title")}
                   </h2>
                   <div className="space-y-6">
                     <div>
                       <h3 className="text-xl font-medium text-white mb-2">
-                        {t("license.privacy.dataCollection.title")}
+                        {t("license:privacy.dataCollection.title")}
                       </h3>
                       <p className="text-white/70">
-                        {t("license.privacy.dataCollection.description")}
+                        {t("license:privacy.dataCollection.description")}
                       </p>
                       <ul className="list-disc list-inside space-y-2 text-white/70 ml-4 mt-2">
-                        <li>{t("license.privacy.dataCollection.email")}</li>
-                        <li>{t("license.privacy.dataCollection.name")}</li>
-                        <li>{t("license.privacy.dataCollection.password")}</li>
+                        <li>{t("license:privacy.dataCollection.email")}</li>
+                        <li>{t("license:privacy.dataCollection.name")}</li>
+                        <li>{t("license:privacy.dataCollection.password")}</li>
                         <li>
-                          {t("license.privacy.dataCollection.submissions")}
+                          {t("license:privacy.dataCollection.submissions")}
                         </li>
                       </ul>
                     </div>
 
                     <div>
                       <h3 className="text-xl font-medium text-white mb-2">
-                        {t("license.privacy.security.title")}
+                        {t("license:privacy.security.title")}
                       </h3>
                       <p className="text-white/70">
-                        {t("license.privacy.security.description")}
+                        {t("license:privacy.security.description")}
                       </p>
                       <ul className="list-disc list-inside space-y-2 text-white/70 ml-4 mt-2">
-                        <li>{t("license.privacy.security.hashing")}</li>
-                        <li>{t("license.privacy.security.encryption")}</li>
-                        <li>{t("license.privacy.security.access")}</li>
+                        <li>{t("license:privacy.security.hashing")}</li>
+                        <li>{t("license:privacy.security.encryption")}</li>
+                        <li>{t("license:privacy.security.access")}</li>
                       </ul>
                     </div>
 
                     <div>
                       <h3 className="text-xl font-medium text-white mb-2">
-                        {t("license.privacy.cookies.title")}
+                        {t("license:privacy.cookies.title")}
                       </h3>
                       <p className="text-white/70">
-                        {t("license.privacy.cookies.description")}
+                        {t("license:privacy.cookies.description")}
                       </p>
                       <ul className="list-disc list-inside space-y-2 text-white/70 ml-4 mt-2">
-                        <li>{t("license.privacy.cookies.session")}</li>
-                        <li>{t("license.privacy.cookies.noTracking")}</li>
-                        <li>{t("license.privacy.cookies.noThirdParty")}</li>
+                        <li>{t("license:privacy.cookies.session")}</li>
+                        <li>{t("license:privacy.cookies.noTracking")}</li>
+                        <li>{t("license:privacy.cookies.noThirdParty")}</li>
                       </ul>
                     </div>
 
                     <div>
                       <h3 className="text-xl font-medium text-white mb-2">
-                        {t("license.privacy.rights.title")}
+                        {t("license:privacy.rights.title")}
                       </h3>
                       <p className="text-white/70">
-                        {t("license.privacy.rights.description")}
+                        {t("license:privacy.rights.description")}
                       </p>
                       <ul className="list-disc list-inside space-y-2 text-white/70 ml-4 mt-2">
-                        <li>{t("license.privacy.rights.access")}</li>
-                        <li>{t("license.privacy.rights.delete")}</li>
-                        <li>{t("license.privacy.rights.export")}</li>
-                        <li>{t("license.privacy.rights.update")}</li>
+                        <li>{t("license:privacy.rights.access")}</li>
+                        <li>{t("license:privacy.rights.delete")}</li>
+                        <li>{t("license:privacy.rights.export")}</li>
+                        <li>{t("license:privacy.rights.update")}</li>
                       </ul>
                     </div>
                   </div>
@@ -109,10 +109,10 @@ export default function LicensePage() {
 
                 <section>
                   <h2 className="text-2xl font-semibold text-amber-500 mb-4">
-                    {t("license.contact.title")}
+                    {t("license:contact.title")}
                   </h2>
                   <p className="text-white/70">
-                    {t("license.contact.description")}{" "}
+                    {t("license:contact.description")}{" "}
                     <a
                       href="mailto:ericphlpp@proton.me"
                       className="text-amber-500 hover:underline"

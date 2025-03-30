@@ -55,7 +55,7 @@ const CreateRoleForm: React.FC<CreateRoleFormProps> = ({
       <div className="p-4 flex flex-col h-full">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-semibold text-amber-500">
-            {t("staffTabs.roles.new")}
+            {t("admin:roles:new")}
           </h2>
           <i className="pi pi-plus-circle text-3xl text-amber-500"></i>
         </div>
@@ -65,14 +65,14 @@ const CreateRoleForm: React.FC<CreateRoleFormProps> = ({
             htmlFor="roleName"
             className="block text-sm font-medium text-white mb-1"
           >
-            {t("staffTabs.roles.name")}
+            {t("admin:roles:name")}
           </label>
           <InputText
             id="roleName"
             value={name}
             onChange={(e) => setName(e.target.value)}
             className="w-full"
-            placeholder={t("common.fields.name")}
+            placeholder={t("common:fields.name")}
           />
         </div>
 
@@ -81,7 +81,7 @@ const CreateRoleForm: React.FC<CreateRoleFormProps> = ({
             htmlFor="rolePermissions"
             className="block text-sm font-medium text-white mb-1"
           >
-            {t("staffTabs.roles.permissions")}
+            {t("admin:roles:permissions")}
           </label>
           <div className="grid grid-cols-1 gap-2 mt-2">
             {permissionsList.map((perm) => (
@@ -107,14 +107,14 @@ const CreateRoleForm: React.FC<CreateRoleFormProps> = ({
             htmlFor="scopeIds"
             className="block text-sm font-medium text-white mb-1"
           >
-            {t("staffTabs.roles.scopes")}
+            {t("admin:roles:scopes")}
           </label>
           <MultiSelect
             id="scopeIds"
             value={selectedScopes}
             options={scopeOptions}
             onChange={(e) => setSelectedScopes(e.value)}
-            placeholder={t("common.selects.scopes")}
+            placeholder={t("common:selects.scopes")}
             className="w-full"
             display="chip"
           />
@@ -122,7 +122,7 @@ const CreateRoleForm: React.FC<CreateRoleFormProps> = ({
 
         <div className="flex justify-end mt-auto">
           <Button
-            label={t("common.actions.create")}
+            label={t("common:actions.create")}
             icon="pi pi-plus"
             className="p-button-primary"
             onClick={handleSubmit}

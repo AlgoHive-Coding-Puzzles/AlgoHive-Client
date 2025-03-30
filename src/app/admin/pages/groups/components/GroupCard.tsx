@@ -31,7 +31,7 @@ const GroupCard: React.FC<GroupCardProps> = ({
       <p className="text-white mt-2">{group.description}</p>
 
       <p className="text-white mt-2">
-        <span className="font-semibold">{t("staffTabs.groups.students")}:</span>{" "}
+        <span className="font-semibold">{t("admin:groups:students")}:</span>{" "}
         <span className="text-gray-300">{group.users?.length || 0}</span>
       </p>
 
@@ -39,17 +39,17 @@ const GroupCard: React.FC<GroupCardProps> = ({
         <Button
           icon="pi pi-pencil"
           className="p-button-outlined p-button-sm"
-          tooltip={t("common.actions.edit")}
+          tooltip={t("common:actions.edit")}
           onClick={() => onEdit(group)}
         />
         <Button
           icon="pi pi-trash"
           className="p-button-outlined p-button-danger p-button-sm"
-          tooltip={t("common.actions.delete")}
+          tooltip={t("common:actions.delete")}
           onClick={() => onDelete(group)}
         />
         <Button
-          label={t("staffTabs.groups.viewDetails")}
+          label={t("admin:groups:viewDetails")}
           icon="pi pi-eye"
           className="p-button-primary"
           onClick={() => onViewDetails(group)}

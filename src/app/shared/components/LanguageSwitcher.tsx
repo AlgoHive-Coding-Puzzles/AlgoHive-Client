@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 const LanguageSwitcher: React.FC = () => {
-  const { i18n, t } = useTranslation();
+  const { i18n, t } = useTranslation(["common", "navigation"]);
 
   const handleLanguageChange = (
     event: React.ChangeEvent<HTMLSelectElement>
@@ -16,7 +16,7 @@ const LanguageSwitcher: React.FC = () => {
       <select
         value={i18n.language}
         onChange={handleLanguageChange}
-        aria-label={t("language.select", "Select language")}
+        aria-label={t("common:selects:language", "Select language")}
         id="language-select"
       >
         <option className="text-black" value="fr">

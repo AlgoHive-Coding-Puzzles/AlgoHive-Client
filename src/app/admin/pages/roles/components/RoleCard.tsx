@@ -45,7 +45,7 @@ const RoleCard: React.FC<RoleCardProps> = ({
 
         <div className="mb-3">
           <h3 className="text-sm font-medium text-white/90 mb-2">
-            {t("staffTabs.roles.permissions")}:
+            {t("admin:roles:permissions")}:
           </h3>
           <div className="flex flex-wrap gap-1 mb-2">
             {permissionsList
@@ -62,7 +62,7 @@ const RoleCard: React.FC<RoleCardProps> = ({
               hasPermission(role.permissions, perm.value)
             ) && (
               <span className="text-gray-400 text-sm italic">
-                {t("staffTabs.roles.noPermissions")}
+                {t("admin:roles:noPermissions")}
               </span>
             )}
           </div>
@@ -70,7 +70,7 @@ const RoleCard: React.FC<RoleCardProps> = ({
 
         <div className="mb-3">
           <h3 className="text-sm font-medium text-white/90 mb-1">
-            {t("staffTabs.roles.scopes")}:
+            {t("admin:roles:scopes")}:
           </h3>
           <div className="flex flex-wrap gap-1">
             {role.scopes && role.scopes.length > 0 ? (
@@ -84,7 +84,7 @@ const RoleCard: React.FC<RoleCardProps> = ({
               ))
             ) : (
               <span className="text-gray-400 text-sm italic">
-                {t("staffTabs.roles.noScopes")}
+                {t("admin:roles:noScopes")}
               </span>
             )}
           </div>
@@ -92,25 +92,25 @@ const RoleCard: React.FC<RoleCardProps> = ({
 
         <div className="mb-3">
           <h3 className="text-sm font-medium text-white/90 mb-1">
-            {t("staffTabs.roles.users")}:
+            {t("admin:roles:users")}:
           </h3>
           <span className="text-white/80">
             {role.users && role.users.length > 0 ? role.users.length : "0"}{" "}
-            {t("staffTabs.roles.usersCount")}
+            {t("admin:roles:usersCount")}
           </span>
         </div>
 
         <div className="flex justify-end mt-auto gap-2">
           <Button
             icon="pi pi-eye"
-            tooltip={t("staffTabs.roles.details")}
+            tooltip={t("admin:roles:details")}
             onClick={onViewDetails}
             className="p-button p-button-info"
             size="small"
           />
           <Button
             icon="pi pi-pencil"
-            tooltip={t("common.actions.edit")}
+            tooltip={t("common:actions.edit")}
             onClick={onEdit}
             className="p-button p-button-warning"
             size="small"
@@ -118,7 +118,7 @@ const RoleCard: React.FC<RoleCardProps> = ({
           />
           <Button
             icon="pi pi-trash"
-            tooltip={t("common.actions.delete")}
+            tooltip={t("common:actions.delete")}
             onClick={onDelete}
             className="p-button p-button-danger"
             size="small"

@@ -20,63 +20,63 @@ const Footer: React.FC = () => {
   ];
 
   const footerNavsDataLinks = [
-    { label: t("users.footer.links.howToPlay"), to: "/how-to-play" },
-    { label: t("users.footer.links.support"), to: "/support" },
-    { label: t("users.footer.links.license"), to: "/license" },
+    { label: t("footer:links.howToPlay"), to: "/how-to-play" },
+    { label: t("footer:links.support"), to: "/support" },
+    { label: t("footer:links.license"), to: "/license" },
   ];
 
   const footerNavsDataProject = [
     {
-      label: t("users.footer.project.github"),
+      label: t("footer:project.github"),
       to: "https://github.com/AlgoHive-Coding-Puzzles",
     },
     {
-      label: t("users.footer.project.createPuzzles"),
+      label: t("footer:project.createPuzzles"),
       to: "https://github.com/AlgoHive-Coding-Puzzles/BeeLine",
     },
     {
-      label: t("users.footer.project.host"),
+      label: t("footer:project.host"),
       to: "https://github.com/AlgoHive-Coding-Puzzles/AlgoHive-Infra",
     },
     {
-      label: t("users.footer.project.kofi"),
+      label: t("footer:project.kofi"),
       to: "https://ko-fi.com/Y8Y41CI3RB",
     },
   ];
 
   const footerNavsDataMore = [
     {
-      label: t("users.footer.moreChallenges.aoc"),
+      label: t("footer:moreChallenges.aoc"),
       to: "https://adventofcode.com/",
     },
     {
-      label: t("users.footer.moreChallenges.htb"),
+      label: t("footer:moreChallenges.htb"),
       to: "https://www.hackthebox.com/",
     },
     {
-      label: t("users.footer.moreChallenges.cg"),
+      label: t("footer:moreChallenges.cg"),
       to: "https://www.codingame.com/start/fr/",
     },
   ];
 
   if (user) {
     footerNavsDataLinks.push({
-      label: t("users.footer.links.profile"),
+      label: t("footer:links.profile"),
       to: `/account`,
     });
   }
 
   const footerNavsData = [
     {
-      title: t("users.footer.links.title"),
+      title: t("footer:links.title"),
       items: footerNavsDataLinks,
     },
     {
-      title: t("users.footer.project.title"),
+      title: t("footer:project.title"),
       items: footerNavsDataProject,
     },
     {
-      title: t("users.footer.moreChallenges.title"),
+      title: t("footer:moreChallenges.title"),
       items: footerNavsDataMore,
     },
   ];
@@ -88,10 +88,10 @@ const Footer: React.FC = () => {
           <div className="mb-20 pb-36 pt-16 flex items-center justify-center border-b border-white/10 border-dashed ">
             <div className="max-w-[34rem] mx-auto">
               <h1 className="title text-4xl lg:text-6xl font-semibold text-center !leading-tight">
-                {t("users.footer.title")}
+                {t("footer:title")}
               </h1>
               <p className="text-lg lg:text-xl text-white/64 text-center max-w-[25rem] mx-auto mt-6">
-                {t("users.footer.description")}
+                {t("footer:description")}
               </p>
             </div>
           </div>

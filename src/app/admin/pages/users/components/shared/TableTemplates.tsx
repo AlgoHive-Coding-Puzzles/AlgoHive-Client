@@ -12,9 +12,7 @@ export const StatusTemplate = (user: User) => {
         user.blocked ? "bg-red-200 text-red-800" : "bg-green-200 text-green-800"
       }`}
     >
-      {user.blocked
-        ? t("staffTabs.users.blocked")
-        : t("staffTabs.users.active")}
+      {user.blocked ? t("admin:users:blocked") : t("admin:users:active")}
     </span>
   );
 };
@@ -27,7 +25,7 @@ export const LastConnectionTemplate = (user: User) => {
     <span className="text-sm">
       {user.last_connected
         ? new Date(user.last_connected).toLocaleString()
-        : t("staffTabs.users.neverConnected")}
+        : t("admin:users:neverConnected")}
     </span>
   );
 };

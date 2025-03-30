@@ -34,7 +34,7 @@ export default function CompetitionDetails({
   onEdit,
   onDeleted,
 }: CompetitionDetailsProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation(["common", "staffTabs"]);
   const toast = useRef<Toast>(null);
 
   const [statistics, setStatistics] = useState<CompetitionStatistics | null>(
@@ -79,7 +79,7 @@ export default function CompetitionDetails({
       );
     } catch (error) {
       console.error("Error loading competition details:", error);
-      showToast("error", t("common.states.errorMessage"));
+      showToast("error", t("common:states.errorMessage"));
     } finally {
       setLoading(false);
     }
@@ -91,7 +91,7 @@ export default function CompetitionDetails({
   ) => {
     toast.current?.show({
       severity,
-      summary: t(`common.states.${severity}`),
+      summary: t(`common:states.${severity}`),
       detail,
       life: 3000,
     });
@@ -105,7 +105,7 @@ export default function CompetitionDetails({
       );
       showToast(
         "success",
-        t("staffTabs.competitions.messages.toggleVisibilitySuccess")
+        t("admin:competitions:messages.toggleVisibilitySuccess")
       );
       // Update competition in parent component
       competition.show = !competition.show;
@@ -115,7 +115,7 @@ export default function CompetitionDetails({
       console.error("Error toggling visibility:", error);
       showToast(
         "error",
-        t("staffTabs.competitions.messages.toggleVisibilityError")
+        t("admin:competitions:messages.toggleVisibilityError")
       );
     }
   };
@@ -123,35 +123,32 @@ export default function CompetitionDetails({
   const handleFinishCompetition = async () => {
     try {
       await ServiceManager.competitions.finishCompetition(competition.id);
-      showToast("success", t("staffTabs.competitions.messages.finishSuccess"));
+      showToast("success", t("admin:competitions:messages.finishSuccess"));
       // Update competition in parent component
       competition.finished = !competition.finished;
       // Reload competition details to refresh the view
       await loadCompetitionDetails();
     } catch (error) {
       console.error("Error finishing competition:", error);
-      showToast("error", t("staffTabs.competitions.messages.finishError"));
+      showToast("error", t("admin:competitions:messages.finishError"));
     }
   };
 
   const confirmDeleteCompetition = () => {
     confirmDialog({
-      message: t("staffTabs.competitions.confirmDelete"),
-      header: t("staffTabs.competitions.confirmDeleteHeader"),
+      message: t("admin:competitions:confirmDelete"),
+      header: t("admin:competitions:confirmDeleteHeader"),
       icon: "pi pi-exclamation-triangle",
       acceptClassName: "p-button-danger",
       accept: async () => {
         try {
           await ServiceManager.competitions.remove(competition.id);
-          showToast(
-            "success",
-            t("staffTabs.competitions.messages.deleteSuccess")
-          );
+          showToast("success", t("admin:competitions:messages.deleteSuccess"));
           onClose();
           onDeleted();
         } catch (error) {
           console.error("Error deleting competition:", error);
-          showToast("error", t("staffTabs.competitions.messages.deleteError"));
+          showToast("error", t("admin:competitions:messages.deleteError"));
         }
       },
     });
@@ -167,7 +164,7 @@ export default function CompetitionDetails({
       <Toast ref={toast} />
 
       <Dialog
-        header={t("staffTabs.competitions.details")}
+        header={t("admin:competitions:details")}
         visible={visible}
         onHide={onClose}
         style={{ width: "70vw", maxWidth: "1200px" }}
@@ -177,7 +174,7 @@ export default function CompetitionDetails({
         {loading ? (
           <div className="flex flex-col items-center justify-center p-6">
             <ProgressSpinner style={{ width: "50px", height: "50px" }} />
-            <p className="mt-4 text-gray-600">{t("common.states.loading")}</p>
+            <p className="mt-4 text-gray-600">{t("common:states.loading")}</p>
           </div>
         ) : (
           <>
@@ -191,24 +188,24 @@ export default function CompetitionDetails({
                     {competition.finished ? (
                       <Tag
                         severity="warning"
-                        value={t("staffTabs.competitions.status.finished")}
+                        value={t("admin:competitions:status.finished")}
                       />
                     ) : (
                       <Tag
                         severity="success"
-                        value={t("staffTabs.competitions.status.active")}
+                        value={t("admin:competitions:status.active")}
                       />
                     )}
 
                     {competition.show ? (
                       <Tag
                         severity="info"
-                        value={t("staffTabs.competitions.status.visible")}
+                        value={t("admin:competitions:status.visible")}
                       />
                     ) : (
                       <Tag
                         severity="danger"
-                        value={t("staffTabs.competitions.status.hidden")}
+                        value={t("admin:competitions:status.hidden")}
                       />
                     )}
                   </div>
@@ -217,7 +214,7 @@ export default function CompetitionDetails({
                 <div className="flex gap-2">
                   <Button
                     icon="pi pi-pencil"
-                    label={t("common.actions.edit")}
+                    label={t("common:actions.edit")}
                     className="p-button-outlined p-button-success"
                     onClick={onEdit}
                   />
@@ -225,8 +222,8 @@ export default function CompetitionDetails({
                     icon="pi pi-flag-fill"
                     label={
                       competition.finished
-                        ? t("staffTabs.competitions.actions.unfinish")
-                        : t("staffTabs.competitions.actions.finish")
+                        ? t("admin:competitions:actions.unfinish")
+                        : t("admin:competitions:actions.finish")
                     }
                     className="p-button-outlined p-button-warning"
                     onClick={handleFinishCompetition}
@@ -236,15 +233,15 @@ export default function CompetitionDetails({
                     icon={competition.show ? "pi pi-eye-slash" : "pi pi-eye"}
                     label={
                       competition.show
-                        ? t("staffTabs.competitions.actions.hide")
-                        : t("staffTabs.competitions.actions.show")
+                        ? t("admin:competitions:actions.hide")
+                        : t("admin:competitions:actions.show")
                     }
                     className="p-button-outlined p-button-secondary"
                     onClick={handleToggleVisibility}
                   />
                   <Button
                     icon="pi pi-trash"
-                    label={t("common.actions.delete")}
+                    label={t("common:actions.delete")}
                     className="p-button-outlined p-button-danger"
                     onClick={confirmDeleteCompetition}
                   />
@@ -260,11 +257,11 @@ export default function CompetitionDetails({
 
             {statistics && (
               <TabView>
-                <TabPanel header={t("staffTabs.competitions.statistics.title")}>
+                <TabPanel header={t("admin:competitions:statistics.title")}>
                   <div className="stats-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-4">
                     <div className="stat-card bg-blue-50 rounded-lg p-4 shadow-sm">
                       <div className="text-lg font-semibold text-blue-800">
-                        {t("staffTabs.competitions.statistics.totalUsers")}
+                        {t("admin:competitions:statistics.totalUsers")}
                       </div>
                       <div className="text-3xl text-black">
                         {statistics.total_users}
@@ -272,7 +269,7 @@ export default function CompetitionDetails({
                     </div>
                     <div className="stat-card bg-green-50 rounded-lg p-4 shadow-sm">
                       <div className="text-lg font-semibold text-green-800">
-                        {t("staffTabs.competitions.statistics.activeUsers")}
+                        {t("admin:competitions:statistics.activeUsers")}
                       </div>
                       <div className="text-3xl text-black">
                         {statistics.active_users}
@@ -280,7 +277,7 @@ export default function CompetitionDetails({
                     </div>
                     <div className="stat-card bg-purple-50 rounded-lg p-4 shadow-sm">
                       <div className="text-lg font-semibold text-purple-800">
-                        {t("staffTabs.competitions.statistics.averageScore")}
+                        {t("admin:competitions:statistics.averageScore")}
                       </div>
                       <div className="text-3xl text-black">
                         {statistics.average_score.toFixed(1)}
@@ -288,7 +285,7 @@ export default function CompetitionDetails({
                     </div>
                     <div className="stat-card bg-red-50 rounded-lg p-4 shadow-sm">
                       <div className="text-lg font-semibold text-red-800">
-                        {t("staffTabs.competitions.statistics.highestScore")}
+                        {t("admin:competitions:statistics.highestScore")}
                       </div>
                       <div className="text-3xl text-black">
                         {statistics.highest_score.toFixed(1)}
@@ -298,14 +295,12 @@ export default function CompetitionDetails({
                 </TabPanel>
 
                 <TabPanel
-                  header={t("staffTabs.competitions.statistics.participants")}
+                  header={t("admin:competitions:statistics.participants")}
                 >
                   {participants.length === 0 ? (
                     <Message
                       severity="info"
-                      text={t(
-                        "staffTabs.competitions.statistics.noParticipants"
-                      )}
+                      text={t("admin:competitions:statistics.noParticipants")}
                     />
                   ) : (
                     <DataTable
@@ -318,24 +313,24 @@ export default function CompetitionDetails({
                       <Column field="id" header="ID" style={{ width: "20%" }} />
                       <Column
                         field="first_name"
-                        header={t("common.fields.firstName")}
+                        header={t("common:fields.firstName")}
                         style={{ width: "25%" }}
                       />
                       <Column
                         field="lastn_ame"
-                        header={t("common.fields.lastName")}
+                        header={t("common:fields.lastName")}
                         style={{ width: "25%" }}
                       />
                       <Column
                         field="email"
-                        header={t("common.fields.email")}
+                        header={t("common:fields.email")}
                         style={{ width: "25%" }}
                       />
                       <Column
                         body={(rowData) => (
                           <Button
                             icon="pi pi-list"
-                            label={t("staffTabs.competitions.tries.viewTries")}
+                            label={t("admin:competitions:tries.viewTries")}
                             className="p-button-sm p-button-outlined"
                             onClick={() => viewParticipantTries(rowData)}
                           />
@@ -346,13 +341,11 @@ export default function CompetitionDetails({
                   )}
                 </TabPanel>
 
-                <TabPanel
-                  header={t("staffTabs.competitions.statistics.groups")}
-                >
+                <TabPanel header={t("admin:competitions:statistics.groups")}>
                   {groups.length === 0 ? (
                     <Message
                       severity="info"
-                      text={t("staffTabs.competitions.statistics.noGroups")}
+                      text={t("admin:competitions:statistics.noGroups")}
                     />
                   ) : (
                     <DataTable
@@ -364,12 +357,12 @@ export default function CompetitionDetails({
                     >
                       <Column
                         field="name"
-                        header={t("common.fields.name")}
+                        header={t("common:fields.name")}
                         style={{ width: "40%" }}
                       />
                       <Column
                         field="description"
-                        header={t("common.fields.description")}
+                        header={t("common:fields.description")}
                         style={{ width: "40%" }}
                       />
                     </DataTable>

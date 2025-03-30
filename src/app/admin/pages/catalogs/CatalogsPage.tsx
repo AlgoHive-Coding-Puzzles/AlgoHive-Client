@@ -29,7 +29,7 @@ export default function CatalogsPage() {
         const data = await ServiceManager.catalogs.fetchCatalogs();
         setCatalogs(data);
       } catch (err) {
-        setError(t("staff.catalogs.errorFetchingCatalogs"));
+        setError(t("admin:catalogs:errorFetchingCatalogs"));
         console.error(err);
       } finally {
         setLoading(false);
@@ -52,7 +52,7 @@ export default function CatalogsPage() {
       {loading && (
         <div className="flex flex-col items-center justify-center p-6">
           <ProgressSpinner style={{ width: "50px", height: "50px" }} />
-          <p className="mt-4 text-gray-600">{t("staff.catalogs.loading")}</p>
+          <p className="mt-4 text-gray-600">{t("common:states.loading")}</p>
         </div>
       )}
 
@@ -69,7 +69,7 @@ export default function CatalogsPage() {
         <div className="flex flex-col items-center justify-center p-12 rounded-lg shadow">
           <i className="pi pi-inbox text-5xl text-gray-400 mb-4"></i>
           <p className="text-gray-600 text-xl">
-            {t("staff.catalogs.noCatalogs")}
+            {t("admion:catalogs:noCatalogs")}
           </p>
         </div>
       )}
@@ -78,7 +78,7 @@ export default function CatalogsPage() {
         <>
           <div className="flex items-center justify-between mb-10">
             <p className="font-semibold text-white-800">
-              {t("staffTabs.catalogs.description")}
+              {t("admin:catalogs:description")}
             </p>
           </div>
 

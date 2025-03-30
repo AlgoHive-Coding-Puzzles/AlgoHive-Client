@@ -62,13 +62,13 @@ const EditRoleDialog: React.FC<EditRoleDialogProps> = ({
   const footerContent = (
     <div className="flex justify-end gap-2">
       <Button
-        label={t("common.actions.cancel")}
+        label={t("common:actions.cancel")}
         icon="pi pi-times"
         onClick={onHide}
         className="p-button-text"
       />
       <Button
-        label={t("common.actions.save")}
+        label={t("common:actions.save")}
         icon="pi pi-check"
         onClick={handleSave}
         loading={loading}
@@ -80,7 +80,7 @@ const EditRoleDialog: React.FC<EditRoleDialogProps> = ({
 
   return (
     <Dialog
-      header={t("staffTabs.roles.editRole")}
+      header={t("admin:roles:editRole")}
       visible={visible}
       style={{ width: "450px" }}
       onHide={onHide}
@@ -91,13 +91,13 @@ const EditRoleDialog: React.FC<EditRoleDialogProps> = ({
     >
       {isOwnerRole && (
         <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4">
-          <p>{t("staffTabs.roles.ownerRoleWarning")}</p>
+          <p>{t("admin:roles:ownerRoleWarning")}</p>
         </div>
       )}
 
       <div className="field mt-4">
         <label htmlFor="edit-role-name" className="font-bold">
-          {t("staffTabs.roles.name")}
+          {t("admin:roles:name")}
         </label>
         <InputText
           id="edit-role-name"
@@ -112,7 +112,7 @@ const EditRoleDialog: React.FC<EditRoleDialogProps> = ({
 
       <div className="field mt-4">
         <label htmlFor="edit-role-permissions" className="font-bold">
-          {t("staffTabs.roles.permissions")}
+          {t("admin:roles:permissions")}
         </label>
         <div className="grid grid-cols-1 gap-2 mt-2">
           {permissionsList.map((perm) => (
@@ -138,7 +138,7 @@ const EditRoleDialog: React.FC<EditRoleDialogProps> = ({
 
       <div className="field mt-4">
         <label htmlFor="edit-role-scopes" className="font-bold">
-          {t("staffTabs.roles.scopes")}
+          {t("admin:roles:scopes")}
         </label>
         <MultiSelect
           id="edit-role-scopes"

@@ -28,13 +28,13 @@ const DeleteScopeDialog: React.FC<DeleteScopeDialogProps> = ({
   const footerContent = (
     <div className="flex justify-end gap-2">
       <Button
-        label={t("common.actions.cancel")}
+        label={t("common:actions.cancel")}
         icon="pi pi-times"
         onClick={onHide}
         className="p-button-text"
       />
       <Button
-        label={t("common.actions.delete")}
+        label={t("common:actions.delete")}
         icon="pi pi-trash"
         onClick={onConfirm}
         className="p-button-danger"
@@ -46,7 +46,7 @@ const DeleteScopeDialog: React.FC<DeleteScopeDialogProps> = ({
 
   return (
     <Dialog
-      header={t("staffTabs.scopes.deleteScope")}
+      header={t("admin:scopes:deleteScope")}
       visible={visible}
       style={{ width: "450px" }}
       onHide={onHide}
@@ -56,16 +56,16 @@ const DeleteScopeDialog: React.FC<DeleteScopeDialogProps> = ({
     >
       <div className="align-items-center p-5 text-center">
         <i className="pi pi-exclamation-triangle text-5xl text-yellow-500 mb-4" />
-        <h4 className="mb-2">{t("staffTabs.scopes.confirmDelete")}</h4>
+        <h4 className="mb-2">{t("admin:scopes:confirmDelete")}</h4>
         <p className="mb-0">
-          {t("staffTabs.scopes.confirmDeleteMessage", { name: scope.name })}
+          {t("admin:scopes:confirmDeleteMessage", { name: scope.name })}
         </p>
 
         {scope.groups && scope.groups.length > 0 && (
           <p className="text-center mt-3 text-danger-500">
-            {t("staffTabs.scopes.dangerGroupsAssigned", {
+            {t("admin:scopes:dangerGroupsAssigned", {
               count: scope.groups.length,
-              groups: t("staffTabs.scopes.groups").toLowerCase(),
+              groups: t("admin:scopes:groups").toLowerCase(),
             })}
           </p>
         )}

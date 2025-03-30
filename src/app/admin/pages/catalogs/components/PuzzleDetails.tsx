@@ -27,7 +27,7 @@ export const PuzzleDetails = ({
         </h2>
         <Button
           icon="pi pi-arrow-left"
-          label={t("staff.catalogs.backToCatalog")}
+          label={t("admin:catalogs:backToCatalog")}
           className="p-button-primary p-button-sm"
           onClick={onBack}
         />
@@ -36,11 +36,11 @@ export const PuzzleDetails = ({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         <div>
           <p className="text-sm text-white-600 mb-1">
-            {t("staff.catalogs.author")}:{" "}
+            {t("admin:catalogs:author")}:{" "}
             <span className="font-medium">{puzzle.author}</span>
           </p>
           <p className="text-sm text-white-600 mb-1">
-            {t("staff.catalogs.difficulty")}:
+            {t("admin:catalogs:difficulty")}:
             <Tag
               className="ml-2"
               severity={
@@ -55,17 +55,17 @@ export const PuzzleDetails = ({
             </Tag>
           </p>
           <p className="mt-6 text-sm text-gray-600 mb-1">
-            {t("staff.catalogs.language")}:{" "}
+            {t("admin:catalogs:language")}:{" "}
             <span className="font-medium">{puzzle.language}</span>
           </p>
           <p className="text-sm text-gray-600 mb-1">
-            {t("staff.catalogs.createdAt")}:{" "}
+            {t("admin:catalogs:createdAt")}:{" "}
             <span className="font-medium">
               {new Date(puzzle.createdAt).toLocaleString()}
             </span>
           </p>
           <p className="text-sm text-gray-600 mb-1">
-            {t("staff.catalogs.updatedAt")}:{" "}
+            {t("admin:catalogs:updatedAt")}:{" "}
             <span className="font-medium">
               {new Date(puzzle.updatedAt).toLocaleString()}
             </span>

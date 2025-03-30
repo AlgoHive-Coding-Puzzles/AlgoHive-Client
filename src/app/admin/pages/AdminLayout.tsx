@@ -7,7 +7,7 @@ import AppDock from "@admin/components/AppDock/AppDock";
 import { useActivePage } from "@contexts/ActivePageContext";
 
 export default function Admin() {
-  const { t } = useTranslation();
+  const { t } = useTranslation(["common", "navigation"]);
   const { activePage, setActivePage } = useActivePage();
   const [isSticky, setIsSticky] = useState(false);
 
@@ -60,7 +60,7 @@ export default function Admin() {
               <div className="p-4 min-h-screen mb-28">
                 <div className="mb-6">
                   <h1 className="text-3xl font-bold text-white mb-2">
-                    {t("navigation.staff." + activePage)}
+                    {t("navigation:staff." + activePage)}
                   </h1>
                   <div className="w-20 h-1 bg-amber-500 rounded"></div>
                 </div>

@@ -1,0 +1,60 @@
+{
+  "how": "How",
+  "toPlayAlgohive": "to play AlgoHive",
+  "description": "You will find all the information you need to play the game here. FAQ, description of the game, and more.",
+  "paragraphs": {
+    "p1": {
+      "title": "Welcome to AlgoHive! 🐝",
+      "desc1": "AlgoHive is a space for programming puzzle competitions designed to challenge your technical skills, reading comprehension, and problem-solving abilities. Whether you're a beginner looking to put your talent to the test or an experienced developer seeking a fresh challenge, AlgoHive has something for you."
+    },
+    "p2": {
+      "title": "How does it work ?",
+      "desc1": "Each puzzle is made up of two steps:",
+      "desc2": "Part One : A problem statement is presented, requiring careful reading and logical thinking. Your first task is to write a program that produces the correct output based on the given input.",
+      "desc3": "Part Two : Once you've cracked the first part, you will be given a second challenge building on it, introducing new constraints or unexpected complexity. This step pushes you to adapt and refine your approach."
+    },
+    "p3": {
+      "title": "Who is it for ?",
+      "desc": "If you enjoy logical puzzles and creative problem-solving, you're in the right place, no matter your experience level"
+    },
+    "p4": {
+      "title": "What do you need ?",
+      "desc1": "A grasp of essential programming abilities",
+      "desc2": "Problem-solving skills and attention to detail",
+      "desc3": "A curiosity for tackling tricky challenges !",
+      "desc4": "A willingness to learn and improve your skills"
+    }
+  },
+  "catchphrase": "Ready to play ? Log in to see what competitions are available to you.",
+  "alreadyLoggedIn": "You are already logged in !",
+  "connectYourAccount": "Login to start your adventure !",
+  "faq": {
+    "title1": "Frequently",
+    "title2": "Asked Questions",
+    "desc": "Find quick answers to common questions about AlgoHive.",
+    "question1": {
+      "title": "What is the minimum level to participate ?",
+      "desc": "There is no minimum level to participate. AlgoHive is designed for all levels of programmers, from beginners to experts."
+    },
+    "question2": {
+      "title": "Who is behind AlgoHive ?",
+      "desc": "AlgoHive is a project developed by a single developer with a passion for programming and algorithmic challenges. The goal is to create a platform that helps developers improve their skills while having fun."
+    },
+    "question3": {
+      "title": "Can I get a solution to the puzzles if I'm stuck ?",
+      "desc": "No, the puzzles are designed to be solved independently. However, feel free to ask for hints or tips from the community."
+    },
+    "question4": {
+      "title": "How do I participate in competitions?",
+      "desc": "To participate in competitions, you need to log in to your account and select the competition you want to join. Once you're in, you can start solving puzzles and competing with others."
+    },
+    "question5": {
+      "title": "Can I use AI to help me solve puzzles?",
+      "desc": "While you can use AI tools to assist you, the goal of AlgoHive is to improve your own skills. We encourage you to try solving puzzles on your own first. It's harder to get better at programming if you ask an AI to do the programming for you.)"
+    },
+    "question6": {
+      "title": "What if I find a bug or issue on the platform?",
+      "desc": "If you encounter any bugs or issues, please report them to the support team. Your feedback is valuable in improving the platform."
+    }
+  }
+}

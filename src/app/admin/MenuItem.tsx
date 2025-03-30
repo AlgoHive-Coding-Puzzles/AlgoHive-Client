@@ -34,14 +34,14 @@ export interface MenuItem {
 export const getStaffMenuItems = (t: TFunction): MenuItem[] => [
   {
     id: "home",
-    label: t("navigation.staff.home"),
+    label: t("navigation:dock:home"),
     icon: "pi pi-home",
     color: "#F2C94C", // Jaune miel
     Component: HomePage,
   },
   {
     id: "catalogs",
-    label: t("navigation.staff.catalogs"),
+    label: t("navigation:dock:catalogs"),
     icon: "pi pi-server",
     color: "#8D6E33", // Ambre foncé
     Component: CatalogsPage,
@@ -49,7 +49,7 @@ export const getStaffMenuItems = (t: TFunction): MenuItem[] => [
   },
   {
     id: "scopes",
-    label: t("navigation.staff.scopes"),
+    label: t("navigation:dock:scopes"),
     icon: "pi pi-building",
     color: "#4F3A1B", // Brun foncé
     Component: ScopesPage,
@@ -58,7 +58,7 @@ export const getStaffMenuItems = (t: TFunction): MenuItem[] => [
   },
   {
     id: "roles",
-    label: t("navigation.staff.roles"),
+    label: t("navigation:dock:roles"),
     icon: "pi pi-shield",
     color: "#E0A800", // Ambre doré
     Component: RolesPage,
@@ -67,7 +67,7 @@ export const getStaffMenuItems = (t: TFunction): MenuItem[] => [
   },
   {
     id: "groups",
-    label: t("navigation.staff.groups"),
+    label: t("navigation:dock:groups"),
     icon: "pi pi-users", // Icône de groupe (plusieurs personnes)
     color: "#7D6608", // Brun miel
     Component: GroupsPage,
@@ -75,7 +75,7 @@ export const getStaffMenuItems = (t: TFunction): MenuItem[] => [
   },
   {
     id: "users",
-    label: t("navigation.staff.users"),
+    label: t("navigation:dock:users"),
     icon: "pi pi-user", // Changé pour une icône d'utilisateur individuel
     color: "#BF8F30", // Ambre clair
     Component: UsersPage,
@@ -83,7 +83,7 @@ export const getStaffMenuItems = (t: TFunction): MenuItem[] => [
   },
   {
     id: "competitions",
-    label: t("navigation.staff.competitions"),
+    label: t("navigation:dock:competitions"),
     icon: "pi pi-graduation-cap",
     color: "#5A3E28", // Brun foncé
     Component: CompetitionsPage,

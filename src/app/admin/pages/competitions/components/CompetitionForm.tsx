@@ -29,7 +29,7 @@ export default function CompetitionForm({
   onSuccess,
   onCancel,
 }: CompetitionFormProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation(["common", "staffTabs"]);
   const toast = useRef<Toast>(null);
 
   // Form state
@@ -152,7 +152,7 @@ export default function CompetitionForm({
   ) => {
     toast.current?.show({
       severity,
-      summary: t(`common.states.${severity}`),
+      summary: t(`common:states.${severity}`),
       detail,
       life: 3000,
     });
@@ -161,27 +161,21 @@ export default function CompetitionForm({
   const handleSubmit = async () => {
     // Validate form
     if (!title) {
-      showToast("error", t("staffTabs.competitions.messages.titleRequired"));
+      showToast("error", t("admin:competitions:messages.titleRequired"));
       return;
     }
     if (!description) {
-      showToast(
-        "error",
-        t("staffTabs.competitions.messages.descriptionRequired")
-      );
+      showToast("error", t("admin:competitions:messages.descriptionRequired"));
       return;
     }
     if (!selectedTheme) {
-      showToast(
-        "error",
-        t("staffTabs.competitions.messages.catalogThemeRequired")
-      );
+      showToast("error", t("admin:competitions:messages.catalogThemeRequired"));
       return;
     }
     if (!selectedCatalog) {
       showToast(
         "error",
-        t("staffTabs.competitions.messages.apiEnvironmentRequired")
+        t("admin:competitions:messages.apiEnvironmentRequired")
       );
       return;
     }
@@ -199,10 +193,7 @@ export default function CompetitionForm({
           isFinished,
           groups.map((group) => group.id)
         );
-        showToast(
-          "success",
-          t("staffTabs.competitions.messages.createSuccess")
-        );
+        showToast("success", t("admin:competitions:messages.createSuccess"));
       } else if (competition) {
         await ServiceManager.competitions.update(
           competition.id,
@@ -215,10 +206,7 @@ export default function CompetitionForm({
           groups.map((group) => group.id)
         );
 
-        showToast(
-          "success",
-          t("staffTabs.competitions.messages.updateSuccess")
-        );
+        showToast("success", t("admin:competitions:messages.updateSuccess"));
 
         // // Update groups
         // const currentGroupIds = competition.groups?.map((g) => g.id) || [];
@@ -245,8 +233,8 @@ export default function CompetitionForm({
       showToast(
         "error",
         mode === "create"
-          ? t("staffTabs.competitions.messages.createError")
-          : t("staffTabs.competitions.messages.updateError")
+          ? t("admin:competitions:messages.createError")
+          : t("admin:competitions:messages.updateError")
       );
     } finally {
       setSubmitting(false);
@@ -259,8 +247,8 @@ export default function CompetitionForm({
       <Dialog
         header={
           mode === "create"
-            ? t("staffTabs.competitions.create")
-            : t("staffTabs.competitions.edit")
+            ? t("admin:competitions:create")
+            : t("admin:competitions:edit")
         }
         visible={visible}
         onHide={onCancel}
@@ -268,13 +256,13 @@ export default function CompetitionForm({
         footer={
           <div className="flex justify-end gap-2">
             <Button
-              label={t("common.actions.cancel")}
+              label={t("common:actions.cancel")}
               icon="pi pi-times"
               className="p-button-text"
               onClick={onCancel}
             />
             <Button
-              label={t("common.actions.save")}
+              label={t("common:actions.save")}
               icon="pi pi-check"
               loading={submitting}
               onClick={handleSubmit}
@@ -284,9 +272,7 @@ export default function CompetitionForm({
       >
         <div className="p-fluid">
           <div className="field mb-4">
-            <label htmlFor="title">
-              {t("staffTabs.competitions.form.title")}
-            </label>
+            <label htmlFor="title">{t("admin:competitions:form.title")}</label>
             <InputText
               id="title"
               value={title}
@@ -295,14 +281,14 @@ export default function CompetitionForm({
             />
             {!title && (
               <small className="p-error">
-                {t("staffTabs.competitions.messages.titleRequired")}
+                {t("admin:competitions:messages.titleRequired")}
               </small>
             )}
           </div>
 
           <div className="field mb-4">
             <label htmlFor="description">
-              {t("staffTabs.competitions.form.description")}
+              {t("admin:competitions:form.description")}
             </label>
             <InputTextarea
               id="description"
@@ -314,14 +300,14 @@ export default function CompetitionForm({
             />
             {!description && (
               <small className="p-error">
-                {t("staffTabs.competitions.messages.descriptionRequired")}
+                {t("admin:competitions:messages.descriptionRequired")}
               </small>
             )}
           </div>
 
           <div className="field mb-4">
             <label htmlFor="apiEnvironment">
-              {t("staffTabs.competitions.form.apiEnvironment")}
+              {t("admin:competitions:form.apiEnvironment")}
             </label>
             <Dropdown
               id="apiEnvironment"
@@ -329,13 +315,13 @@ export default function CompetitionForm({
               onChange={(e) => setSelectedCatalog(e.value)}
               options={catalogs}
               optionLabel="name"
-              placeholder={t("common.selects.catalogs")}
+              placeholder={t("common:selects.catalogs")}
               className={!selectedCatalog ? "p-invalid" : ""}
               filter
             />
             {!selectedCatalog && (
               <small className="p-error">
-                {t("staffTabs.competitions.messages.apiEnvironmentRequired")}
+                {t("admin:competitions:messages.apiEnvironmentRequired")}
               </small>
             )}
           </div>
@@ -343,7 +329,7 @@ export default function CompetitionForm({
           {selectedCatalog && (
             <div className="field mb-4">
               <label htmlFor="catalogTheme">
-                {t("staffTabs.competitions.form.catalogTheme")}
+                {t("admin:competitions:form.catalogTheme")}
               </label>
               <Dropdown
                 id="catalogTheme"
@@ -353,13 +339,13 @@ export default function CompetitionForm({
                 }}
                 options={themes}
                 optionLabel="name"
-                placeholder={t("common.selects.themes")}
+                placeholder={t("common:selects.themes")}
                 className={!selectedTheme ? "p-invalid" : ""}
                 filter
               />
               {!selectedTheme && (
                 <small className="p-error">
-                  {t("staffTabs.competitions.messages.catalogThemeRequired")}
+                  {t("admin:competitions:messages.catalogThemeRequired")}
                 </small>
               )}
             </div>
@@ -367,7 +353,7 @@ export default function CompetitionForm({
 
           <div className="field mb-4">
             <label htmlFor="groups">
-              {t("staffTabs.competitions.form.groups")}
+              {t("admin:competitions:form.groups")}
             </label>
             <MultiSelect
               id="groups"
@@ -375,14 +361,14 @@ export default function CompetitionForm({
               onChange={(e) => setGroups(e.value)}
               options={availableGroups}
               optionLabel="name"
-              placeholder={t("common.selects.groups")}
+              placeholder={t("common:selects.groups")}
               filter
               display="chip"
               className="w-full"
             />
             <small className="text-gray-500">
               {groups.length === 0
-                ? t("staffTabs.competitions.statistics.noGroups")
+                ? t("admin:competitions:statistics.noGroups")
                 : ""}
             </small>
           </div>
@@ -394,7 +380,7 @@ export default function CompetitionForm({
               onChange={(e) => setIsVisible(e.checked ?? false)}
             />
             <label htmlFor="visible" className="ml-2">
-              {t("staffTabs.competitions.form.visible")}
+              {t("admin:competitions:form.visible")}
             </label>
           </div>
 
@@ -406,7 +392,7 @@ export default function CompetitionForm({
                 onChange={(e) => setIsFinished(e.checked ?? false)}
               />
               <label htmlFor="finished" className="ml-2">
-                {t("staffTabs.competitions.form.finished")}
+                {t("admin:competitions:form.finished")}
               </label>
             </div>
           )}

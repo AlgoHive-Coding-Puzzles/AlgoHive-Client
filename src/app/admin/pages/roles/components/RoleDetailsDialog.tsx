@@ -34,13 +34,13 @@ const RoleDetailsDialog: React.FC<RoleDetailsDialogProps> = ({
   const footerContent = (
     <div className="flex justify-end gap-2">
       <Button
-        label={t("common.actions.close")}
+        label={t("common:actions.close")}
         icon="pi pi-times"
         onClick={onHide}
         className="p-button-text"
       />
       <Button
-        label={t("common.actions.edit")}
+        label={t("common:actions.edit")}
         icon="pi pi-pencil"
         onClick={() => {
           onHide();
@@ -67,23 +67,23 @@ const RoleDetailsDialog: React.FC<RoleDetailsDialogProps> = ({
       <div className="mt-2">
         {isOwnerRole && (
           <Tag severity="danger" className="mb-3">
-            {t("staffTabs.roles.ownerRole")}
+            {t("admin:roles:ownerRole")}
           </Tag>
         )}
 
         <h3 className="text-lg font-semibold mb-2">
-          {t("staffTabs.roles.information")}
+          {t("admin:roles:information")}
         </h3>
 
         <div className="mb-4">
-          <span className="font-medium">{t("staffTabs.roles.id")}: </span>
+          <span className="font-medium">{t("admin:roles:id")}: </span>
           <span className="text-gray-700">{role.id}</span>
         </div>
 
         <Divider />
 
         <h3 className="text-lg font-semibold mb-3">
-          {t("staffTabs.roles.permissions")}
+          {t("admin:roles:permissions")}
         </h3>
 
         <div className="flex flex-wrap gap-2 mb-4">
@@ -103,7 +103,7 @@ const RoleDetailsDialog: React.FC<RoleDetailsDialogProps> = ({
         <Divider />
 
         <h3 className="text-lg font-semibold mb-3">
-          {t("staffTabs.roles.scopes")}
+          {t("admin:roles:scopes")}
         </h3>
 
         <div className="flex flex-wrap gap-2 mb-4">
@@ -116,25 +116,21 @@ const RoleDetailsDialog: React.FC<RoleDetailsDialogProps> = ({
               />
             ))
           ) : (
-            <p className="text-gray-500 italic">
-              {t("staffTabs.roles.noScopes")}
-            </p>
+            <p className="text-gray-500 italic">{t("admin:roles:noScopes")}</p>
           )}
         </div>
 
         <Divider />
 
-        <h3 className="text-lg font-semibold mb-3">
-          {t("staffTabs.roles.users")}
-        </h3>
+        <h3 className="text-lg font-semibold mb-3">{t("admin:roles:users")}</h3>
 
         <div className="mb-4">
           <span className="font-medium">
-            {t("staffTabs.roles.usersWithRole")}:{" "}
+            {t("admin:roles:usersWithRole")}:{" "}
           </span>
           <span className="text-gray-700">
             {role.users && role.users.length > 0 ? role.users.length : "0"}{" "}
-            {t("staffTabs.roles.usersCount")}
+            {t("admin:roles:usersCount")}
           </span>
         </div>
 
@@ -149,9 +145,7 @@ const RoleDetailsDialog: React.FC<RoleDetailsDialogProps> = ({
             ))}
             {role.users.length > 10 && (
               <Chip
-                label={`+${role.users.length - 10} ${t(
-                  "staffTabs.roles.more"
-                )}`}
+                label={`+${role.users.length - 10} ${t("admin:roles:more")}`}
                 className="bg-gray-500 text-white"
               />
             )}

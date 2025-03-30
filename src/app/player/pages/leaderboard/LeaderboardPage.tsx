@@ -30,7 +30,7 @@ interface WebSocketMessage {
 }
 
 export default function LeaderboardPage() {
-  const { t } = useTranslation();
+  const { t } = useTranslation(["common", "leaderboard"]);
   const { competition_id } = useParams();
   const competitionId = competition_id || "";
 
@@ -299,7 +299,7 @@ export default function LeaderboardPage() {
           {!isFullscreenView && (
             <>
               <h1 className="text-4xl font-bold text-surface-0">
-                {t("leaderboard.title")}
+                {t("leaderboard:title")}
               </h1>
               {competitionName && (
                 <p className="text-xl text-white/64 mt-4">{competitionName}</p>
@@ -339,8 +339,8 @@ export default function LeaderboardPage() {
                   )}
                 </svg>
                 {isFullscreen
-                  ? t("leaderboard.exitFullscreen")
-                  : t("leaderboard.fullscreen")}
+                  ? t("leaderboard:exitFullscreen")
+                  : t("leaderboard:fullscreen")}
               </button>
             </div>
             <table
@@ -357,7 +357,7 @@ export default function LeaderboardPage() {
                       isFullscreenView ? "text-lg" : "text-sm"
                     } font-medium text-amber-500`}
                   >
-                    {t("leaderboard.rank")}
+                    {t("leaderboard:rank")}
                   </th>
                   <th
                     className={`px-6 ${
@@ -366,7 +366,7 @@ export default function LeaderboardPage() {
                       isFullscreenView ? "text-lg" : "text-sm"
                     } font-medium text-amber-500`}
                   >
-                    {t("leaderboard.user")}
+                    {t("leaderboard:user")}
                   </th>
                   <th
                     className={`px-6 ${
@@ -375,7 +375,7 @@ export default function LeaderboardPage() {
                       isFullscreenView ? "text-lg" : "text-sm"
                     } font-medium text-amber-500`}
                   >
-                    {t("leaderboard.group")}
+                    {t("leaderboard:group")}
                   </th>
                   <th
                     className={`px-6 ${
@@ -384,7 +384,7 @@ export default function LeaderboardPage() {
                       isFullscreenView ? "text-lg" : "text-sm"
                     } font-medium text-amber-500`}
                   >
-                    {t("leaderboard.totalScore")}
+                    {t("leaderboard:totalScore")}
                   </th>
                   <th
                     className={`px-6 ${
@@ -393,7 +393,7 @@ export default function LeaderboardPage() {
                       isFullscreenView ? "text-lg" : "text-sm"
                     } font-medium text-amber-500`}
                   >
-                    {t("leaderboard.currentPuzzle")}
+                    {t("leaderboard:currentPuzzle")}
                   </th>
                   <th
                     className={`px-6 ${
@@ -402,7 +402,7 @@ export default function LeaderboardPage() {
                       isFullscreenView ? "text-lg" : "text-sm"
                     } font-medium text-amber-500`}
                   >
-                    {t("leaderboard.currentStep")}
+                    {t("leaderboard:currentStep")}
                   </th>
                   <th
                     className={`px-6 ${
@@ -411,7 +411,7 @@ export default function LeaderboardPage() {
                       isFullscreenView ? "text-lg" : "text-sm"
                     } font-medium text-amber-500`}
                   >
-                    {t("leaderboard.totalAttempts")}
+                    {t("leaderboard:totalAttempts")}
                   </th>
                 </tr>
               </thead>
@@ -502,7 +502,7 @@ export default function LeaderboardPage() {
                         isFullscreenView ? "text-xl" : ""
                       }`}
                     >
-                      {t("leaderboard.noEntries")}
+                      {t("leaderboard:noEntries")}
                     </td>
                   </tr>
                 )}
@@ -516,7 +516,7 @@ export default function LeaderboardPage() {
                 href={`/competitions/${competitionId}`}
                 className="px-4 py-2 bg-amber-700 hover:bg-amber-600 text-white font-medium rounded-xl transition-colors inline-block"
               >
-                {t("leaderboard.backToCompetition")}
+                {t("leaderboard:backToCompetition")}
               </a>
             </div>
           )}

@@ -68,7 +68,7 @@ export default function GroupsPage() {
 
         setScopes(scopesData);
       } catch (err) {
-        setError(t("staffTabs.groups.errorFetchingScopes"));
+        setError(t("admin:groups:errorFetchingScopes"));
         console.error(err);
       } finally {
         setLoading(false);
@@ -119,8 +119,8 @@ export default function GroupsPage() {
       } catch (err) {
         toast.current?.show({
           severity: "error",
-          summary: t("common.states.error"),
-          detail: t("staffTabs.groups.errorFetchingGroups"),
+          summary: t("common:states.error"),
+          detail: t("admin:groups:errorFetchingGroups"),
           life: 3000,
         });
         console.error(err);
@@ -140,8 +140,8 @@ export default function GroupsPage() {
     if (!selectedScope) {
       toast.current?.show({
         severity: "error",
-        summary: t("common.states.error"),
-        detail: t("staffTabs.groups.selectScopeFirst"),
+        summary: t("common:states.error"),
+        detail: t("admin:groups:selectScopeFirst"),
         life: 3000,
       });
       return;
@@ -150,8 +150,8 @@ export default function GroupsPage() {
     if (!name.trim()) {
       toast.current?.show({
         severity: "error",
-        summary: t("common.states.error"),
-        detail: t("staffTabs.groups.nameRequired"),
+        summary: t("common:states.error"),
+        detail: t("admin:groups:nameRequired"),
         life: 3000,
       });
       return;
@@ -166,15 +166,15 @@ export default function GroupsPage() {
 
       toast.current?.show({
         severity: "success",
-        summary: t("common.states.success"),
-        detail: t("staffTabs.groups.groupCreated"),
+        summary: t("common:states.success"),
+        detail: t("admin:groups:groupCreated"),
         life: 3000,
       });
     } catch (err) {
       toast.current?.show({
         severity: "error",
-        summary: t("common.states.error"),
-        detail: t("staffTabs.groups.errorCreatingGroup"),
+        summary: t("common:states.error"),
+        detail: t("admin:groups:errorCreatingGroup"),
         life: 3000,
       });
       console.error(err);
@@ -194,8 +194,8 @@ export default function GroupsPage() {
     if (!name.trim()) {
       toast.current?.show({
         severity: "error",
-        summary: t("common.states.error"),
-        detail: t("staffTabs.groups.nameRequired"),
+        summary: t("common:states.error"),
+        detail: t("admin:groups:nameRequired"),
         life: 3000,
       });
       return;
@@ -212,16 +212,16 @@ export default function GroupsPage() {
 
       toast.current?.show({
         severity: "success",
-        summary: t("common.states.success"),
-        detail: t("staffTabs.groups.groupUpdated"),
+        summary: t("common:states.success"),
+        detail: t("admin:groups:groupUpdated"),
         life: 3000,
       });
       setEditDialogVisible(false);
     } catch (err) {
       toast.current?.show({
         severity: "error",
-        summary: t("common.states.error"),
-        detail: t("staffTabs.groups.errorUpdatingGroup"),
+        summary: t("common:states.error"),
+        detail: t("admin:groups:errorUpdatingGroup"),
         life: 3000,
       });
       console.error(err);
@@ -247,16 +247,16 @@ export default function GroupsPage() {
 
       toast.current?.show({
         severity: "success",
-        summary: t("common.states.success"),
-        detail: t("staffTabs.groups.groupDeleted"),
+        summary: t("common:states.success"),
+        detail: t("admin:groups:groupDeleted"),
         life: 3000,
       });
       setDeleteDialogVisible(false);
     } catch (err) {
       toast.current?.show({
         severity: "error",
-        summary: t("common.states.error"),
-        detail: t("staffTabs.groups.errorDeletingGroup"),
+        summary: t("common:states.error"),
+        detail: t("admin:groups:errorDeletingGroup"),
         life: 3000,
       });
       console.error(err);
@@ -277,8 +277,8 @@ export default function GroupsPage() {
     } catch (err) {
       toast.current?.show({
         severity: "error",
-        summary: t("common.states.error"),
-        detail: t("staffTabs.groups.errorFetchingGroupDetails"),
+        summary: t("common:states.error"),
+        detail: t("admin:groups:errorFetchingGroupDetails"),
         life: 3000,
       });
       console.error(err);
@@ -316,7 +316,7 @@ export default function GroupsPage() {
     return (
       <div className="flex flex-col items-center justify-center p-6">
         <ProgressSpinner style={{ width: "50px", height: "50px" }} />
-        <p className="mt-4 text-gray-600">{t("common.states.loading")}</p>
+        <p className="mt-4 text-gray-600">{t("common:states.loading")}</p>
       </div>
     );
   }
@@ -337,7 +337,7 @@ export default function GroupsPage() {
       <div className="flex flex-col items-center justify-center p-12 bg-white/10 backdrop-blur-md rounded-lg shadow">
         <i className="pi pi-inbox text-5xl text-gray-400 mb-4"></i>
         <p className="text-gray-300 text-xl">
-          {t("staffTabs.scopes.messages.notFound")}
+          {t("admin:scopes:messages.notFound")}
         </p>
       </div>
     );
@@ -378,7 +378,7 @@ export default function GroupsPage() {
       <div className="mb-6">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 gap-3">
           <h1 className="text-2xl font-bold text-white">
-            {t("navigation.staff.groups")}
+            {t("navigation:dock:groups")}
           </h1>
         </div>
       </div>
@@ -389,14 +389,14 @@ export default function GroupsPage() {
           htmlFor="scopes"
           className="block text-sm font-medium text-white mb-1"
         >
-          {t("common.selects.scopes")}
+          {t("common:selects.scopes")}
         </label>
         <Dropdown
           id="scopes"
           value={selectedScope}
           options={scopeOptions}
           onChange={handleSelectedScopeChange}
-          placeholder={t("common.selects.scopes")}
+          placeholder={t("common:selects.scopes")}
           className="w-full"
         />
       </div>
@@ -411,7 +411,7 @@ export default function GroupsPage() {
                 <InputText
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder={t("staffTabs.groups.searchGroups")}
+                  placeholder={t("admin:groups:searchGroups")}
                   className="w-full"
                   style={{ paddingRight: "35px" }}
                 />
@@ -453,7 +453,7 @@ export default function GroupsPage() {
               <div className="flex flex-col items-center justify-center p-12 bg-white/10 backdrop-blur-md rounded-lg shadow">
                 <i className="pi pi-inbox text-5xl text-gray-400 mb-4"></i>
                 <p className="text-gray-300 text-xl">
-                  {t("staffTabs.groups.noGroups")}
+                  {t("admin:groups:noGroups")}
                 </p>
               </div>
             )}
@@ -463,7 +463,7 @@ export default function GroupsPage() {
               <div className="flex flex-col items-center justify-center p-8 mt-6 bg-white/10 backdrop-blur-md rounded-lg shadow">
                 <i className="pi pi-search text-4xl text-gray-400 mb-3"></i>
                 <p className="text-gray-300 text-lg">
-                  {t("staffTabs.groups.noSearchResults")}
+                  {t("admin:groups:noSearchResults")}
                 </p>
               </div>
             )}
@@ -476,7 +476,7 @@ export default function GroupsPage() {
         <div className="flex flex-col items-center justify-center p-12 bg-white/10 backdrop-blur-md rounded-lg shadow">
           <i className="pi pi-arrow-up text-5xl text-amber-500 mb-4"></i>
           <p className="text-gray-300 text-xl">
-            {t("staffTabs.groups.selectScopeToManageGroups")}
+            {t("admin:groups:selectScopeToManageGroups")}
           </p>
         </div>
       )}

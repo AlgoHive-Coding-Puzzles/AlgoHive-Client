@@ -31,7 +31,7 @@ const CreateGroupForm: React.FC<CreateGroupFormProps> = ({
     <div className="p-4 bg-white/10 backdrop-blur-md rounded-lg shadow-lg border border-white/30 hover:shadow-xl transition-all duration-300">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-semibold text-amber-500">
-          {t("staffTabs.groups.new")}
+          {t("admin:groups:new")}
         </h2>
         <i className="pi pi-plus-circle text-4xl text-amber-500"></i>
       </div>
@@ -41,14 +41,14 @@ const CreateGroupForm: React.FC<CreateGroupFormProps> = ({
           htmlFor="groupName"
           className="block text-sm font-medium text-white mb-1"
         >
-          {t("staffTabs.groups.name")}
+          {t("admin:groups:name")}
         </label>
         <InputText
           id="groupName"
           value={name}
           onChange={(e) => setName(e.target.value)}
           className="w-full"
-          placeholder={t("staffTabs.groups.groupName")}
+          placeholder={t("admin:groups:groupName")}
           disabled={!selectedScope || isLoading}
         />
       </div>
@@ -58,7 +58,7 @@ const CreateGroupForm: React.FC<CreateGroupFormProps> = ({
           htmlFor="groupDescription"
           className="block text-sm font-medium text-white mb-1"
         >
-          {t("staffTabs.groups.description")}
+          {t("admin:groups:description")}
         </label>
         <InputTextarea
           id="groupDescription"
@@ -66,14 +66,14 @@ const CreateGroupForm: React.FC<CreateGroupFormProps> = ({
           onChange={(e) => setDescription(e.target.value)}
           rows={2}
           className="w-full"
-          placeholder={t("staffTabs.groups.groupDescription")}
+          placeholder={t("admin:groups:groupDescription")}
           disabled={!selectedScope || isLoading}
         />
       </div>
 
       <div className="flex justify-end mt-4">
         <Button
-          label={t("staffTabs.groups.create")}
+          label={t("admin:groups:create")}
           icon="pi pi-plus"
           className="p-button-primary"
           onClick={handleSubmit}

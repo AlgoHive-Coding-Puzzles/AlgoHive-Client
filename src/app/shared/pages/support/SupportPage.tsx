@@ -36,8 +36,8 @@ const SupportPage = () => {
     if (!name || !email || !subject || !message || !issueType) {
       toast.current?.show({
         severity: "error",
-        summary: t("common.states.error"),
-        detail: t("users.support.contactForm.required"),
+        summary: t("common:states.error"),
+        detail: t("support:contactForm.required"),
         life: 3000,
       });
       return;
@@ -62,16 +62,16 @@ const SupportPage = () => {
 
       toast.current?.show({
         severity: "success",
-        summary: t("common.states.success"),
-        detail: t("users.support.contactForm.success"),
+        summary: t("common:states.success"),
+        detail: t("support:contactForm.success"),
         life: 3000,
       });
     } catch (error) {
       console.error("Error sending message:", error);
       toast.current?.show({
         severity: "error",
-        summary: t("common.states.error"),
-        detail: t("users.support.contactForm.error"),
+        summary: t("common:states.error"),
+        detail: t("support:contactForm.error"),
         life: 3000,
       });
     } finally {
@@ -92,10 +92,10 @@ const SupportPage = () => {
             <div className="p-6 mt-10 md:p-12 rounded-2xl lg:rounded-4xl bg-white/5 backdrop-blur-[48px] md:max-w-[calc(100%-3rem)] lg:max-w-none mx-auto shadow-[0px_2px_5px_0px_rgba(255,255,255,0.06)_inset,0px_12px_20px_0px_rgba(0,0,0,0.06)]">
               <div className="py-6 border-b border-white/12">
                 <h1 className="text-4xl font-bold text-surface-0">
-                  {t("users.support.title")}
+                  {t("support:title")}
                 </h1>
                 <p className="text-xl text-white/64 mt-4">
-                  {t("users.support.description")}
+                  {t("support:description")}
                 </p>
               </div>
 
@@ -104,15 +104,15 @@ const SupportPage = () => {
                 <div className="space-y-10">
                   <div>
                     <h2 className="text-2xl font-semibold text-surface-0 mb-4">
-                      {t("users.support.helpCenter")}
+                      {t("support:helpCenter")}
                     </h2>
                     <div className="space-y-6">
                       <div className="p-6 rounded-2xl bg-white/5 backdrop-blur-sm shadow-sm">
                         <h3 className="text-xl font-medium text-amber-500 mb-2">
-                          {t("users.support.communitySupport")}
+                          {t("support:communitySupport")}
                         </h3>
                         <p className="text-white/70 mb-4">
-                          {t("users.support.communityDesc")}
+                          {t("support:communityDesc")}
                         </p>
                         <div className="flex flex-wrap gap-3 mt-4">
                           <a
@@ -121,7 +121,7 @@ const SupportPage = () => {
                             rel="noopener noreferrer"
                             className="px-4 py-2 bg-gray-800/60 hover:bg-gray-700 rounded-xl text-white transition-colors"
                           >
-                            {t("users.support.github")}
+                            {t("support:github")}
                           </a>
                           <a
                             href="https://github.com/AlgoHive-Coding-Puzzles/BeeLine"
@@ -129,17 +129,17 @@ const SupportPage = () => {
                             rel="noopener noreferrer"
                             className="px-4 py-2 bg-gray-800/60 hover:bg-gray-700 rounded-xl text-white transition-colors"
                           >
-                            {t("users.support.createPuzzles")}
+                            {t("support:createPuzzles")}
                           </a>
                         </div>
                       </div>
 
                       <div className="p-6 rounded-2xl bg-white/5 backdrop-blur-sm shadow-sm">
                         <h3 className="text-xl font-medium text-amber-500 mb-2">
-                          {t("users.support.documentation")}
+                          {t("support:documentation")}
                         </h3>
                         <p className="text-white/70 mb-4">
-                          {t("users.support.documentationDesc")}
+                          {t("support:documentationDesc")}
                         </p>
                         <a
                           href="https://github.com/AlgoHive-Coding-Puzzles"
@@ -147,22 +147,22 @@ const SupportPage = () => {
                           rel="noopener noreferrer"
                           className="px-4 py-2 bg-amber-700/60 hover:bg-amber-600 rounded-xl text-white inline-block transition-colors"
                         >
-                          {t("users.support.docs")}
+                          {t("support:docs")}
                         </a>
                       </div>
 
                       <MeteorsCard>
                         <h3 className="text-xl font-medium text-amber-500 mb-2 relative z-10">
-                          {t("users.support.faq")}
+                          {t("support:faq")}
                         </h3>
                         <p className="text-white/70 mb-4 relative z-10">
-                          {t("users.howToPlay.faq.desc")}
+                          {t("support:desc")}
                         </p>
                         <a
                           href="/how-to-play"
                           className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-xl text-white inline-block transition-colors relative z-10"
                         >
-                          {t("users.menus.howToPlay")}
+                          {t("support:howToPlay")}
                         </a>
                       </MeteorsCard>
                     </div>
@@ -172,11 +172,11 @@ const SupportPage = () => {
                 {/* Right column: Contact form */}
                 <div>
                   <h2 className="text-2xl font-semibold text-surface-0 mb-4">
-                    {t("users.support.contactUs")}
+                    {t("support:contactUs")}
                   </h2>
                   <div className="p-6 rounded-2xl bg-white/5 backdrop-blur-sm shadow-sm">
                     <h3 className="text-xl font-medium text-amber-500 mb-4">
-                      {t("users.support.reportIssue")}
+                      {t("support:reportIssue")}
                     </h3>
                     <form onSubmit={handleSubmit} className="space-y-4">
                       <div>
@@ -184,7 +184,7 @@ const SupportPage = () => {
                           htmlFor="name"
                           className="block text-sm font-medium text-white/90 mb-1"
                         >
-                          {t("users.support.contactForm.name")}
+                          {t("support:contactForm.name")}
                         </label>
                         <Input
                           id="name"
@@ -199,7 +199,7 @@ const SupportPage = () => {
                           htmlFor="email"
                           className="block text-sm font-medium text-white/90 mb-1"
                         >
-                          {t("users.support.contactForm.email")}
+                          {t("support:contactForm.email")}
                         </label>
                         <Input
                           id="email"
@@ -215,7 +215,7 @@ const SupportPage = () => {
                           htmlFor="issueType"
                           className="block text-sm font-medium text-white/90 mb-1"
                         >
-                          {t("users.support.issueTypes.title")}
+                          {t("support:issueTypes.title")}
                         </label>
                         <select
                           id="issueType"
@@ -224,22 +224,22 @@ const SupportPage = () => {
                           onChange={(e) => setIssueType(e.target.value)}
                         >
                           <option value="" disabled>
-                            {t("users.support.issueTypes.placeholder")}
+                            {t("support:issueTypes.placeholder")}
                           </option>
                           <option value="technical">
-                            {t("users.support.issueTypes.technical")}
+                            {t("support:issueTypes.technical")}
                           </option>
                           <option value="account">
-                            {t("users.support.issueTypes.account")}
+                            {t("support:issueTypes.account")}
                           </option>
                           <option value="puzzle">
-                            {t("users.support.issueTypes.puzzle")}
+                            {t("support:issueTypes.puzzle")}
                           </option>
                           <option value="suggestion">
-                            {t("users.support.issueTypes.suggestion")}
+                            {t("support:issueTypes.suggestion")}
                           </option>
                           <option value="other">
-                            {t("users.support.issueTypes.other")}
+                            {t("support:issueTypes.other")}
                           </option>
                         </select>
                       </div>
@@ -249,7 +249,7 @@ const SupportPage = () => {
                           htmlFor="subject"
                           className="block text-sm font-medium text-white/90 mb-1"
                         >
-                          {t("users.support.contactForm.subject")}
+                          {t("support:contactForm.subject")}
                         </label>
                         <Input
                           id="subject"
@@ -264,7 +264,7 @@ const SupportPage = () => {
                           htmlFor="message"
                           className="block text-sm font-medium text-white/90 mb-1"
                         >
-                          {t("users.support.contactForm.message")}
+                          {t("support:contactForm.message")}
                         </label>
                         <textarea
                           id="message"
@@ -283,10 +283,10 @@ const SupportPage = () => {
                           {loading ? (
                             <div className="flex items-center justify-center gap-2">
                               <div className="w-4 h-4 border-2 border-white rounded-full animate-spin border-t-transparent"></div>
-                              {t("common.states.loading")}
+                              {t("common:states.loading")}
                             </div>
                           ) : (
-                            t("users.support.contactForm.send")
+                            t("support:contactForm.send")
                           )}
                         </button>
                       </div>
@@ -295,10 +295,10 @@ const SupportPage = () => {
 
                   <div className="mt-8 p-6 rounded-2xl bg-white/5 backdrop-blur-sm shadow-sm">
                     <h3 className="text-xl font-medium text-amber-500 mb-2">
-                      {t("users.support.directSupport")}
+                      {t("support:directSupport")}
                     </h3>
                     <p className="text-white/70">
-                      {t("users.support.directSupportDesc")}
+                      {t("support:directSupportDesc")}
                     </p>
                     <div className="mt-4 p-4 bg-black/20 rounded-xl">
                       <p className="text-white font-mono">

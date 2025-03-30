@@ -29,13 +29,13 @@ const GroupDetailsDialog: React.FC<GroupDetailsDialogProps> = ({
     return (
       <div>
         <Button
-          label={t("common.actions.close")}
+          label={t("common:actions.close")}
           icon="pi pi-times"
           className="p-button-text"
           onClick={onHide}
         />
         <Button
-          label={t("common.actions.edit")}
+          label={t("common:actions.edit")}
           icon="pi pi-pencil"
           className="p-button-primary"
           onClick={onEdit}
@@ -56,17 +56,17 @@ const GroupDetailsDialog: React.FC<GroupDetailsDialogProps> = ({
     >
       <div>
         <h3 className="text-xl font-semibold mb-2">
-          {t("staffTabs.groups.information")}
+          {t("admin:groups:information")}
         </h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <p className="font-medium">{t("staffTabs.groups.id")}</p>
+            <p className="font-medium">{t("admin:groups:id")}</p>
             <p className="text-gray-500">{group.id}</p>
           </div>
 
           <div>
-            <p className="font-medium">{t("staffTabs.groups.students")}</p>
+            <p className="font-medium">{t("admin:groups:students")}</p>
             <p className="text-gray-500">{group.users?.length || 0}</p>
           </div>
         </div>
@@ -74,16 +74,14 @@ const GroupDetailsDialog: React.FC<GroupDetailsDialogProps> = ({
         <Divider />
 
         <div className="mb-4">
-          <p className="font-medium mb-1">{t("staffTabs.groups.name")}</p>
+          <p className="font-medium mb-1">{t("admin:groups:name")}</p>
           <p className="text-gray-700">{group.name}</p>
         </div>
 
         <div>
-          <p className="font-medium mb-1">
-            {t("staffTabs.groups.description")}
-          </p>
+          <p className="font-medium mb-1">{t("admin:groups:description")}</p>
           <p className="text-gray-700">
-            {group.description || t("staffTabs.groups.noDescription")}
+            {group.description || t("admin:groups:noDescription")}
           </p>
         </div>
 
@@ -91,7 +89,7 @@ const GroupDetailsDialog: React.FC<GroupDetailsDialogProps> = ({
 
         <div>
           <h3 className="text-lg font-semibold mb-3">
-            {t("staffTabs.groups.students")}
+            {t("admin:groups:students")}
           </h3>
 
           {group.users && group.users.length > 0 ? (
@@ -103,7 +101,7 @@ const GroupDetailsDialog: React.FC<GroupDetailsDialogProps> = ({
               ))}
             </ul>
           ) : (
-            <p className="text-gray-500">{t("staffTabs.groups.noStudents")}</p>
+            <p className="text-gray-500">{t("admin:groups:noStudents")}</p>
           )}
         </div>
       </div>

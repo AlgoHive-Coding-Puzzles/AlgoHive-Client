@@ -31,7 +31,7 @@ import "./CompetitionPage.css";
 
 export default function CompetitionPage() {
   const { user } = useAuth();
-  const { t } = useTranslation();
+  const { t } = useTranslation(["common", "puzzles"]);
 
   const { competition_id } = useParams();
   const competitionId = competition_id || "";
@@ -116,7 +116,7 @@ export default function CompetitionPage() {
                   </p>
 
                   <p className="text-center text-xl text-surface-950 dark:text-surface-0 font-semibold mt-10">
-                    {t("puzzles.selectPuzzle")}
+                    {t("puzzles:selectPuzzle")}
                   </p>
 
                   <div className="w-full flex flex-col sm:flex-row justify-center mt-10 gap-6">
@@ -124,14 +124,14 @@ export default function CompetitionPage() {
                       onClickAction={() => {
                         window.location.href = "/competitions";
                       }}
-                      text={t("puzzles.backToCompetitions")}
+                      text={t("puzzles:backToCompetitions")}
                       icon="pi-arrow-left"
                     />
                     <OrangeBlackButton
                       onClickAction={() => {
                         window.location.href = `/competition/${selectedCompetition.id}/leaderboard`;
                       }}
-                      text={t("puzzles.leaderboard")}
+                      text={t("puzzles:leaderboard")}
                       icon="pi-users"
                     />
                   </div>
@@ -148,7 +148,7 @@ export default function CompetitionPage() {
                                 ? "unlocked-card"
                                 : "grayscale-card")
                             }
-                            data-pr-tooltip={t("puzzles.clickToAccess")}
+                            data-pr-tooltip={t("puzzles:clickToAccess")}
                             data-pr-position="top"
                             onClick={() => {
                               if (
@@ -170,7 +170,7 @@ export default function CompetitionPage() {
                             <div className="mt-2">
                               <Tag
                                 value={t(
-                                  "puzzles.difficulty." +
+                                  "puzzles:difficulty." +
                                     getPuzzleDifficulty(item.difficulty)
                                 )}
                                 // @ts-expect-error pls

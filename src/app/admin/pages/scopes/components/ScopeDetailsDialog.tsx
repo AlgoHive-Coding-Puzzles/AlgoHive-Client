@@ -28,13 +28,13 @@ const ScopeDetailsDialog: React.FC<ScopeDetailsDialogProps> = ({
   const footerContent = (
     <div className="flex justify-end gap-2">
       <Button
-        label={t("common.actions.close")}
+        label={t("common:actions.close")}
         icon="pi pi-times"
         onClick={onHide}
         className="p-button-text"
       />
       <Button
-        label={t("common.actions.edit")}
+        label={t("common:actions.edit")}
         icon="pi pi-pencil"
         onClick={() => {
           onHide();
@@ -59,27 +59,25 @@ const ScopeDetailsDialog: React.FC<ScopeDetailsDialogProps> = ({
     >
       <div className="mt-2">
         <h3 className="text-lg font-semibold mb-2">
-          {t("staffTabs.scopes.information")}
+          {t("admin:scopes:information")}
         </h3>
 
         <div className="mb-4">
-          <span className="font-medium">{t("staffTabs.scopes.id")}: </span>
+          <span className="font-medium">{t("admin:scopes:id")}: </span>
           <span className="text-gray-200">{scope.id}</span>
         </div>
 
         <div className="mb-4">
-          <span className="font-medium">
-            {t("staffTabs.scopes.description")}:{" "}
-          </span>
+          <span className="font-medium">{t("admin:scopes:description")}: </span>
           <p className="mt-1 text-gray-200">
-            {scope.description || t("staffTabs.scopes.noDescription")}
+            {scope.description || t("admin:scopes:noDescription")}
           </p>
         </div>
 
         <Divider />
 
         <h3 className="text-lg font-semibold mb-3">
-          {t("staffTabs.scopes.catalogs")}
+          {t("admin:scopes:catalogs")}
         </h3>
 
         <div className="flex flex-wrap gap-2 mb-4">
@@ -93,7 +91,7 @@ const ScopeDetailsDialog: React.FC<ScopeDetailsDialogProps> = ({
             ))
           ) : (
             <p className="text-gray-400 italic">
-              {t("staffTabs.scopes.noCatalogs")}
+              {t("admin:scopes:noCatalogs")}
             </p>
           )}
         </div>
@@ -101,7 +99,7 @@ const ScopeDetailsDialog: React.FC<ScopeDetailsDialogProps> = ({
         <Divider />
 
         <h3 className="text-lg font-semibold mb-3">
-          {t("staffTabs.scopes.roles")}
+          {t("admin:scopes:roles")}
         </h3>
 
         <div className="flex flex-wrap gap-2 mb-4">
@@ -114,16 +112,14 @@ const ScopeDetailsDialog: React.FC<ScopeDetailsDialogProps> = ({
               />
             ))
           ) : (
-            <p className="text-gray-400 italic">
-              {t("staffTabs.scopes.noRoles")}
-            </p>
+            <p className="text-gray-400 italic">{t("admin:scopes:noRoles")}</p>
           )}
         </div>
 
         <Divider />
 
         <h3 className="text-lg font-semibold mb-3">
-          {t("staffTabs.scopes.groups")}
+          {t("admin:scopes:groups")}
         </h3>
 
         <div className="flex flex-wrap gap-2">
@@ -136,9 +132,7 @@ const ScopeDetailsDialog: React.FC<ScopeDetailsDialogProps> = ({
               />
             ))
           ) : (
-            <p className="text-gray-400 italic">
-              {t("staffTabs.scopes.noGroups")}
-            </p>
+            <p className="text-gray-400 italic">{t("admin:scopes:noGroups")}</p>
           )}
         </div>
       </div>

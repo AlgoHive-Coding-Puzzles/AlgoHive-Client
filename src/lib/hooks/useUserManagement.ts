@@ -72,8 +72,8 @@ export const useUserManagement = (fetchData: () => Promise<void>) => {
     if (!formFields.first_name.trim()) {
       toast.current?.show({
         severity: "warn",
-        summary: t("common.states.validationError"),
-        detail: t("staffTabs.users.validation.firstNameRequired"),
+        summary: t("common:states.validationError"),
+        detail: t("admin:users:validation.firstNameRequired"),
         life: 3000,
       });
       return false;
@@ -82,8 +82,8 @@ export const useUserManagement = (fetchData: () => Promise<void>) => {
     if (!formFields.last_name.trim()) {
       toast.current?.show({
         severity: "warn",
-        summary: t("common.states.validationError"),
-        detail: t("staffTabs.users.validation.lastNameRequired"),
+        summary: t("common:states.validationError"),
+        detail: t("admin:users:validation.lastNameRequired"),
         life: 3000,
       });
       return false;
@@ -92,8 +92,8 @@ export const useUserManagement = (fetchData: () => Promise<void>) => {
     if (!formFields.email.trim()) {
       toast.current?.show({
         severity: "warn",
-        summary: t("common.states.validationError"),
-        detail: t("staffTabs.users.validation.emailRequired"),
+        summary: t("common:states.validationError"),
+        detail: t("admin:users:validation.emailRequired"),
         life: 3000,
       });
       return false;
@@ -103,8 +103,8 @@ export const useUserManagement = (fetchData: () => Promise<void>) => {
     if (!emailRegex.test(formFields.email)) {
       toast.current?.show({
         severity: "warn",
-        summary: t("common.states.validationError"),
-        detail: t("staffTabs.users.validation.validEmail"),
+        summary: t("common:states.validationError"),
+        detail: t("admin:users:validation.validEmail"),
         life: 3000,
       });
       return false;
@@ -116,8 +116,8 @@ export const useUserManagement = (fetchData: () => Promise<void>) => {
     ) {
       toast.current?.show({
         severity: "warn",
-        summary: t("common.states.validationError"),
-        detail: t("staffTabs.users.validation.roleRequired"),
+        summary: t("common:states.validationError"),
+        detail: t("admin:users:validation.roleRequired"),
         life: 3000,
       });
       return false;
@@ -132,10 +132,10 @@ export const useUserManagement = (fetchData: () => Promise<void>) => {
     deleteFunc: (userId: string) => Promise<void>
   ) => {
     confirmDialog({
-      message: t("staffTabs.users.deleteUserMsg", {
+      message: t("admin:users:deleteUserMsg", {
         user: `${user.first_name} ${user.last_name}`,
       }),
-      header: t("staffTabs.users.deleteUser"),
+      header: t("admin:users:deleteUser"),
       icon: "pi pi-exclamation-triangle",
       acceptClassName: "p-button-danger",
       accept: async () => {
@@ -144,16 +144,16 @@ export const useUserManagement = (fetchData: () => Promise<void>) => {
           await fetchData();
           toast.current?.show({
             severity: "success",
-            summary: t("common.states.success"),
-            detail: t("staffTabs.users.messages.userDeleted"),
+            summary: t("common:states.success"),
+            detail: t("admin:users:messages.userDeleted"),
             life: 3000,
           });
         } catch (err) {
           console.error("Error deleting user:", err);
           toast.current?.show({
             severity: "error",
-            summary: t("common.states.error"),
-            detail: t("staffTabs.users.messages.errorDeleting"),
+            summary: t("common:states.error"),
+            detail: t("admin:users:messages.errorDeleting"),
             life: 3000,
           });
         }
@@ -164,10 +164,10 @@ export const useUserManagement = (fetchData: () => Promise<void>) => {
   // Confirm reset password
   const confirmResetPassword = (user: User) => {
     confirmDialog({
-      message: t("staffTabs.users.confirmations.resetPassword", {
+      message: t("admin:users:confirmations.resetPassword", {
         user: `${user.first_name} ${user.last_name}`,
       }),
-      header: t("common.confirmations.resetPassword"),
+      header: t("common:confirmations.resetPassword"),
       icon: "pi pi-exclamation-triangle",
       acceptClassName: "p-button-info",
       accept: async () => {
@@ -175,16 +175,16 @@ export const useUserManagement = (fetchData: () => Promise<void>) => {
           await ServiceManager.users.resetTargetUserPassword(user.id);
           toast.current?.show({
             severity: "success",
-            summary: t("common.states.success"),
-            detail: t("staffTabs.users.messages.passwordReset"),
+            summary: t("common:states.success"),
+            detail: t("admin:users:messages.passwordReset"),
             life: 3000,
           });
         } catch (err) {
           console.error("Error resetting password:", err);
           toast.current?.show({
             severity: "error",
-            summary: t("common.states.error"),
-            detail: t("staffTabs.users.messages.errorResettingPassword"),
+            summary: t("common:states.error"),
+            detail: t("admin:users:messages.errorResettingPassword"),
             life: 3000,
           });
         }

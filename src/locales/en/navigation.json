@@ -1,0 +1,24 @@
+{
+  "dock": {
+    "terminal": "Terminal",
+    "home": "Home",
+    "users": "User Management",
+    "roles": "Role Management",
+    "scopes": "Scope Management",
+    "groups": "Group Management",
+    "competitions": "Competition Management",
+    "catalogs": "Puzzle Catalog"
+  },
+  "menus": {
+    "staffPortal": "Staff Portal",
+    "howToPlay": "How to Play",
+    "support": "Support",
+    "myCompetitions": "My Competitions",
+    "welcome": "Welcome",
+    "login": "Log in"
+  },
+  "security": {
+    "defaultPasswordWarning": "Your password is still the default one. Please change it.",
+    "changePassword": "Change your password"
+  }
+}

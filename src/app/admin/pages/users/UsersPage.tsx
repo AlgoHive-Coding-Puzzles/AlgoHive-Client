@@ -40,7 +40,7 @@ export default function UsersPage() {
             value: role.id,
           }));
       } catch (err) {
-        setError(t("common.states.error"));
+        setError(t("common:states.error"));
         console.error(err);
       } finally {
         setLoading(false);
@@ -57,7 +57,7 @@ export default function UsersPage() {
       {loading && (
         <div className="flex flex-col items-center justify-center p-6">
           <ProgressSpinner style={{ width: "50px", height: "50px" }} />
-          <p className="mt-4 text-gray-600">{t("t.users.loading")}</p>
+          <p className="mt-4 text-gray-600">{t("common:loading")}</p>
         </div>
       )}
 
@@ -74,23 +74,23 @@ export default function UsersPage() {
         <div>
           {isOwner(user) ? (
             <TabView>
-              <TabPanel header={t("staffTabs.users.views.asAdmin")}>
+              <TabPanel header={t("admin:users:views.asAdmin")}>
                 <UsersTableAdmin toast={toast} />
               </TabPanel>
-              <TabPanel header={t("staffTabs.users.views.asStaff")}>
+              <TabPanel header={t("admin:users:views.asStaff")}>
                 <div className="mb-4">
                   <label
                     htmlFor="rolesIds"
                     className="block text-sm font-medium text-white mb-1"
                   >
-                    {t("staffTabs.users.asRoles")}
+                    {t("admin:users:asRoles")}
                   </label>
                   <MultiSelect
                     id="rolesIds"
                     value={selectedRoles}
                     options={rolesOptions.current}
                     onChange={(e) => setSelectedRoles(e.value)}
-                    placeholder={t("common.selects.roles")}
+                    placeholder={t("common:selects.roles")}
                     className="w-full"
                     display="chip"
                   />

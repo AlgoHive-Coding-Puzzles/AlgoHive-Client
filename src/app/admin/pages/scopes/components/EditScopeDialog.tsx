@@ -54,13 +54,13 @@ const EditScopeDialog: React.FC<EditScopeDialogProps> = ({
   const footerContent = (
     <div className="flex justify-end gap-2">
       <Button
-        label={t("common.actions.cancel")}
+        label={t("common:actions.cancel")}
         icon="pi pi-times"
         onClick={onHide}
         className="p-button-text"
       />
       <Button
-        label={t("common.actions.save")}
+        label={t("common:actions.save")}
         icon="pi pi-check"
         onClick={handleSave}
         loading={loading}
@@ -71,7 +71,7 @@ const EditScopeDialog: React.FC<EditScopeDialogProps> = ({
 
   return (
     <Dialog
-      header={t("staffTabs.scopes.editScope")}
+      header={t("admin:scopes:editScope")}
       visible={visible}
       style={{ width: "450px" }}
       onHide={onHide}
@@ -82,7 +82,7 @@ const EditScopeDialog: React.FC<EditScopeDialogProps> = ({
     >
       <div className="field mt-4">
         <label htmlFor="edit-scope-name" className="font-bold">
-          {t("staffTabs.scopes.name")}
+          {t("admin:scopes:name")}
         </label>
         <InputText
           id="edit-scope-name"
@@ -96,7 +96,7 @@ const EditScopeDialog: React.FC<EditScopeDialogProps> = ({
 
       <div className="field mt-4">
         <label htmlFor="edit-scope-description" className="font-bold">
-          {t("staffTabs.scopes.description")}
+          {t("admin:scopes:description")}
         </label>
         <InputTextarea
           id="edit-scope-description"
@@ -109,7 +109,7 @@ const EditScopeDialog: React.FC<EditScopeDialogProps> = ({
 
       <div className="field mt-4">
         <label htmlFor="edit-scope-catalogs" className="font-bold">
-          {t("staffTabs.scopes.catalogs")}
+          {t("admin:scopes:catalogs")}
         </label>
         <MultiSelect
           id="edit-scope-catalogs"

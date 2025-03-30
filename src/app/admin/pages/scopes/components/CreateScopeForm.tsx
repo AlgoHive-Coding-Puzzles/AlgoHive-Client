@@ -45,7 +45,7 @@ const CreateScopeForm: React.FC<CreateScopeFormProps> = ({
       <div className="p-4 flex flex-col h-full">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-semibold text-amber-500">
-            {t("staffTabs.scopes.new")}
+            {t("admin:scopes:new")}
           </h2>
           <i className="pi pi-plus-circle text-3xl text-amber-500"></i>
         </div>
@@ -55,14 +55,14 @@ const CreateScopeForm: React.FC<CreateScopeFormProps> = ({
             htmlFor="scopeName"
             className="block text-sm font-medium text-white mb-1"
           >
-            {t("staffTabs.scopes.name")}
+            {t("admin:scopes:name")}
           </label>
           <InputText
             id="scopeName"
             value={name}
             onChange={(e) => setName(e.target.value)}
             className="w-full"
-            placeholder={t("common.fields.name")}
+            placeholder={t("common:fields.name")}
           />
         </div>
 
@@ -71,7 +71,7 @@ const CreateScopeForm: React.FC<CreateScopeFormProps> = ({
             htmlFor="scopeDescription"
             className="block text-sm font-medium text-white mb-1"
           >
-            {t("staffTabs.scopes.description")}
+            {t("admin:scopes:description")}
           </label>
           <InputTextarea
             id="scopeDescription"
@@ -79,7 +79,7 @@ const CreateScopeForm: React.FC<CreateScopeFormProps> = ({
             onChange={(e) => setDescription(e.target.value)}
             rows={3}
             className="w-full"
-            placeholder={t("common.fields.description")}
+            placeholder={t("common:fields.description")}
           />
         </div>
 
@@ -88,14 +88,14 @@ const CreateScopeForm: React.FC<CreateScopeFormProps> = ({
             htmlFor="apiIds"
             className="block text-sm font-medium text-white mb-1"
           >
-            {t("staffTabs.scopes.catalogs")}
+            {t("admin:scopes:catalogs")}
           </label>
           <MultiSelect
             id="apiIds"
             value={selectedApiIds}
             options={apiOptions}
             onChange={(e) => setSelectedApiIds(e.value)}
-            placeholder={t("common.selects.catalogs")}
+            placeholder={t("common:selects.catalogs")}
             className="w-full"
             display="chip"
           />
@@ -103,7 +103,7 @@ const CreateScopeForm: React.FC<CreateScopeFormProps> = ({
 
         <div className="flex justify-end mt-auto">
           <Button
-            label={t("common.actions.create")}
+            label={t("common:actions.create")}
             icon="pi pi-plus"
             className="p-button-primary"
             onClick={handleSubmit}

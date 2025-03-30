@@ -30,14 +30,14 @@ const DeleteGroupDialog: React.FC<DeleteGroupDialogProps> = ({
     return (
       <div>
         <Button
-          label={t("common.actions.cancel")}
+          label={t("common:actions.cancel")}
           icon="pi pi-times"
           className="p-button-text"
           onClick={onHide}
           disabled={loading}
         />
         <Button
-          label={t("common.actions.delete")}
+          label={t("common:actions.delete")}
           icon="pi pi-trash"
           className="p-button-danger"
           onClick={onConfirm}
@@ -49,7 +49,7 @@ const DeleteGroupDialog: React.FC<DeleteGroupDialogProps> = ({
 
   return (
     <Dialog
-      header={t("staffTabs.groups.deleteGroup")}
+      header={t("admin:groups:deleteGroup")}
       visible={visible}
       onHide={onHide}
       style={{ width: "450px" }}
@@ -63,17 +63,17 @@ const DeleteGroupDialog: React.FC<DeleteGroupDialogProps> = ({
           style={{ fontSize: "3rem" }}
         />
         <h4 className="m-0 mb-3 font-bold">
-          {t("staffTabs.groups.confirmDelete")}
+          {t("admin:groups:confirmDelete")}
         </h4>
         <p className="text-center mb-0">
-          {t("staffTabs.groups.confirmDeleteMessage", { name: group.name })}
+          {t("admin:groups:confirmDeleteMessage", { name: group.name })}
         </p>
 
         {group.users && group.users.length > 0 && (
           <p className="text-center mt-3 text-danger-500">
-            {t("staffTabs.groups.dangerUsersAssigned", {
+            {t("admin:groups:dangerUsersAssigned", {
               count: group.users.length,
-              users: t("staffTabs.groups.students").toLowerCase(),
+              users: t("admin:groups:students").toLowerCase(),
             })}
           </p>
         )}

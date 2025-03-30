@@ -23,7 +23,7 @@ export default function CompetitionsList({
   onEdit,
   onViewDetails,
 }: CompetitionsListProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation(["common", "staffTabs"]);
   const [globalFilter, setGlobalFilter] = useState<string>("");
 
   const downloadExcelReport = async (competitionID: string) => {
@@ -36,24 +36,21 @@ export default function CompetitionsList({
         {rowData.finished ? (
           <Tag
             severity="warning"
-            value={t("staffTabs.competitions.status.finished")}
+            value={t("admin:competitions:status.finished")}
           />
         ) : (
           <Tag
             severity="success"
-            value={t("staffTabs.competitions.status.active")}
+            value={t("admin:competitions:status.active")}
           />
         )}
 
         {rowData.show ? (
-          <Tag
-            severity="info"
-            value={t("staffTabs.competitions.status.visible")}
-          />
+          <Tag severity="info" value={t("admin:competitions:status.visible")} />
         ) : (
           <Tag
             severity="danger"
-            value={t("staffTabs.competitions.status.hidden")}
+            value={t("admin:competitions:status.hidden")}
           />
         )}
       </div>
@@ -67,19 +64,19 @@ export default function CompetitionsList({
           icon="pi pi-eye"
           className="p-button-rounded p-button-info p-button-sm"
           onClick={() => onViewDetails(rowData)}
-          tooltip={t("common.actions.view")}
+          tooltip={t("common:actions.view")}
         />
         <Button
           icon="pi pi-pencil"
           className="p-button-rounded p-button-success p-button-sm"
           onClick={() => onEdit(rowData)}
-          tooltip={t("common.actions.edit")}
+          tooltip={t("common:actions.edit")}
         />
         <Button
           icon="pi pi-download"
           className="p-button-rounded p-button-warning p-button-sm"
           onClick={() => downloadExcelReport(rowData.id)}
-          tooltip={t("staffTabs.competitions.actions.downloadReport")}
+          tooltip={t("admin:competitions:actions.downloadReport")}
         />
       </div>
     );
@@ -87,9 +84,7 @@ export default function CompetitionsList({
 
   const header = (
     <div className="flex justify-between items-center">
-      <h2 className="text-xl font-semibold">
-        {t("staffTabs.competitions.title")}
-      </h2>
+      <h2 className="text-xl font-semibold">{t("admin:competitions:title")}</h2>
       <span className="p-input-icon-left">
         <i className="pi pi-search" style={{ right: "10px" }} />
         <InputText
@@ -111,7 +106,7 @@ export default function CompetitionsList({
         rowsPerPageOptions={[5, 10, 25, 50]}
         tableStyle={{ minWidth: "60rem" }}
         stripedRows
-        emptyMessage={t("staffTabs.competitions.noCompetitions")}
+        emptyMessage={t("admin:competitions:noCompetitions")}
         sortField="title"
         sortOrder={1}
         responsiveLayout="scroll"
@@ -120,13 +115,13 @@ export default function CompetitionsList({
       >
         <Column
           field="title"
-          header={t("staffTabs.competitions.form.title")}
+          header={t("admin:competitions:form.title")}
           style={{ width: "20rem" }}
           sortable
         />
         <Column
           field="description"
-          header={t("staffTabs.competitions.form.description")}
+          header={t("admin:competitions:form.description")}
           style={{ maxWidth: "100px" }}
           body={(rowData) => (
             <div
@@ -143,19 +138,19 @@ export default function CompetitionsList({
         />
         <Column
           field="catalog_theme"
-          header={t("staffTabs.competitions.form.catalogTheme")}
+          header={t("admin:competitions:form.catalogTheme")}
           sortable
           style={{ width: "15rem" }}
         />
         <Column
-          header={t("common.fields.status")}
+          header={t("common:fields.status")}
           body={statusTemplate}
           style={{ width: "180px" }}
           sortable
           sortField="finished"
         />
         <Column
-          header={t("common.fields.actions")}
+          header={t("common:fields.actions")}
           body={actionsTemplate}
           style={{ width: "150px", textAlign: "center" }}
         />

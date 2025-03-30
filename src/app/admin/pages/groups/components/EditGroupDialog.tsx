@@ -47,14 +47,14 @@ const EditGroupDialog: React.FC<EditGroupDialogProps> = ({
     return (
       <div>
         <Button
-          label={t("common.actions.cancel")}
+          label={t("common:actions.cancel")}
           icon="pi pi-times"
           className="p-button-text"
           onClick={onHide}
           disabled={loading}
         />
         <Button
-          label={t("common.actions.save")}
+          label={t("common:actions.save")}
           icon="pi pi-check"
           className="p-button-primary"
           onClick={handleSave}
@@ -66,7 +66,7 @@ const EditGroupDialog: React.FC<EditGroupDialogProps> = ({
 
   return (
     <Dialog
-      header={t("staffTabs.groups.editGroup")}
+      header={t("admin:groups:editGroup")}
       visible={visible}
       onHide={onHide}
       style={{ width: "50vw" }}
@@ -78,7 +78,7 @@ const EditGroupDialog: React.FC<EditGroupDialogProps> = ({
         <div className="p-fluid">
           <div className="field mb-4">
             <label htmlFor="edit-name" className="font-bold mb-2 block">
-              {t("staffTabs.groups.name")}
+              {t("admin:groups:name")}
             </label>
             <InputText
               id="edit-name"
@@ -91,7 +91,7 @@ const EditGroupDialog: React.FC<EditGroupDialogProps> = ({
 
           <div className="field">
             <label htmlFor="edit-description" className="font-bold mb-2 block">
-              {t("staffTabs.groups.description")}
+              {t("admin:groups:description")}
             </label>
             <InputTextarea
               id="edit-description"

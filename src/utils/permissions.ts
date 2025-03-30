@@ -15,27 +15,27 @@ export const permissionsList = [
   {
     name: "SCOPES",
     value: Permission.SCOPES,
-    label: t("staffTabs.roles.permissionTypes.scopes"),
+    label: t("admin:roles:permissionTypes.scopes"),
   },
   {
     name: "API_ENV",
     value: Permission.API_ENV,
-    label: t("staffTabs.roles.permissionTypes.catalogs"),
+    label: t("admin:roles:permissionTypes.catalogs"),
   },
   {
     name: "GROUPS",
     value: Permission.GROUPS,
-    label: t("staffTabs.roles.permissionTypes.groups"),
+    label: t("admin:roles:permissionTypes.groups"),
   },
   {
     name: "COMPETITIONS",
     value: Permission.COMPETITIONS,
-    label: t("staffTabs.roles.permissionTypes.competitions"),
+    label: t("admin:roles:permissionTypes.competitions"),
   },
   {
     name: "ROLES",
     value: Permission.ROLES,
-    label: t("staffTabs.roles.permissionTypes.roles"),
+    label: t("admin:roles:permissionTypes.roles"),
   },
 ];
 

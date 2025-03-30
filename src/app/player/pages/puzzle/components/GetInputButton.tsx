@@ -13,16 +13,16 @@ const GetInputTemplate = ({
   pollingForTry,
   handleInputRequest,
 }: GetInputButtonProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation(["common", "puzzles"]);
 
   return (
     <Button
       label={
         inputRequesting
-          ? t("puzzles.input.openingInput")
+          ? t("puzzles:input.openingInput")
           : pollingForTry
-          ? t("puzzles.input.checkingInput")
-          : t("puzzles.input.getInput")
+          ? t("puzzles:input.checkingInput")
+          : t("puzzles:input.getInput")
       }
       className="w-full max-w-xs"
       onClick={handleInputRequest}

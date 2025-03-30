@@ -1,0 +1,39 @@
+{
+  "title": "Support",
+  "description": "Obtenez de l'aide et de l'assistance avec AlgoHive",
+  "getInTouch": "Contactez-nous",
+  "contactUs": "Nous contacter",
+  "helpCenter": "Centre d'aide",
+  "faq": "Questions fréquemment posées",
+  "reportIssue": "Signaler un problème",
+  "contactForm": {
+    "name": "Votre nom",
+    "email": "Votre adresse e-mail",
+    "subject": "Sujet",
+    "message": "Message",
+    "send": "Envoyer le message",
+    "success": "Message envoyé avec succès !",
+    "error": "Erreur lors de l'envoi du message",
+    "required": "Ce champ est obligatoire"
+  },
+  "issueTypes": {
+    "placeholder": "Sélectionnez un type de problème",
+    "title": "Sélectionnez un type de problème",
+    "technical": "Problème technique",
+    "account": "Problème de compte",
+    "puzzle": "Question sur une énigme",
+    "suggestion": "Suggestion de fonctionnalité",
+    "other": "Autre"
+  },
+  "communitySupport": "Support communautaire",
+  "communityDesc": "Rejoignez nos canaux communautaires pour obtenir de l'aide d'autres utilisateurs et de notre équipe de support.",
+  "documentation": "Documentation",
+  "documentationDesc": "Explorez la documentation technique pour trouver des réponses aux questions courantes et des guides.",
+  "directSupport": "Support direct",
+  "directSupportDesc": "Contactez moi directement pour une assistance personnalisée.",
+  "github": "Issues GitHub",
+  "createPuzzles": "Créer des énigmes",
+  "docs": "Lire la documentation",
+  "desc": "Trouvez des réponses rapides aux questions courantes sur AlgoHive.",
+  "howToPlay": "Comment jouer ?"
+}

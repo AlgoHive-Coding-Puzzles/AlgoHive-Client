@@ -61,7 +61,7 @@ const MacbookScroll = ({
       >
         {title || (
           <span>
-            {t("users.tagline")} <br />
+            {t("home:tagline")} <br />
             <span className="text-aceternity">AlgoHive</span>
           </span>
         )}

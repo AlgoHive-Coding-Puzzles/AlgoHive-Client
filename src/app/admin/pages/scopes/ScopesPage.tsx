@@ -53,7 +53,7 @@ export default function ScopesPage() {
         value: catalog.id,
       }));
     } catch (err) {
-      setError(t("staffTabs.scopes.messages.fetchError"));
+      setError(t("admin:scopes:messages.fetchError"));
       console.error(err);
     } finally {
       setLoading(false);
@@ -68,8 +68,8 @@ export default function ScopesPage() {
     if (!name.trim()) {
       toast.current?.show({
         severity: "error",
-        summary: t("common.states.error"),
-        detail: t("staffTabs.scopes.messages.nameRequired"),
+        summary: t("common:states.error"),
+        detail: t("admin:scopes:messages.nameRequired"),
         life: 3000,
       });
       return;
@@ -82,15 +82,15 @@ export default function ScopesPage() {
 
       toast.current?.show({
         severity: "success",
-        summary: t("common.states.success"),
-        detail: t("staffTabs.scopes.messages.createSuccess"),
+        summary: t("common:states.success"),
+        detail: t("admin:scopes:messages.createSuccess"),
         life: 3000,
       });
     } catch (err) {
       toast.current?.show({
         severity: "error",
-        summary: t("common.states.error"),
-        detail: t("staffTabs.scopes.messages.createError"),
+        summary: t("common:states.error"),
+        detail: t("admin:scopes:messages.createError"),
         life: 3000,
       });
       console.error(err);
@@ -108,8 +108,8 @@ export default function ScopesPage() {
     if (!name.trim()) {
       toast.current?.show({
         severity: "error",
-        summary: t("common.states.error"),
-        detail: t("staffTabs.scopes.messages.nameRequired"),
+        summary: t("common:states.error"),
+        detail: t("admin:scopes:messages.nameRequired"),
         life: 3000,
       });
       return;
@@ -122,16 +122,16 @@ export default function ScopesPage() {
 
       toast.current?.show({
         severity: "success",
-        summary: t("common.states.success"),
-        detail: t("staffTabs.scopes.messages.updateSuccess"),
+        summary: t("common:states.success"),
+        detail: t("admin:scopes:messages.updateSuccess"),
         life: 3000,
       });
       setEditDialogVisible(false);
     } catch (err) {
       toast.current?.show({
         severity: "error",
-        summary: t("common.states.error"),
-        detail: t("staffTabs.scopes.messages.updateError"),
+        summary: t("common:states.error"),
+        detail: t("admin:scopes:messages.updateError"),
         life: 3000,
       });
       console.error(err);
@@ -150,8 +150,8 @@ export default function ScopesPage() {
 
       toast.current?.show({
         severity: "success",
-        summary: t("common.states.success"),
-        detail: t("staffTabs.scopes.messages.deleteSuccess"),
+        summary: t("common:states.success"),
+        detail: t("admin:scopes:messages.deleteSuccess"),
         life: 3000,
       });
       setDeleteDialogVisible(false);
@@ -160,15 +160,15 @@ export default function ScopesPage() {
       if (err instanceof Error && err.message.includes("409")) {
         toast.current?.show({
           severity: "error",
-          summary: t("common.states.error"),
-          detail: t("staffTabs.scopes.messages.deleteErrorInUse"),
+          summary: t("common:states.error"),
+          detail: t("admin:scopes:messages.deleteErrorInUse"),
           life: 3000,
         });
       } else {
         toast.current?.show({
           severity: "error",
-          summary: t("common.states.error"),
-          detail: t("staffTabs.scopes.messages.deleteError"),
+          summary: t("common:states.error"),
+          detail: t("admin:scopes:messages.deleteError"),
           life: 3000,
         });
       }
@@ -192,8 +192,8 @@ export default function ScopesPage() {
     } catch (err) {
       toast.current?.show({
         severity: "error",
-        summary: t("common.states.error"),
-        detail: t("staffTabs.scopes.messages.fetchDetailError"),
+        summary: t("common:states.error"),
+        detail: t("admin:scopes:messages.fetchDetailError"),
         life: 3000,
       });
       console.error(err);
@@ -251,7 +251,7 @@ export default function ScopesPage() {
       {loading && (
         <div className="flex flex-col items-center justify-center p-6">
           <ProgressSpinner style={{ width: "50px", height: "50px" }} />
-          <p className="mt-4 text-gray-600">{t("common.states.loading")}</p>
+          <p className="mt-4 text-gray-600">{t("common:states.loading")}</p>
         </div>
       )}
 
@@ -270,14 +270,14 @@ export default function ScopesPage() {
         <div className="mb-6">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 gap-3">
             <h1 className="text-2xl font-bold text-white">
-              {t("navigation.staff.scopes")}
+              {t("navigation:dock.scopes")}
             </h1>
             <span className="p-input-icon-right w-full md:w-1/3">
               <i className="pi pi-search" style={{ right: "10px" }} />
               <InputText
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder={t("staffTabs.scopes.search") || "Search scopes..."}
+                placeholder={t("admin:scopes:search") || "Search scopes..."}
                 className="w-full"
                 style={{ paddingRight: "35px" }}
               />
@@ -291,7 +291,7 @@ export default function ScopesPage() {
         <div className="flex flex-col items-center justify-center p-12 bg-white/10 backdrop-blur-md rounded-lg shadow">
           <i className="pi pi-inbox text-5xl text-gray-400 mb-4"></i>
           <p className="text-gray-300 text-xl">
-            {t("staffTabs.scopes.messages.notFound")}
+            {t("admin:scopes:messages.notFound")}
           </p>
         </div>
       )}
@@ -324,7 +324,7 @@ export default function ScopesPage() {
             <div className="flex flex-col items-center justify-center p-8 mt-6 bg-white/10 backdrop-blur-md rounded-lg shadow">
               <i className="pi pi-search text-4xl text-gray-400 mb-3"></i>
               <p className="text-gray-300 text-lg">
-                {t("staffTabs.scopes.noSearchResults") ||
+                {t("admin:scopes:noSearchResults") ||
                   "No scopes found matching your search."}
               </p>
             </div>

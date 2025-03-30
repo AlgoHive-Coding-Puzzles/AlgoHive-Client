@@ -1,0 +1,21 @@
+{
+  "details": "More details",
+  "notFound": "No catalogs found.",
+  "description": "Catalogs are a collection of libraries containing two steps puzzles.",
+  "loading": "Loading catalogs...",
+  "errorFetchingCatalogs": "Error fetching catalogs",
+  "noCatalogs": "No catalogs available",
+  "themes": "Themes",
+  "puzzles": "Puzzles",
+  "difficulty": "Difficulty",
+  "author": "Author",
+  "language": "Language",
+  "createdAt": "Created At",
+  "updatedAt": "Updated At",
+  "back": "Back to catalogs",
+  "viewPuzzle": "View Puzzle",
+  "noThemes": "No themes available for this catalog",
+  "puzzleDetails": "Puzzle Details",
+  "puzzlesCount": "Puzzles",
+  "backToCatalog": "Back to catalog"
+}

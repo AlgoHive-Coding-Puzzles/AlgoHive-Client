@@ -1,0 +1,50 @@
+{
+  "license": {
+    "title": "Licence & Politique de Confidentialité",
+    "openSource": {
+      "title": "Licence Open Source",
+      "description": "AlgoHive est une application open-source publiée sous la licence MIT. Cela signifie que vous pouvez :",
+      "use": "Utiliser le logiciel à des fins commerciales",
+      "modify": "Modifier le code source",
+      "distribute": "Distribuer le logiciel",
+      "selfHost": "Auto-héberger votre propre instance"
+    },
+    "privacy": {
+      "title": "Politique de Confidentialité",
+      "dataCollection": {
+        "title": "Collecte de Données",
+        "description": "Nous collectons les informations personnelles minimales nécessaires au fonctionnement de la plateforme :",
+        "email": "Adresse e-mail (pour l'authentification)",
+        "name": "Nom (pour la personnalisation du profil)",
+        "password": "Mot de passe (haché de manière sécurisée)",
+        "submissions": "Soumissions et résultats des compétitions"
+      },
+      "security": {
+        "title": "Sécurité des Données",
+        "description": "Nous prenons la sécurité des données au sérieux :",
+        "hashing": "Tous les mots de passe sont hachés de manière sécurisée dans la base de données",
+        "encryption": "Les informations personnelles sont chiffrées en transit",
+        "access": "L'accès aux données des utilisateurs est strictement contrôlé"
+      },
+      "cookies": {
+        "title": "Cookies",
+        "description": "Nous utilisons uniquement des cookies essentiels :",
+        "session": "Cookie de session pour l'authentification",
+        "noTracking": "Pas de cookies de suivi ou de publicité",
+        "noThirdParty": "Pas de cookies tiers"
+      },
+      "rights": {
+        "title": "Vos Droits",
+        "description": "En tant qu'utilisateur, vous avez le droit de :",
+        "access": "Accéder à vos données personnelles",
+        "delete": "Demander la suppression de votre compte et de vos données",
+        "export": "Exporter vos données",
+        "update": "Mettre à jour vos informations personnelles"
+      }
+    },
+    "contact": {
+      "title": "Contact",
+      "description": "Pour toute question concernant la licence ou la politique de confidentialité, veuillez nous contacter à :"
+    }
+  }
+}

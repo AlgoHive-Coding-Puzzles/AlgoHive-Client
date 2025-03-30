@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { t } from "i18next";
 
 import LanguageSwitcher from "@shared/components/LanguageSwitcher";
 
@@ -28,6 +28,7 @@ const getTagLine = () => {
 };
 
 const Navbar: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
+  const { t } = useTranslation();
   const { user, hasDefaultPassword } = useAuth();
   const [tagline, setTagline] = React.useState<string>(getTagLine());
   const [isMenuOpen, setIsMenuOpen] = React.useState<boolean>(false);
@@ -56,36 +57,36 @@ const Navbar: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
   const navbarData = [
     {
       id: "how-to-play",
-      title: t("users.menus.howToPlay"),
+      title: t("navigation:menus.howToPlay"),
     },
     {
       id: "support",
-      title: t("users.menus.support"),
+      title: t("navigation:menus.support"),
     },
   ];
 
   const staffPortalNav = [
     {
       id: "staff_portal",
-      title: t("users.menus.staffPortal"),
+      title: t("navigation:menus.staffPortal"),
     },
   ];
 
   const acountNav = [
     {
       id: "account",
-      title: t("users.menus.welcome") + " " + user?.first_name,
+      title: t("navigation:menus.welcome") + " " + user?.first_name,
     },
     {
       id: "competitions",
-      title: t("users.menus.myCompetitions"),
+      title: t("navigation:menus.myCompetitions"),
     },
   ];
 
   const logginNav = [
     {
       id: "login",
-      title: t("users.menus.login"),
+      title: t("navigation:menus.login"),
     },
   ];
 
@@ -122,14 +123,14 @@ const Navbar: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
                   />
                 </svg>
                 <p className="text-xs sm:text-sm font-medium text-white">
-                  {t("users.security.defaultPasswordWarning")}
+                  {t("navigation:security.defaultPasswordWarning")}
                 </p>
               </div>
               <Link
                 to="/account"
                 className="flex items-center justify-center space-x-1 text-xs sm:text-sm font-medium text-white hover:text-white/80 transition-colors duration-300 bg-white/10 hover:bg-white/20 px-3 py-1 rounded-md"
               >
-                <span>{t("users.security.changePassword")}</span>
+                <span>{t("navigation:security.changePassword")}</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-3 w-3"

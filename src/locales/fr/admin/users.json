@@ -1,0 +1,67 @@
+{
+  "views": {
+    "asAdmin": "Vue administrateur",
+    "asStaff": "Vue personnel"
+  },
+  "asRoles": "Vue par rôles",
+  "blocked": "Bloqué",
+  "active": "Actif",
+  "neverConnected": "Jamais connecté",
+  "deleteUser": "Supprimer l'utilisateur",
+  "deleteUserMsg": "Êtes-vous sûr de vouloir supprimer cet utilisateur ?",
+  "import": {
+    "button": "Importer des utilisateurs",
+    "success": "Les utilisateurs ont été importés avec succès",
+    "error": "Une erreur est survenue lors de l'importation des utilisateurs",
+    "fileType": "Seuls les fichiers XLSX sont pris en charge",
+    "selectFile": "Sélectionner un fichier XLSX"
+  },
+  "asStaff": {
+    "title": "Gestion des utilisateurs du personnel",
+    "targetScope": "Périmètre cible",
+    "new": "Nouvel utilisateur",
+    "newUser": "Créer un nouvel utilisateur",
+    "editUser": "Modifier l'utilisateur",
+    "noUsersInGroup": "Aucun utilisateur trouvé dans ce groupe",
+    "messages": {
+      "userCreated": "L'utilisateur a été créé avec succès.",
+      "userUpdated": "L'utilisateur a été mis à jour avec succès.",
+      "errorCreating": "Une erreur est survenue lors de la création de l'utilisateur.",
+      "errorUpdating": "Une erreur est survenue lors de la mise à jour de l'utilisateur.",
+      "errorDeleting": "Une erreur est survenue lors de la suppression de l'utilisateur.",
+      "groupRequired": "Le groupe est requis.",
+      "deleteSelectedConfirm": "Êtes-vous sûr de vouloir supprimer les {{count}} utilisateurs sélectionnés ?",
+      "usersDeleted": "Les utilisateurs sélectionnés ont été supprimés avec succès."
+    }
+  },
+  "asAdmin": {
+    "title": "Gestion des membres du personnel",
+    "new": "Créer un nouveau membre du personnel",
+    "resetPassword": "Réinitialiser le mot de passe",
+    "editUser": "Modifier le membre du personnel",
+    "newStaff": "Nouveau membre du personnel",
+    "messages": {
+      "userCreated": "Le membre du personnel a été créé avec succès.",
+      "userUpdated": "Le membre du personnel a été mis à jour avec succès.",
+      "errorCreating": "Une erreur est survenue lors de la création du membre du personnel.",
+      "errorUpdating": "Une erreur est survenue lors de la mise à jour du membre du personnel.",
+      "roleRequired": "Un rôle est requis."
+    }
+  },
+  "messages": {
+    "userBlocked": "L'utilisateur a été bloqué avec succès.",
+    "userUnblocked": "L'utilisateur a été débloqué avec succès.",
+    "errorBlocking": "Une erreur est survenue lors du blocage de l'utilisateur.",
+    "firstNameRequired": "Le prénom est requis.",
+    "lastNameRequired": "Le nom est requis.",
+    "validEmailRequired": "Un email valide est requis.",
+    "confirmResetPassHeader": "Réinitialiser le mot de passe",
+    "confirmResetPass": "Êtes-vous sûr de vouloir réinitialiser le mot de passe de ce membre ?",
+    "passwordReset": "Le mot de passe a été réinitialisé avec succès.",
+    "errorResetting": "Une erreur est survenue lors de la réinitialisation du mot de passe.",
+    "confirmDeleteUser": "Êtes-vous sûr de vouloir supprimer cet utilisateur ?",
+    "confirmDeleteHeader": "Supprimer l'utilisateur",
+    "userDeleted": "Utilisateur supprimé avec succès.",
+    "errorDeleting": "Une erreur est survenue lors de la suppression de l'utilisateur."
+  }
+}

@@ -42,7 +42,7 @@ export const CatalogsList = ({
 
             <div className="mt-auto">
               <Button
-                label={t("staffTabs.catalogs.details")}
+                label={t("admin:catalogs:details")}
                 icon="pi pi-arrow-right"
                 iconPos="right"
                 className="p-button-rounded p-button-outlined w-full"

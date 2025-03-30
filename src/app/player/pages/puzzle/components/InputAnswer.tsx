@@ -39,7 +39,7 @@ function InputAnswer({
   const [loading, setLoading] = useState(false);
   const [cooldown, setCooldown] = useState<number>();
   const toast = useRef<Toast>(null);
-  const { t } = useTranslation();
+  const { t } = useTranslation(["common", "puzzles"]);
 
   // Update cooldown timer
   useEffect(() => {
@@ -65,8 +65,8 @@ function InputAnswer({
     if (solution === undefined || solution === null) {
       toast.current?.show({
         severity: "error",
-        summary: t("puzzles.input.error"),
-        detail: t("puzzles.input.solution"),
+        summary: t("puzzles:input.error"),
+        detail: t("puzzles:input.solution"),
         life: 3000,
       });
       return;
@@ -92,8 +92,8 @@ function InputAnswer({
         setCooldown(response.wait_time_seconds);
         toast.current?.show({
           severity: "warn",
-          summary: t("puzzles.input.rateLimited"),
-          detail: t("puzzles.input.pleaseWait"),
+          summary: t("puzzles:input.rateLimited"),
+          detail: t("puzzles:input.pleaseWait"),
           life: 3000,
         });
         return;
@@ -102,8 +102,8 @@ function InputAnswer({
       if (response.is_correct) {
         toast.current?.show({
           severity: "success",
-          summary: t("puzzles.input.correct"),
-          detail: t("puzzles.input.congratulations"),
+          summary: t("puzzles:input.correct"),
+          detail: t("puzzles:input.congratulations"),
           life: 3000,
         });
         // Delay the refresh to allow toast to be visible
@@ -113,19 +113,41 @@ function InputAnswer({
       } else {
         toast.current?.show({
           severity: "warn",
-          summary: t("puzzles.input.incorrect"),
-          detail: t("puzzles.input.tryAgain"),
+          summary: t("puzzles:input.incorrect"),
+          detail: t("puzzles:input.tryAgain"),
           life: 3000,
         });
       }
     } catch (error) {
-      toast.current?.show({
-        severity: "error",
-        summary: t("puzzles.input.failed"),
-        detail: t("puzzles.input.error"),
-        life: 3000,
-      });
-      console.error("Error submitting answer:", error);
+      // If the code is 429
+      if (error instanceof Error && error.message.includes("429")) {
+        const axiosError = error as unknown as {
+          response?: { data?: { wait_time_seconds: number } };
+        };
+        if (axiosError.response?.data?.wait_time_seconds) {
+          setCooldown(axiosError.response?.data?.wait_time_seconds);
+          console.log(
+            "Rate limit exceeded. Please wait:",
+            axiosError.response.data.wait_time_seconds
+          );
+        }
+
+        toast.current?.show({
+          severity: "warn",
+          summary: t("puzzles:input.rateLimited"),
+          detail: t("puzzles:input.pleaseWait"),
+          life: 3000,
+        });
+        return;
+      } else {
+        toast.current?.show({
+          severity: "error",
+          summary: t("puzzles:input.failed"),
+          detail: t("puzzles:input.error"),
+          life: 3000,
+        });
+        console.error("Error submitting answer:", error);
+      }
     } finally {
       setLoading(false);
     }
@@ -157,21 +179,21 @@ function InputAnswer({
         {!isMobile && (
           <span className="p-inputgroup-addon">
             <i className="pi pi-question-circle mr-2"></i>{" "}
-            {t("puzzles.input.answer")}:
+            {t("puzzles:input.answer")}:
           </span>
         )}
         <InputNumber
-          placeholder={t("puzzles.input.enterAnswer")}
+          placeholder={t("puzzles:input.enterAnswer")}
           className="w-full max-w-md mx-auto"
           value={solution}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
           disabled={loading || disabled || !!cooldown}
-          aria-label={t("puzzles.input.answer")}
+          aria-label={t("puzzles:input.answer")}
           max={9999999999999.99}
         />
         <Button
-          label={t("puzzles.input.submit")}
+          label={t("puzzles:input.submit")}
           className="max-w-md mx-auto"
           onClick={handleSubmit}
           icon={loading ? "pi pi-spinner pi-spin" : "pi pi-check"}
@@ -182,12 +204,12 @@ function InputAnswer({
             border: "0.8px solid #fff",
           }}
           disabled={loading || disabled || !!cooldown}
-          aria-label={t("puzzles.input.submit")}
+          aria-label={t("puzzles:input.submit")}
         />
       </div>
       {cooldown && (
         <div className="text-yellow-500 mt-2">
-          {t("puzzles.input.cooldownMessage", {
+          {t("puzzles:input.cooldownMessage", {
             time: getSecondsToPretty(cooldown),
           })}
         </div>

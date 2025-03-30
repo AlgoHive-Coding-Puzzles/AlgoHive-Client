@@ -55,7 +55,7 @@ const InputTemplate = ({
       <div
         className={hasRequestedInput ? "" : "opacity-60 cursor-not-allowed"}
         data-pr-tooltip={
-          !hasRequestedInput ? t("puzzles.input.needInput") : undefined
+          !hasRequestedInput ? t("puzzles:input.needInput") : undefined
         }
       >
         <Tooltip

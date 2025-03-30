@@ -42,10 +42,10 @@ const UsersListCompetitions: React.FC<UsersListCompetitionsProps> = ({
   return (
     <div className={cn("container min-[height:75vh]", className)}>
       <span className="text-xl font-semibold text-surface-950 dark:text-surface-0">
-        {t("users.competitions")}
+        {t("competitions:competitions")}
       </span>
       <h1 className="mt-2 text-3xl lg:text-6xl font-semibold text-surface-950 dark:text-surface-0">
-        {t("users.selectCompetition")}
+        {t("competitions:selectCompetition")}
       </h1>
       <div className="mt-14 flex flex-col">
         {!competitions || competitions.length === 0 ? (
@@ -59,13 +59,13 @@ const UsersListCompetitions: React.FC<UsersListCompetitionsProps> = ({
             <div className="flex flex-col items-center justify-center mt-12 md:mt-24 w-full">
               <MeteorsCard>
                 <h1 className="relative z-50 mb-4 text-xl font-bold text-white">
-                  {t("users.noCompetitions")}
+                  {t("navigation:noCompetitions")}
                 </h1>
 
                 {!user && (
                   <>
                     <h2 className="relative z-50 mb-4 font-normal text-slate-500 text-lg">
-                      {t("users.connectYourAccount")}
+                      {t("competitions:connectYourAccount")}
                     </h2>
 
                     <button
@@ -78,7 +78,7 @@ const UsersListCompetitions: React.FC<UsersListCompetitionsProps> = ({
                         <span className="absolute inset-0 rounded-full bg-[image:radial-gradient(75%_100%_at_50%_0%,rgba(56,189,248,0.6)_0%,rgba(56,189,248,0)_75%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                       </span>
                       <div className="relative flex space-x-2 items-center z-10 rounded-full bg-zinc-950 py-2 px-6 ring-1 ring-white/10">
-                        <span>{t("users.menus.login")}</span>
+                        <span>{t("navigation:menus.login")}</span>
                         <svg
                           fill="none"
                           height="20"

@@ -1,0 +1,25 @@
+{
+  "footer": "AlgoHive © 2025",
+  "title": "Êtes-vous prêt à explorer la plateforme AlgoHive ?",
+  "description": "Rejoins-nous dès à présent et commence ton expérience vers la maîtrise des algorithmes et des structures de données. Auto-hébergé, open-source et gratuit.",
+  "links": {
+    "title": "Liens",
+    "howToPlay": "Comment jouer",
+    "support": "Support",
+    "license": "Licence",
+    "profile": "Mon Profil"
+  },
+  "project": {
+    "title": "Le Projet",
+    "github": "GitHub",
+    "createPuzzles": "Créer des énigmes",
+    "host": "Auto-héberger AlgoHive",
+    "kofi": "Soutenir sur Ko-fi"
+  },
+  "moreChallenges": {
+    "title": "Plus de défis",
+    "aoc": "Advent of Code",
+    "htb": "Hack The Box",
+    "cg": "Coding Games"
+  }
+}
