@@ -1,13 +1,13 @@
-import { UsersService, usersService } from "./usersService";
+import { UsersService, usersService } from "./UsersService";
 import {
   CompetitionsService,
   competitionsService,
-} from "./competitionsService";
-import { GroupsService, groupsService } from "./groupsService";
-import { RolesService, rolesService } from "./rolesService";
-import { ScopesService, scopesService } from "./scopesService";
-import { AuthService, authService } from "./authService";
-import { catalogsService, CatalogsService } from "./catalogsService";
+} from "./CompetitionsService";
+import { GroupsService, groupsService } from "./GroupsService";
+import { RolesService, rolesService } from "./RolesService";
+import { ScopesService, scopesService } from "./ScopesService";
+import { AuthService, authService } from "./AuthService";
+import { catalogsService, CatalogsService } from "./CatalogsService";
 
 /**
  * Service manager provides centralized access to all service instances
