@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { t } from "i18next";
 
 import AnimatedContainer from "@shared/components/AnimatedContainer";
-import { MeteorsCard } from "@shared/components/MeteorsCard";
+import { MeteorsCard } from "@/app/shared/components/ui/meteor-card";
 import CirclePattern from "@shared/components/CirclePattern";
 
 import { ServiceManager } from "@/services";

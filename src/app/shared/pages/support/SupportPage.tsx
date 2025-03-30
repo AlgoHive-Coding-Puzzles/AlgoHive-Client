@@ -5,7 +5,7 @@ import { Toast } from "primereact/toast";
 
 import AnimatedContainer from "@shared/components/AnimatedContainer";
 import CirclePattern from "@shared/components/CirclePattern";
-import { MeteorsCard } from "@shared/components/MeteorsCard";
+import { MeteorsCard } from "@/app/shared/components/ui/meteor-card";
 import { Input } from "@shared/components/ui/input";
 import Footer from "@shared/components/Footer";
 import Navbar from "@shared/components/Navbar";

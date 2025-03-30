@@ -6,7 +6,6 @@ import { useAuth } from "@contexts/AuthContext";
 interface ProtectedRoutesProps {
   children?: React.ReactNode;
   target?: "staff" | "participant" | "all";
-  allowedRoles?: string[];
 }
 
 const ProtectedRoutes = ({
@@ -19,18 +18,23 @@ const ProtectedRoutes = ({
 
   useEffect(() => {
     // Only check authentication once when the component is mounted
-    if (!initialCheckDone && isLoading) {
+    if (!initialCheckDone) {
       const verifyAuth = async () => {
         await checkAuth();
         setInitialCheckDone(true);
       };
       verifyAuth();
     }
-  }, [checkAuth, initialCheckDone, isLoading]);
+  }, [checkAuth, initialCheckDone]);
 
   // Show loading state only during initial authentication check
   if (isLoading && !initialCheckDone) {
-    return <div>Chargement...</div>;
+    return (
+      <div className="loading-container">
+        <div className="loading-spinner"></div>
+        <p>Loading authentication...</p>
+      </div>
+    );
   }
 
   // Redirect if not authenticated

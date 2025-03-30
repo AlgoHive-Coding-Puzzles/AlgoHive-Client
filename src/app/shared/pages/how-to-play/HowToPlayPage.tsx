@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 
 import { Accordion, AccordionItem } from "@shared/components/ui/accordion";
 import AnimatedContainer from "@shared/components/AnimatedContainer";
-import { MeteorsCard } from "@/app/shared/components/MeteorsCard";
+import { MeteorsCard } from "@/app/shared/components/ui/meteor-card";
 import CirclePattern from "@shared/components/CirclePattern";
 import Footer from "@/app/shared/components/Footer";
 import Navbar from "@shared/components/Navbar";
