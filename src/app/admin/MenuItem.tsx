@@ -5,16 +5,14 @@ import { TFunction } from "i18next";
 const HomePage = lazy(
   () => import("@/app/admin/pages/dashboard/DashboardPage")
 );
-const UsersPage = lazy(() => import("@/app/admin/pages/users/UsersPage"));
-const RolesPage = lazy(() => import("@/app/admin/pages/roles/RolesPage"));
-const ScopesPage = lazy(() => import("@/app/admin/pages/scopes/ScopesPage"));
-const GroupsPage = lazy(() => import("@/app/admin/pages/groups/GroupsPage"));
+const UsersPage = lazy(() => import("@admin/pages/users/UsersPage"));
+const RolesPage = lazy(() => import("@admin/pages/roles/RolesPage"));
+const ScopesPage = lazy(() => import("@admin/pages/scopes/ScopesPage"));
+const GroupsPage = lazy(() => import("@admin/pages/groups/GroupsPage"));
 const CompetitionsPage = lazy(
-  () => import("@/app/admin/pages/competitions/CompetitionsPage")
+  () => import("@admin/pages/competitions/CompetitionsPage")
 );
-const CatalogsPage = lazy(
-  () => import("@/app/admin/pages/catalogs/CatalogsPage")
-);
+const CatalogsPage = lazy(() => import("@admin/pages/catalogs/CatalogsPage"));
 
 import { Permission, rolesHavePermission } from "@utils/permissions";
 
