@@ -2,15 +2,19 @@ import { JSX, lazy } from "react";
 import { TFunction } from "i18next";
 
 // Lazy load components
-const HomePage = lazy(() => import("@admin/pages/home/Home"));
-const UsersPage = lazy(() => import("@admin/pages/users/Users"));
-const RolesPage = lazy(() => import("@admin/pages/roles/Roles"));
-const ScopesPage = lazy(() => import("@admin/pages/scopes/Scopes"));
-const GroupsPage = lazy(() => import("@admin/pages/groups/Groups"));
-const CompetitionsPage = lazy(
-  () => import("@admin/pages/competitions/Competitions")
+const HomePage = lazy(
+  () => import("@/app/admin/pages/dashboard/DashboardPage")
 );
-const CatalogsPage = lazy(() => import("@admin/pages/catalogs/Catalogs"));
+const UsersPage = lazy(() => import("@/app/admin/pages/users/UsersPage"));
+const RolesPage = lazy(() => import("@/app/admin/pages/roles/RolesPage"));
+const ScopesPage = lazy(() => import("@/app/admin/pages/scopes/ScopesPage"));
+const GroupsPage = lazy(() => import("@/app/admin/pages/groups/GroupsPage"));
+const CompetitionsPage = lazy(
+  () => import("@/app/admin/pages/competitions/CompetitionsPage")
+);
+const CatalogsPage = lazy(
+  () => import("@/app/admin/pages/catalogs/CatalogsPage")
+);
 
 import { Permission, rolesHavePermission } from "@utils/permissions";
 

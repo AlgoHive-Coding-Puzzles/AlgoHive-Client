@@ -14,7 +14,7 @@ import Shape3 from "@assets/shapes/shape-3.svg";
 import Shape4 from "@assets/shapes/shape-4.svg";
 import Shape5 from "@assets/shapes/shape-5.svg";
 
-import "./Home.css";
+import "./HomePage.css";
 
 export default function Users() {
   const { t } = useTranslation();

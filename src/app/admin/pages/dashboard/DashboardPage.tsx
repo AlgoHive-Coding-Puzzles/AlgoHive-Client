@@ -21,7 +21,7 @@ import { ServiceManager } from "@services/index";
 import { useActivePage } from "@contexts/ActivePageContext";
 import { useAuth } from "@contexts/AuthContext";
 
-export default function HomePage() {
+export default function DashboardPage() {
   const { t } = useTranslation();
   const { user, logout } = useAuth();
   const navigate = useNavigate();

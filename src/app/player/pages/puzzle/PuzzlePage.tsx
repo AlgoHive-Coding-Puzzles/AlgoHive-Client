@@ -18,11 +18,11 @@ import { prettyPrintTitle } from "@utils/puzzles";
 
 import { Competition, Puzzle, Try } from "@/models";
 
-import useIsMobile from "@hooks/use-is-mobile";
+import useIsMobile from "@/lib/hooks/useIsMobile";
 
 import { useAuth } from "@contexts/AuthContext";
 
-import "./puzzle.css";
+import "./PuzzlePage.css";
 
 export default function PuzzlePage() {
   const { user } = useAuth();

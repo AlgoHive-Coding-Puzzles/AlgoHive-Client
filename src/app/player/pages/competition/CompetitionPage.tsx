@@ -27,7 +27,7 @@ import { useAuth } from "@contexts/AuthContext";
 
 import { Competition, Theme, Try } from "@/models";
 
-import "./competition.css";
+import "./CompetitionPage.css";
 
 export default function CompetitionPage() {
   const { user } = useAuth();

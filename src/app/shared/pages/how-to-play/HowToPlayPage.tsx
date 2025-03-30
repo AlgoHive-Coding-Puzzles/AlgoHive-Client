@@ -9,7 +9,7 @@ import Navbar from "@shared/components/Navbar";
 
 import { useAuth } from "@contexts/AuthContext";
 
-export default function HowToPlay() {
+export default function HowToPlayPage() {
   const { t } = useTranslation();
   const { user } = useAuth();
 

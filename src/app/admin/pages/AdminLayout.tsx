@@ -19,7 +19,7 @@ export default function Admin() {
 
     window.addEventListener("scroll", handleScroll);
 
-    // Dynamically load the CSS
+    // Dynamically load the CSS "AdminLayout.css" file
     const styleLink = document.createElement("link");
     styleLink.setAttribute("rel", "stylesheet");
     styleLink.setAttribute("type", "text/css");

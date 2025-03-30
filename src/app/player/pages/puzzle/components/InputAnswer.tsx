@@ -7,7 +7,7 @@ import { Toast } from "primereact/toast";
 
 import { ServiceManager } from "@/services";
 
-import useIsMobile from "@hooks/use-is-mobile";
+import useIsMobile from "@/lib/hooks/useIsMobile";
 
 import { Competition, Puzzle } from "@/models";
 

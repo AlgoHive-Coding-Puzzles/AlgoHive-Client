@@ -1,6 +1,6 @@
 import React from "react";
 import { cn } from "@utils/utils";
-import useVisible from "@hooks/use-visible";
+import useVisible from "@/lib/hooks/useVisible";
 
 type AnimatedContainerProps = {
   visibleClass?: string;

@@ -1,23 +1,23 @@
 import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 
-import ResetPasswordPage from "@shared/pages/reset-password/reset-password";
-import HowToPlay from "@shared/pages/how-to-play/how-to-play";
-import AccountPage from "@shared/pages/account/Account";
-import SupportPage from "@shared/pages/support/support";
-import LicensePage from "@shared/pages/license/license";
-import LoginPage from "@shared/pages/login/login";
-import Users from "@shared/pages/home/Home";
+import ResetPasswordPage from "@/app/shared/pages/reset-password/ResetPasswordPage";
+import HowToPlayPage from "@/app/shared/pages/how-to-play/HowToPlayPage";
+import AccountPage from "@/app/shared/pages/account/AccountPage";
+import SupportPage from "@/app/shared/pages/support/SupportPage";
+import LicensePage from "@/app/shared/pages/license/LicensePage";
+import LoginPage from "@/app/shared/pages/login/LoginPage";
+import Users from "@/app/shared/pages/home/HomePage";
 
-import ProtectedRoutes from "@shared/ProtectedRoutes";
+import ProtectedRoutes from "@/app/shared/components/ProtectedRoutes";
 
 // Lazy load Admin component to improve load time
-const Admin = lazy(() => import("./app/admin/pages/Admin"));
+const Admin = lazy(() => import("./app/admin/pages/AdminLayout"));
 
-import PuzzleInputPage from "@player/pages/puzzle_input/puzzle_input";
-import CompetitionPage from "@player/pages/competition/competition";
-import LeaderboardPage from "@player/pages/leaderboard/leaderboard";
-import PuzzlePage from "@player/pages/puzzle/puzzle";
+import PuzzleInputPage from "@/app/player/pages/puzzle-input/PuzzleInputPage";
+import CompetitionPage from "@/app/player/pages/competition/CompetitionPage";
+import LeaderboardPage from "@/app/player/pages/leaderboard/LeaderboardPage";
+import PuzzlePage from "@/app/player/pages/puzzle/PuzzlePage";
 
 import { isStaff } from "@utils/permissions";
 
@@ -34,7 +34,7 @@ const AppRoutes = () => {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/reset-password" element={<ResetPasswordPage />} />
       <Route path="/" element={<Users />} />
-      <Route path="/how-to-play" element={<HowToPlay />} />
+      <Route path="/how-to-play" element={<HowToPlayPage />} />
       <Route path="/support" element={<SupportPage />} />
       <Route path="/license" element={<LicensePage />} />
 

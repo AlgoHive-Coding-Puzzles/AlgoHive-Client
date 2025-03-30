@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { InputText } from "primereact/inputtext";
 
-import useIsMobile from "@hooks/use-is-mobile";
+import useIsMobile from "@/lib/hooks/useIsMobile";
 
 interface InputAnsweredProps {
   solution: string;
