@@ -50,6 +50,8 @@ export default function RolesPage() {
         ServiceManager.scopes.fetchAll(),
       ]);
 
+      console.log("Fetched roles:", fetchedRoles);
+
       setRoles(fetchedRoles);
       scopeOptions.current = scopes.map((scope) => ({
         label: scope.name,
