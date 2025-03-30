@@ -45,7 +45,7 @@ const ResetPasswordPage = () => {
     }
 
     try {
-      await ServiceManager.auth.resetPassword(token, password);
+      await ServiceManager.auth.resetPassword(password, token);
 
       toast.current?.show({
         severity: "success",
