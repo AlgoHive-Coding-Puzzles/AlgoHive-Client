@@ -19,7 +19,7 @@ import { useAuth } from "@contexts/AuthContext";
 
 import { Group, Role, Scope } from "@/models";
 
-import "./Groups.css";
+import "./GroupsPage.css";
 
 /**
  * Groups management page component
