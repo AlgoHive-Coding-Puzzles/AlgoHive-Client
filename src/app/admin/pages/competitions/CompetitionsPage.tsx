@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 
 import { Toast } from "primereact/toast";
@@ -17,6 +17,15 @@ import { Competition } from "@/models";
 
 import "./CompetitionsPage.css";
 
+/**
+ * CompetitionsPage - Admin page that manages competitions
+ *
+ * This component handles:
+ * - Listing all competitions
+ * - Creating new competitions
+ * - Editing existing competitions
+ * - Viewing competition details
+ */
 export default function CompetitionsPage() {
   const { t } = useTranslation(["common", "staffTabs"]);
   const toast = useRef<Toast>(null);
@@ -27,14 +36,18 @@ export default function CompetitionsPage() {
     useState<Competition | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
-  // Dialog visibility states - refactored to match Roles.tsx pattern
+  // Dialog visibility states
   const [editDialogVisible, setEditDialogVisible] = useState<boolean>(false);
   const [createDialogVisible, setCreateDialogVisible] =
     useState<boolean>(false);
   const [detailsDialogVisible, setDetailsDialogVisible] =
     useState<boolean>(false);
 
-  const fetchCompetitionsData = async () => {
+  /**
+   * Fetches all competitions from the API
+   * Memoized with useCallback to prevent unnecessary re-renders
+   */
+  const fetchCompetitionsData = useCallback(async () => {
     try {
       setLoading(true);
       const fetchedCompetitions = await ServiceManager.competitions.fetchAll();
@@ -45,13 +58,16 @@ export default function CompetitionsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [t]);
 
+  // Load competitions on component mount
   useEffect(() => {
     fetchCompetitionsData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [fetchCompetitionsData]);
 
+  /**
+   * Display a toast notification
+   */
   const showToast = (
     severity: "success" | "info" | "warn" | "error",
     detail: string
@@ -64,7 +80,7 @@ export default function CompetitionsPage() {
     });
   };
 
-  // Open dialog handlers - refactored to match Roles.tsx pattern
+  // Dialog handlers
   const openCreateDialog = () => {
     setSelectedCompetition(null);
     setCreateDialogVisible(true);
@@ -80,6 +96,10 @@ export default function CompetitionsPage() {
     setDetailsDialogVisible(true);
   };
 
+  /**
+   * Handle successful form submission (create/edit)
+   * Refreshes the competitions list automatically
+   */
   const handleFormSubmitSuccess = () => {
     // Close all dialog forms
     setCreateDialogVisible(false);
@@ -87,6 +107,9 @@ export default function CompetitionsPage() {
     fetchCompetitionsData();
   };
 
+  /**
+   * Renders the appropriate content based on loading state and data availability
+   */
   const renderContent = () => {
     if (loading) {
       return (
@@ -151,7 +174,7 @@ export default function CompetitionsPage() {
       {/* Main content */}
       {renderContent()}
 
-      {/* Competition Create Form Dialog */}
+      {/* Competition Create Form Dialog - Only render when visible */}
       {createDialogVisible && (
         <CompetitionForm
           visible={createDialogVisible}
@@ -162,7 +185,7 @@ export default function CompetitionsPage() {
         />
       )}
 
-      {/* Competition Edit Form Dialog */}
+      {/* Competition Edit Form Dialog - Only render when visible and has selected competition */}
       {editDialogVisible && selectedCompetition && (
         <CompetitionForm
           visible={editDialogVisible}
@@ -173,7 +196,7 @@ export default function CompetitionsPage() {
         />
       )}
 
-      {/* Competition Details Dialog */}
+      {/* Competition Details Dialog - Only render when visible and has selected competition */}
       {detailsDialogVisible && selectedCompetition && (
         <CompetitionDetails
           visible={detailsDialogVisible}

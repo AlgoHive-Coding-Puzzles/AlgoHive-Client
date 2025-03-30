@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback, memo } from "react";
 import { useTranslation } from "react-i18next";
 
 import { Tag } from "primereact/tag";
@@ -18,7 +18,10 @@ interface CompetitionsListProps {
   onViewDetails: (competition: Competition) => void;
 }
 
-export default function CompetitionsList({
+/**
+ * CompetitionsList - Displays competitions in a data table with filtering and actions
+ */
+const CompetitionsList = memo(function CompetitionsList({
   competitions,
   onEdit,
   onViewDetails,
@@ -26,67 +29,102 @@ export default function CompetitionsList({
   const { t } = useTranslation(["common", "staffTabs"]);
   const [globalFilter, setGlobalFilter] = useState<string>("");
 
-  const downloadExcelReport = async (competitionID: string) => {
-    ServiceManager.competitions.getResumeExportXLSX(competitionID);
-  };
+  /**
+   * Download Excel report for a competition
+   */
+  const downloadExcelReport = useCallback(async (competitionID: string) => {
+    try {
+      await ServiceManager.competitions.getResumeExportXLSX(competitionID);
+    } catch (error) {
+      console.error("Error downloading Excel report:", error);
+    }
+  }, []);
 
-  const statusTemplate = (rowData: Competition) => {
-    return (
-      <div className="flex flex-wrap gap-2">
-        {rowData.finished ? (
-          <Tag
-            severity="warning"
-            value={t("admin:competitions:status.finished")}
+  /**
+   * Status template for competition status cells
+   */
+  const statusTemplate = useCallback(
+    (rowData: Competition) => {
+      return (
+        <div className="flex flex-wrap gap-2">
+          {rowData.finished ? (
+            <Tag
+              severity="warning"
+              value={t("admin:competitions:status.finished")}
+            />
+          ) : (
+            <Tag
+              severity="success"
+              value={t("admin:competitions:status.active")}
+            />
+          )}
+
+          {rowData.show ? (
+            <Tag
+              severity="info"
+              value={t("admin:competitions:status.visible")}
+            />
+          ) : (
+            <Tag
+              severity="danger"
+              value={t("admin:competitions:status.hidden")}
+            />
+          )}
+        </div>
+      );
+    },
+    [t]
+  );
+
+  /**
+   * Actions template for competition action cells
+   */
+  const actionsTemplate = useCallback(
+    (rowData: Competition) => {
+      return (
+        <div className="flex gap-2 justify-content-center">
+          <Button
+            icon="pi pi-eye"
+            className="p-button-rounded p-button-info p-button-sm"
+            onClick={() => onViewDetails(rowData)}
+            tooltip={t("common:actions.view")}
           />
-        ) : (
-          <Tag
-            severity="success"
-            value={t("admin:competitions:status.active")}
+          <Button
+            icon="pi pi-pencil"
+            className="p-button-rounded p-button-success p-button-sm"
+            onClick={() => onEdit(rowData)}
+            tooltip={t("common:actions.edit")}
           />
-        )}
-
-        {rowData.show ? (
-          <Tag severity="info" value={t("admin:competitions:status.visible")} />
-        ) : (
-          <Tag
-            severity="danger"
-            value={t("admin:competitions:status.hidden")}
+          <Button
+            icon="pi pi-download"
+            className="p-button-rounded p-button-warning p-button-sm"
+            onClick={() => downloadExcelReport(rowData.id)}
+            tooltip={t("admin:competitions:actions.downloadReport")}
           />
-        )}
-      </div>
-    );
-  };
+        </div>
+      );
+    },
+    [onViewDetails, onEdit, downloadExcelReport, t]
+  );
 
-  const actionsTemplate = (rowData: Competition) => {
-    return (
-      <div className="flex gap-2 justify-content-center">
-        <Button
-          icon="pi pi-eye"
-          className="p-button-rounded p-button-info p-button-sm"
-          onClick={() => onViewDetails(rowData)}
-          tooltip={t("common:actions.view")}
-        />
-        <Button
-          icon="pi pi-pencil"
-          className="p-button-rounded p-button-success p-button-sm"
-          onClick={() => onEdit(rowData)}
-          tooltip={t("common:actions.edit")}
-        />
-        <Button
-          icon="pi pi-download"
-          className="p-button-rounded p-button-warning p-button-sm"
-          onClick={() => downloadExcelReport(rowData.id)}
-          tooltip={t("admin:competitions:actions.downloadReport")}
-        />
-      </div>
-    );
-  };
+  /**
+   * Description template for description cells
+   */
+  const descriptionTemplate = useCallback(
+    (rowData: Competition) => (
+      <div className="description-cell">{rowData.description}</div>
+    ),
+    []
+  );
 
+  /**
+   * Header component for the DataTable
+   */
   const header = (
     <div className="flex justify-between items-center">
       <h2 className="text-xl font-semibold">{t("admin:competitions:title")}</h2>
       <span className="p-input-icon-left">
-        <i className="pi pi-search" style={{ right: "10px" }} />
+        <i className="pi pi-search" style={{ right: 10 }} />
         <InputText
           value={globalFilter}
           onChange={(e) => setGlobalFilter(e.target.value)}
@@ -112,49 +150,45 @@ export default function CompetitionsList({
         responsiveLayout="scroll"
         globalFilter={globalFilter}
         header={header}
+        removableSort
+        resizableColumns
+        columnResizeMode="fit"
+        showGridlines
       >
         <Column
           field="title"
           header={t("admin:competitions:form.title")}
-          style={{ width: "20rem" }}
+          style={{ width: "20%" }}
           sortable
         />
         <Column
           field="description"
           header={t("admin:competitions:form.description")}
-          style={{ maxWidth: "100px" }}
-          body={(rowData) => (
-            <div
-              className="description-cell"
-              style={{
-                maxHeight: "60px",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-              }}
-            >
-              {rowData.description}
-            </div>
-          )}
+          style={{ width: "30%" }}
+          body={descriptionTemplate}
         />
         <Column
           field="catalog_theme"
           header={t("admin:competitions:form.catalogTheme")}
           sortable
-          style={{ width: "15rem" }}
+          style={{ width: "20%" }}
         />
         <Column
           header={t("common:fields.status")}
           body={statusTemplate}
-          style={{ width: "180px" }}
+          style={{ width: "15%" }}
           sortable
           sortField="finished"
         />
         <Column
           header={t("common:fields.actions")}
           body={actionsTemplate}
-          style={{ width: "150px", textAlign: "center" }}
+          style={{ width: "15%" }}
+          exportable={false}
         />
       </DataTable>
     </Card>
   );
-}
+});
+
+export default CompetitionsList;

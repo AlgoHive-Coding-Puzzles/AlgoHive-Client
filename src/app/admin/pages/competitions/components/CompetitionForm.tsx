@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 
 import { Dialog } from "primereact/dialog";
@@ -22,6 +22,11 @@ interface CompetitionFormProps {
   onCancel: () => void;
 }
 
+/**
+ * CompetitionForm - Form component for creating/editing competitions
+ *
+ * This component handles form validation and submission for competitions.
+ */
 export default function CompetitionForm({
   visible,
   mode,
@@ -31,6 +36,7 @@ export default function CompetitionForm({
 }: CompetitionFormProps) {
   const { t } = useTranslation(["common", "staffTabs"]);
   const toast = useRef<Toast>(null);
+  const isSubmitAttempted = useRef<boolean>(false);
 
   // Form state
   const [title, setTitle] = useState<string>("");
@@ -49,31 +55,42 @@ export default function CompetitionForm({
     { id: string; name: string }[]
   >([]);
 
-  const loadData = async () => {
+  // Form validation
+  const [errors, setErrors] = useState<{
+    title?: string;
+    description?: string;
+    catalog?: string;
+    theme?: string;
+  }>({});
+
+  /**
+   * Load necessary data (catalogs, groups) for the form
+   */
+  const loadData = useCallback(async () => {
     try {
       const [scopes, catalogs] = await Promise.all([
         ServiceManager.scopes.fetchAll(),
         ServiceManager.catalogs.fetchCatalogs(),
       ]);
 
-      const groups = [];
-      for (const scope of scopes) {
-        if (!scope.groups) continue;
-        for (const group of scope.groups) {
-          groups.push({
+      const formattedGroups = scopes
+        .flatMap((scope) =>
+          (scope.groups || []).map((group) => ({
             id: group.id,
             name: `${scope.name} - ${group.name}`,
-          });
-        }
-      }
+          }))
+        )
+        .filter((group) => group.id);
 
       setCatalogs(catalogs);
-      setAvailableGroups(groups);
+      setAvailableGroups(formattedGroups);
     } catch (error) {
       console.error("Error loading data:", error);
+      showToast("error", t("common:states.error"));
     }
-  };
+  }, [t]);
 
+  // Load initial data on mount
   useEffect(() => {
     loadData();
 
@@ -81,10 +98,11 @@ export default function CompetitionForm({
     if (mode === "edit" && competition) {
       loadCompetitionGroups(competition.id);
     }
-  }, [mode, competition]);
+  }, [mode, competition, loadData]);
 
+  // Set form values when editing an existing competition
   useEffect(() => {
-    if (mode === "edit" && competition) {
+    if (mode === "edit" && competition && catalogs.length > 0) {
       const selectedCatalog = catalogs.find(
         (catalog) => catalog.id === competition.catalog_id
       );
@@ -92,26 +110,32 @@ export default function CompetitionForm({
       const selectedGroups = availableGroups.filter((group) =>
         competition.groups?.some((g) => g.id === group.id)
       );
-      setGroups(selectedGroups);
+
       setTitle(competition.title || "");
       setDescription(competition.description || "");
       setSelectedCatalog(selectedCatalog as Catalog);
       setSelectedTheme(competition.catalog_theme || "");
       setIsVisible(competition.show);
       setIsFinished(competition.finished);
-    } else {
+      setGroups(selectedGroups);
+    } else if (mode === "create") {
       resetForm();
     }
   }, [mode, competition, catalogs, availableGroups]);
 
+  // Load themes when catalog is selected
   useEffect(() => {
-    // Load themes when a catalog is selected
     const loadThemes = async () => {
       if (selectedCatalog) {
-        const data = await ServiceManager.catalogs.fetchCatalogThemes(
-          selectedCatalog.id
-        );
-        setThemes(data.map((theme) => theme.name));
+        try {
+          const data = await ServiceManager.catalogs.fetchCatalogThemes(
+            selectedCatalog.id
+          );
+          setThemes(data.map((theme) => theme.name));
+        } catch (error) {
+          console.error("Error loading themes:", error);
+          showToast("error", t("admin:competitions:messages.themesLoadError"));
+        }
       }
     };
 
@@ -120,8 +144,11 @@ export default function CompetitionForm({
     } else {
       setThemes([]);
     }
-  }, [selectedCatalog]);
+  }, [selectedCatalog, t]);
 
+  /**
+   * Load competition groups when editing
+   */
   const loadCompetitionGroups = async (competitionId: string) => {
     try {
       const data = await ServiceManager.competitions.fetchGroups(competitionId);
@@ -136,6 +163,9 @@ export default function CompetitionForm({
     }
   };
 
+  /**
+   * Reset form fields to default values
+   */
   const resetForm = () => {
     setTitle("");
     setDescription("");
@@ -144,8 +174,13 @@ export default function CompetitionForm({
     setGroups([]);
     setIsVisible(true);
     setIsFinished(false);
+    setErrors({});
+    isSubmitAttempted.current = false;
   };
 
+  /**
+   * Display toast notification
+   */
   const showToast = (
     severity: "success" | "info" | "warn" | "error",
     detail: string
@@ -158,25 +193,48 @@ export default function CompetitionForm({
     });
   };
 
-  const handleSubmit = async () => {
-    // Validate form
-    if (!title) {
-      showToast("error", t("admin:competitions:messages.titleRequired"));
-      return;
+  /**
+   * Validates the form and returns true if valid
+   */
+  const validateForm = (): boolean => {
+    const newErrors: {
+      title?: string;
+      description?: string;
+      catalog?: string;
+      theme?: string;
+    } = {};
+
+    if (!title.trim()) {
+      newErrors.title = t("admin:competitions:messages.titleRequired");
     }
-    if (!description) {
-      showToast("error", t("admin:competitions:messages.descriptionRequired"));
-      return;
-    }
-    if (!selectedTheme) {
-      showToast("error", t("admin:competitions:messages.catalogThemeRequired"));
-      return;
-    }
-    if (!selectedCatalog) {
-      showToast(
-        "error",
-        t("admin:competitions:messages.apiEnvironmentRequired")
+
+    if (!description.trim()) {
+      newErrors.description = t(
+        "admin:competitions:messages.descriptionRequired"
       );
+    }
+
+    if (!selectedCatalog) {
+      newErrors.catalog = t(
+        "admin:competitions:messages.apiEnvironmentRequired"
+      );
+    }
+
+    if (!selectedTheme) {
+      newErrors.theme = t("admin:competitions:messages.catalogThemeRequired");
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  /**
+   * Handle form submission
+   */
+  const handleSubmit = async () => {
+    isSubmitAttempted.current = true;
+
+    if (!validateForm()) {
       return;
     }
 
@@ -184,49 +242,34 @@ export default function CompetitionForm({
       setSubmitting(true);
 
       if (mode === "create") {
-        ServiceManager.competitions.create(
+        await ServiceManager.competitions.create(
           title,
           description,
-          selectedTheme,
-          selectedCatalog.id,
+          selectedTheme!,
+          selectedCatalog!.id,
           isVisible,
           isFinished,
           groups.map((group) => group.id)
         );
+
         showToast("success", t("admin:competitions:messages.createSuccess"));
       } else if (competition) {
         await ServiceManager.competitions.update(
           competition.id,
           title,
           description,
-          selectedTheme,
-          selectedCatalog.id,
+          selectedTheme!,
+          selectedCatalog!.id,
           isVisible,
           isFinished,
           groups.map((group) => group.id)
         );
 
         showToast("success", t("admin:competitions:messages.updateSuccess"));
-
-        // // Update groups
-        // const currentGroupIds = competition.groups?.map((g) => g.id) || [];
-        // const newGroupIds = groups.map((g) => g.id);
-
-        // // Groups to add
-        // for (const group of groups) {
-        //   if (!currentGroupIds.includes(group.id)) {
-        //     await addGroupToCompetition(competition.id, group.id);
-        //   }
-        // }
-
-        // // Groups to remove
-        // for (const groupId of currentGroupIds) {
-        //   if (!newGroupIds.includes(groupId)) {
-        //     await removeGroupFromCompetition(competition.id, groupId);
-        //   }
-        // }
       }
 
+      // Reset form and notify parent of success
+      resetForm();
       onSuccess();
     } catch (error) {
       console.error("Error submitting competition form:", error);
@@ -241,9 +284,17 @@ export default function CompetitionForm({
     }
   };
 
+  /**
+   * Handle dialog close/cancel
+   */
+  const handleCancel = () => {
+    resetForm();
+    onCancel();
+  };
+
   return (
     <>
-      <Toast ref={toast} />
+      <Toast ref={toast} position="top-right" />
       <Dialog
         header={
           mode === "create"
@@ -251,15 +302,17 @@ export default function CompetitionForm({
             : t("admin:competitions:edit")
         }
         visible={visible}
-        onHide={onCancel}
+        onHide={handleCancel}
         style={{ width: "50rem" }}
+        modal
         footer={
           <div className="flex justify-end gap-2">
             <Button
               label={t("common:actions.cancel")}
               icon="pi pi-times"
               className="p-button-text"
-              onClick={onCancel}
+              onClick={handleCancel}
+              disabled={submitting}
             />
             <Button
               label={t("common:actions.save")}
@@ -272,23 +325,22 @@ export default function CompetitionForm({
       >
         <div className="p-fluid">
           <div className="field mb-4">
-            <label htmlFor="title">{t("admin:competitions:form.title")}</label>
+            <label htmlFor="title" className="font-medium">
+              {t("admin:competitions:form.title")}*
+            </label>
             <InputText
               id="title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className={!title ? "p-invalid" : ""}
+              className={errors.title ? "p-invalid" : ""}
+              maxLength={100}
             />
-            {!title && (
-              <small className="p-error">
-                {t("admin:competitions:messages.titleRequired")}
-              </small>
-            )}
+            {errors.title && <small className="p-error">{errors.title}</small>}
           </div>
 
           <div className="field mb-4">
-            <label htmlFor="description">
-              {t("admin:competitions:form.description")}
+            <label htmlFor="description" className="font-medium">
+              {t("admin:competitions:form.description")}*
             </label>
             <InputTextarea
               id="description"
@@ -296,18 +348,17 @@ export default function CompetitionForm({
               onChange={(e) => setDescription(e.target.value)}
               rows={5}
               autoResize
-              className={!description ? "p-invalid" : ""}
+              className={errors.description ? "p-invalid" : ""}
+              maxLength={500}
             />
-            {!description && (
-              <small className="p-error">
-                {t("admin:competitions:messages.descriptionRequired")}
-              </small>
+            {errors.description && (
+              <small className="p-error">{errors.description}</small>
             )}
           </div>
 
           <div className="field mb-4">
-            <label htmlFor="apiEnvironment">
-              {t("admin:competitions:form.apiEnvironment")}
+            <label htmlFor="apiEnvironment" className="font-medium">
+              {t("admin:competitions:form.apiEnvironment")}*
             </label>
             <Dropdown
               id="apiEnvironment"
@@ -316,43 +367,42 @@ export default function CompetitionForm({
               options={catalogs}
               optionLabel="name"
               placeholder={t("common:selects.catalogs")}
-              className={!selectedCatalog ? "p-invalid" : ""}
+              className={errors.catalog ? "p-invalid" : ""}
               filter
             />
-            {!selectedCatalog && (
-              <small className="p-error">
-                {t("admin:competitions:messages.apiEnvironmentRequired")}
-              </small>
+            {errors.catalog && (
+              <small className="p-error">{errors.catalog}</small>
             )}
           </div>
 
           {selectedCatalog && (
             <div className="field mb-4">
-              <label htmlFor="catalogTheme">
-                {t("admin:competitions:form.catalogTheme")}
+              <label htmlFor="catalogTheme" className="font-medium">
+                {t("admin:competitions:form.catalogTheme")}*
               </label>
               <Dropdown
                 id="catalogTheme"
                 value={selectedTheme}
-                onChange={(e) => {
-                  setSelectedTheme(e.value);
-                }}
+                onChange={(e) => setSelectedTheme(e.value)}
                 options={themes}
-                optionLabel="name"
                 placeholder={t("common:selects.themes")}
-                className={!selectedTheme ? "p-invalid" : ""}
+                className={errors.theme ? "p-invalid" : ""}
                 filter
+                disabled={themes.length === 0}
               />
-              {!selectedTheme && (
-                <small className="p-error">
-                  {t("admin:competitions:messages.catalogThemeRequired")}
+              {errors.theme && (
+                <small className="p-error">{errors.theme}</small>
+              )}
+              {themes.length === 0 && selectedCatalog && (
+                <small className="text-gray-500">
+                  {t("admin:competitions:messages.noThemesAvailable")}
                 </small>
               )}
             </div>
           )}
 
           <div className="field mb-4">
-            <label htmlFor="groups">
+            <label htmlFor="groups" className="font-medium">
               {t("admin:competitions:form.groups")}
             </label>
             <MultiSelect
@@ -366,11 +416,6 @@ export default function CompetitionForm({
               display="chip"
               className="w-full"
             />
-            <small className="text-gray-500">
-              {groups.length === 0
-                ? t("admin:competitions:statistics.noGroups")
-                : ""}
-            </small>
           </div>
 
           <div className="field-checkbox mb-4">
@@ -379,7 +424,7 @@ export default function CompetitionForm({
               checked={isVisible}
               onChange={(e) => setIsVisible(e.checked ?? false)}
             />
-            <label htmlFor="visible" className="ml-2">
+            <label htmlFor="visible" className="ml-2 font-medium">
               {t("admin:competitions:form.visible")}
             </label>
           </div>
@@ -391,7 +436,7 @@ export default function CompetitionForm({
                 checked={isFinished}
                 onChange={(e) => setIsFinished(e.checked ?? false)}
               />
-              <label htmlFor="finished" className="ml-2">
+              <label htmlFor="finished" className="ml-2 font-medium">
                 {t("admin:competitions:form.finished")}
               </label>
             </div>

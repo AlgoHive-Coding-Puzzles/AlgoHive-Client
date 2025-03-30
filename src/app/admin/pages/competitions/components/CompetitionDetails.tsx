@@ -1,22 +1,20 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 
 import { Dialog } from "primereact/dialog";
 import { TabView, TabPanel } from "primereact/tabview";
 import { Divider } from "primereact/divider";
-import { Button } from "primereact/button";
-import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
-import { Message } from "primereact/message";
-import { Tag } from "primereact/tag";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { Toast } from "primereact/toast";
 import { confirmDialog } from "primereact/confirmdialog";
 
+import CompetitionDetailsHeader from "./CompetitionDetailsHeader";
+import CompetitionStatisticsPanel from "./CompetitionStatisticsPanel";
+import ParticipantsTable from "./ParticipantsTable";
+import GroupsTable from "./GroupsTable";
 import ParticipantTries from "./ParticipantTries";
 
 import { ServiceManager } from "@/services";
-
 import { Group, User, Competition, CompetitionStatistics } from "@/models";
 
 interface CompetitionDetailsProps {
@@ -27,6 +25,12 @@ interface CompetitionDetailsProps {
   onDeleted: () => void;
 }
 
+/**
+ * CompetitionDetails - Dialog component that shows detailed information about a competition
+ *
+ * This component displays statistics, participants, and groups for a competition
+ * and provides actions to edit, toggle visibility, finish, or delete the competition.
+ */
 export default function CompetitionDetails({
   visible,
   competition,
@@ -37,6 +41,7 @@ export default function CompetitionDetails({
   const { t } = useTranslation(["common", "staffTabs"]);
   const toast = useRef<Toast>(null);
 
+  // State
   const [statistics, setStatistics] = useState<CompetitionStatistics | null>(
     null
   );
@@ -46,14 +51,19 @@ export default function CompetitionDetails({
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [triesDialogVisible, setTriesDialogVisible] = useState<boolean>(false);
 
+  /**
+   * Load competition details when the dialog becomes visible
+   */
   useEffect(() => {
     if (visible && competition) {
       loadCompetitionDetails();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible, competition]);
 
-  const loadCompetitionDetails = async () => {
+  /**
+   * Load all competition data - statistics, groups, and participants
+   */
+  const loadCompetitionDetails = useCallback(async () => {
     try {
       setLoading(true);
       const [stats, groupsData, triesData] = await Promise.all([
@@ -83,8 +93,11 @@ export default function CompetitionDetails({
     } finally {
       setLoading(false);
     }
-  };
+  }, [competition, t]);
 
+  /**
+   * Show a toast notification
+   */
   const showToast = (
     severity: "success" | "info" | "warn" | "error",
     detail: string
@@ -97,6 +110,9 @@ export default function CompetitionDetails({
     });
   };
 
+  /**
+   * Toggle competition visibility
+   */
   const handleToggleVisibility = async () => {
     try {
       await ServiceManager.competitions.updateVisibility(
@@ -107,8 +123,10 @@ export default function CompetitionDetails({
         "success",
         t("admin:competitions:messages.toggleVisibilitySuccess")
       );
+
       // Update competition in parent component
       competition.show = !competition.show;
+
       // Reload competition details to refresh the view
       await loadCompetitionDetails();
     } catch (error) {
@@ -120,12 +138,17 @@ export default function CompetitionDetails({
     }
   };
 
+  /**
+   * Toggle finished status of the competition
+   */
   const handleFinishCompetition = async () => {
     try {
       await ServiceManager.competitions.finishCompetition(competition.id);
       showToast("success", t("admin:competitions:messages.finishSuccess"));
+
       // Update competition in parent component
       competition.finished = !competition.finished;
+
       // Reload competition details to refresh the view
       await loadCompetitionDetails();
     } catch (error) {
@@ -134,6 +157,9 @@ export default function CompetitionDetails({
     }
   };
 
+  /**
+   * Show delete confirmation dialog
+   */
   const confirmDeleteCompetition = () => {
     confirmDialog({
       message: t("admin:competitions:confirmDelete"),
@@ -154,6 +180,9 @@ export default function CompetitionDetails({
     });
   };
 
+  /**
+   * Opens the participant tries dialog for a specific user
+   */
   const viewParticipantTries = (user: User) => {
     setSelectedUser(user);
     setTriesDialogVisible(true);
@@ -170,6 +199,7 @@ export default function CompetitionDetails({
         style={{ width: "70vw", maxWidth: "1200px" }}
         maximizable
         className="competition-details-dialog"
+        blockScroll
       >
         {loading ? (
           <div className="flex flex-col items-center justify-center p-6">
@@ -178,76 +208,14 @@ export default function CompetitionDetails({
           </div>
         ) : (
           <>
-            <div className="competition-header mb-4">
-              <div className="flex justify-between items-start">
-                <div>
-                  <h2 className="text-2xl font-bold mb-2">
-                    {competition.title}
-                  </h2>
-                  <div className="flex gap-2">
-                    {competition.finished ? (
-                      <Tag
-                        severity="warning"
-                        value={t("admin:competitions:status.finished")}
-                      />
-                    ) : (
-                      <Tag
-                        severity="success"
-                        value={t("admin:competitions:status.active")}
-                      />
-                    )}
-
-                    {competition.show ? (
-                      <Tag
-                        severity="info"
-                        value={t("admin:competitions:status.visible")}
-                      />
-                    ) : (
-                      <Tag
-                        severity="danger"
-                        value={t("admin:competitions:status.hidden")}
-                      />
-                    )}
-                  </div>
-                </div>
-
-                <div className="flex gap-2">
-                  <Button
-                    icon="pi pi-pencil"
-                    label={t("common:actions.edit")}
-                    className="p-button-outlined p-button-success"
-                    onClick={onEdit}
-                  />
-                  <Button
-                    icon="pi pi-flag-fill"
-                    label={
-                      competition.finished
-                        ? t("admin:competitions:actions.unfinish")
-                        : t("admin:competitions:actions.finish")
-                    }
-                    className="p-button-outlined p-button-warning"
-                    onClick={handleFinishCompetition}
-                  />
-
-                  <Button
-                    icon={competition.show ? "pi pi-eye-slash" : "pi pi-eye"}
-                    label={
-                      competition.show
-                        ? t("admin:competitions:actions.hide")
-                        : t("admin:competitions:actions.show")
-                    }
-                    className="p-button-outlined p-button-secondary"
-                    onClick={handleToggleVisibility}
-                  />
-                  <Button
-                    icon="pi pi-trash"
-                    label={t("common:actions.delete")}
-                    className="p-button-outlined p-button-danger"
-                    onClick={confirmDeleteCompetition}
-                  />
-                </div>
-              </div>
-            </div>
+            {/* Competition header with actions */}
+            <CompetitionDetailsHeader
+              competition={competition}
+              onEdit={onEdit}
+              onToggleVisibility={handleToggleVisibility}
+              onFinishCompetition={handleFinishCompetition}
+              onDelete={confirmDeleteCompetition}
+            />
 
             <div className="competition-description mb-4">
               <p className="text-gray-600">{competition.description}</p>
@@ -257,116 +225,24 @@ export default function CompetitionDetails({
 
             {statistics && (
               <TabView>
+                {/* Statistics Tab */}
                 <TabPanel header={t("admin:competitions:statistics.title")}>
-                  <div className="stats-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-4">
-                    <div className="stat-card bg-blue-50 rounded-lg p-4 shadow-sm">
-                      <div className="text-lg font-semibold text-blue-800">
-                        {t("admin:competitions:statistics.totalUsers")}
-                      </div>
-                      <div className="text-3xl text-black">
-                        {statistics.total_users}
-                      </div>
-                    </div>
-                    <div className="stat-card bg-green-50 rounded-lg p-4 shadow-sm">
-                      <div className="text-lg font-semibold text-green-800">
-                        {t("admin:competitions:statistics.activeUsers")}
-                      </div>
-                      <div className="text-3xl text-black">
-                        {statistics.active_users}
-                      </div>
-                    </div>
-                    <div className="stat-card bg-purple-50 rounded-lg p-4 shadow-sm">
-                      <div className="text-lg font-semibold text-purple-800">
-                        {t("admin:competitions:statistics.averageScore")}
-                      </div>
-                      <div className="text-3xl text-black">
-                        {statistics.average_score.toFixed(1)}
-                      </div>
-                    </div>
-                    <div className="stat-card bg-red-50 rounded-lg p-4 shadow-sm">
-                      <div className="text-lg font-semibold text-red-800">
-                        {t("admin:competitions:statistics.highestScore")}
-                      </div>
-                      <div className="text-3xl text-black">
-                        {statistics.highest_score.toFixed(1)}
-                      </div>
-                    </div>
-                  </div>
+                  <CompetitionStatisticsPanel statistics={statistics} />
                 </TabPanel>
 
+                {/* Participants Tab */}
                 <TabPanel
                   header={t("admin:competitions:statistics.participants")}
                 >
-                  {participants.length === 0 ? (
-                    <Message
-                      severity="info"
-                      text={t("admin:competitions:statistics.noParticipants")}
-                    />
-                  ) : (
-                    <DataTable
-                      value={participants}
-                      paginator
-                      rows={10}
-                      rowsPerPageOptions={[5, 10, 25]}
-                      tableStyle={{ minWidth: "50rem" }}
-                    >
-                      <Column field="id" header="ID" style={{ width: "20%" }} />
-                      <Column
-                        field="first_name"
-                        header={t("common:fields.firstName")}
-                        style={{ width: "25%" }}
-                      />
-                      <Column
-                        field="lastn_ame"
-                        header={t("common:fields.lastName")}
-                        style={{ width: "25%" }}
-                      />
-                      <Column
-                        field="email"
-                        header={t("common:fields.email")}
-                        style={{ width: "25%" }}
-                      />
-                      <Column
-                        body={(rowData) => (
-                          <Button
-                            icon="pi pi-list"
-                            label={t("admin:competitions:tries.viewTries")}
-                            className="p-button-sm p-button-outlined"
-                            onClick={() => viewParticipantTries(rowData)}
-                          />
-                        )}
-                        style={{ width: "15%" }}
-                      />
-                    </DataTable>
-                  )}
+                  <ParticipantsTable
+                    participants={participants}
+                    onViewTries={viewParticipantTries}
+                  />
                 </TabPanel>
 
+                {/* Groups Tab */}
                 <TabPanel header={t("admin:competitions:statistics.groups")}>
-                  {groups.length === 0 ? (
-                    <Message
-                      severity="info"
-                      text={t("admin:competitions:statistics.noGroups")}
-                    />
-                  ) : (
-                    <DataTable
-                      value={groups}
-                      paginator
-                      rows={10}
-                      rowsPerPageOptions={[5, 10, 25]}
-                      tableStyle={{ minWidth: "50rem" }}
-                    >
-                      <Column
-                        field="name"
-                        header={t("common:fields.name")}
-                        style={{ width: "40%" }}
-                      />
-                      <Column
-                        field="description"
-                        header={t("common:fields.description")}
-                        style={{ width: "40%" }}
-                      />
-                    </DataTable>
-                  )}
+                  <GroupsTable groups={groups} />
                 </TabPanel>
               </TabView>
             )}
@@ -374,6 +250,7 @@ export default function CompetitionDetails({
         )}
       </Dialog>
 
+      {/* Participant Tries Dialog */}
       {selectedUser && (
         <ParticipantTries
           visible={triesDialogVisible}

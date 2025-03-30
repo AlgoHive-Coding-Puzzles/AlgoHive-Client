@@ -1,76 +1,87 @@
-import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
-
-import { Tag } from "primereact/tag";
-import { Badge } from "primereact/badge";
 import { Tooltip } from "primereact/tooltip";
 
 import UsersListCompetitions from "@shared/components/UsersListCompetitions";
 import AnimatedContainer from "@shared/components/AnimatedContainer";
 import CirclePattern from "@shared/components/CirclePattern";
-import OrangeBlackButton from "@shared/components/ui/button";
 import Navbar from "@shared/components/Navbar";
 import Footer from "@shared/components/Footer";
 
+import CompetitionHeader from "./components/CompetitionHeader";
+import PuzzleGrid from "./components/PuzzleGrid";
+
 import { ServiceManager } from "@services/index";
-
-import {
-  getPuzzleDifficulty,
-  getPuzzleDifficultySeverity,
-  isPartDone,
-  isPuzzleUnlocked,
-  prettyPrintTitle,
-} from "@utils/puzzles";
-
 import { useAuth } from "@contexts/AuthContext";
 
 import { Competition, Theme, Try } from "@/models";
 
 import "./CompetitionPage.css";
 
+/**
+ * CompetitionPage - Main page for viewing competition details and puzzles
+ *
+ * This component manages the state and data fetching for competitions,
+ * with puzzle selection and user progress tracking
+ */
 export default function CompetitionPage() {
   const { user } = useAuth();
-  const { t } = useTranslation(["common", "puzzles"]);
-
   const { competition_id } = useParams();
   const competitionId = competition_id || "";
 
+  // State management
   const [selectedCompetition, setSelectedCompetition] =
     useState<Competition | null>(null);
   const [theme, setTheme] = useState<Theme | null>(null);
   const [finishedTries, setFinishedTries] = useState<Try[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  useEffect(() => {
-    const fetchCompetitionFromId = async () => {
-      if (!competitionId || competitionId.length == 0) return;
+  /**
+   * Fetch competition data by ID
+   */
+  const fetchCompetition = useCallback(async () => {
+    if (!competitionId) {
+      setLoading(false);
+      return;
+    }
 
+    try {
+      setLoading(true);
       const competition = await ServiceManager.competitions.fetchByID(
         competitionId
       );
-      if (!competition) return;
-      setSelectedCompetition(competition);
-    };
-
-    fetchCompetitionFromId();
+      setSelectedCompetition(competition || null);
+    } catch (error) {
+      console.error("Error fetching competition:", error);
+    } finally {
+      setLoading(false);
+    }
   }, [competitionId]);
 
-  useEffect(() => {
-    const getCompetitionDetails = async () => {
-      if (!selectedCompetition || !user) return;
+  /**
+   * Fetch competition theme and user tries
+   */
+  const fetchCompetitionDetails = useCallback(async () => {
+    if (!selectedCompetition || !user) return;
 
-      const themeDetails =
-        await ServiceManager.catalogs.fetchCatalogThemeDetails(
+    try {
+      setLoading(true);
+
+      // Fetch theme details and user tries in parallel
+      const [themeDetails, triesDetails] = await Promise.all([
+        ServiceManager.catalogs.fetchCatalogThemeDetails(
           selectedCompetition.catalog_id,
           selectedCompetition.catalog_theme
-        );
+        ),
+        ServiceManager.competitions.fetchTriesByUserID(
+          selectedCompetition.id,
+          user.id
+        ),
+      ]);
+
       setTheme(themeDetails);
 
-      const triesDetails = await ServiceManager.competitions.fetchTriesByUserID(
-        selectedCompetition.id,
-        user.id
-      );
-
+      // Sort and filter tries
       const sortedAndFilteredTries = triesDetails
         .sort(
           (a, b) =>
@@ -79,14 +90,28 @@ export default function CompetitionPage() {
         .filter((tryItem) => tryItem.end_time);
 
       setFinishedTries(sortedAndFilteredTries);
-    };
-
-    getCompetitionDetails();
+    } catch (error) {
+      console.error("Error fetching competition details:", error);
+    } finally {
+      setLoading(false);
+    }
   }, [selectedCompetition, user]);
+
+  // Initial competition fetch
+  useEffect(() => {
+    fetchCompetition();
+  }, [fetchCompetition]);
+
+  // Fetch theme and tries when competition or user changes
+  useEffect(() => {
+    if (selectedCompetition && user) {
+      fetchCompetitionDetails();
+    }
+  }, [selectedCompetition, user, fetchCompetitionDetails]);
 
   return (
     <>
-      <Tooltip target={".unlocked-card"} />
+      <Tooltip target=".unlocked-card" />
       <section>
         <AnimatedContainer
           visibleClass="!slide-in-from-top-0"
@@ -101,133 +126,34 @@ export default function CompetitionPage() {
             </div>
             <div className="relative z-20">
               <Navbar />
-              {selectedCompetition && (
+
+              {selectedCompetition ? (
                 <>
-                  <div className="flex flex-col items-center gap-4 mt-20">
-                    <h1 className="max-w-[calc(100%-3rem)] lg:max-w-5xl mx-auto title lg:text-6xl text-4xl text-center font-bold">
-                      {selectedCompetition.title}
-                    </h1>
-                  </div>
+                  {/* Competition header with title and navigation */}
+                  <CompetitionHeader competition={selectedCompetition} />
 
-                  <div className="w-32 h-1 bg-orange-500 mx-auto mt-4" />
-
-                  <p className="text-center text-2xl text-surface-950 dark:text-surface-0 font-semibold mt-10">
-                    {selectedCompetition.description}
-                  </p>
-
-                  <p className="text-center text-xl text-surface-950 dark:text-surface-0 font-semibold mt-10">
-                    {t("puzzles:selectPuzzle")}
-                  </p>
-
-                  <div className="w-full flex flex-col sm:flex-row justify-center mt-10 gap-6">
-                    <OrangeBlackButton
-                      onClickAction={() => {
-                        window.location.href = "/competitions";
-                      }}
-                      text={t("puzzles:backToCompetitions")}
-                      icon="pi-arrow-left"
-                    />
-                    <OrangeBlackButton
-                      onClickAction={() => {
-                        window.location.href = `/competition/${selectedCompetition.id}/leaderboard`;
-                      }}
-                      text={t("puzzles:leaderboard")}
-                      icon="pi-users"
-                    />
-                  </div>
+                  {/* Puzzle grid */}
                   <div className={`lg:mt-28 mt-24`}>
-                    {theme && theme.puzzles && (
-                      <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6">
-                        {theme.puzzles.map((item, index) => (
-                          <AnimatedContainer
-                            key={index}
-                            delay={index * 200}
-                            className={
-                              `quest-card p-8 border-0 dark:border border-white/12 shadow-stroke dark:shadow-none rounded-4xl bg-[#313131] ` +
-                              (isPuzzleUnlocked(index, finishedTries.length)
-                                ? "unlocked-card"
-                                : "grayscale-card")
-                            }
-                            data-pr-tooltip={t("puzzles:clickToAccess")}
-                            data-pr-position="top"
-                            onClick={() => {
-                              if (
-                                isPuzzleUnlocked(index, finishedTries.length)
-                              ) {
-                                window.location.href = `/competition/${
-                                  selectedCompetition.id
-                                }/puzzle/${index + 1}`;
-                              }
-                            }}
-                          >
-                            <Badge
-                              value={index + 1}
-                              className="absolute top-4 right-4"
-                            />
-                            <div className="icon-box ml-0">
-                              <i className="pi pi-folder" />
-                            </div>
-                            <div className="mt-2">
-                              <Tag
-                                value={t(
-                                  "puzzles:difficulty." +
-                                    getPuzzleDifficulty(item.difficulty)
-                                )}
-                                // @ts-expect-error pls
-                                severity={getPuzzleDifficultySeverity(
-                                  item.difficulty
-                                )}
-                              />
-
-                              {/** Two tags in one line */}
-                              <div className="flex flex-row gap-2 mt-2">
-                                <Tag
-                                  value="Part One"
-                                  className="flex-1"
-                                  style={{
-                                    backgroundColor: isPartDone(
-                                      index,
-                                      1,
-                                      finishedTries.length
-                                    )
-                                      ? "#d8d76d"
-                                      : "#9b9ac8",
-                                  }}
-                                />
-                                <Tag
-                                  value="Part Two"
-                                  className="flex-1"
-                                  style={{
-                                    backgroundColor: isPartDone(
-                                      index,
-                                      2,
-                                      finishedTries.length
-                                    )
-                                      ? "#d8d76d"
-                                      : "#9b9ac8",
-                                  }}
-                                />
-                              </div>
-                            </div>
-                            <h5 className="text-2xl text-surface-950 dark:text-surface-0 font-semibold mt-10">
-                              {prettyPrintTitle(item.name)}
-                            </h5>
-                          </AnimatedContainer>
-                        ))}
-                      </div>
+                    {theme && (
+                      <PuzzleGrid
+                        theme={theme}
+                        finishedTries={finishedTries}
+                        competitionId={selectedCompetition.id}
+                      />
                     )}
                   </div>
                 </>
+              ) : (
+                /* If no competition is selected, show the competitions list */
+                !loading && (
+                  <div className="mt-16">
+                    <UsersListCompetitions
+                      setCompetition={setSelectedCompetition}
+                    />
+                  </div>
+                )
               )}
             </div>
-
-            {!selectedCompetition && (
-              <div className="mt-16">
-                <UsersListCompetitions
-                  setCompetition={setSelectedCompetition}
-                />
-              </div>
-            )}
           </div>
         </AnimatedContainer>
 
