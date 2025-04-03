@@ -15,6 +15,8 @@ export interface Theme {
 export interface Puzzle {
   id: string;
   name: string;
+  title: string;
+  index: number;
   author: string;
   difficulty: string;
   language: string;
@@ -24,4 +26,5 @@ export interface Puzzle {
   obscure: string;
   compressedSize: number;
   uncompressedSize: number;
+  hivecraftVersion: string;
 }

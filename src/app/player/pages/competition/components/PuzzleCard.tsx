@@ -96,7 +96,7 @@ export default function PuzzleCard({
       </div>
 
       <h5 className="text-2xl text-surface-950 dark:text-surface-0 font-semibold mt-10">
-        {prettyPrintTitle(puzzle.name)}
+        {prettyPrintTitle(puzzle.title)}
       </h5>
     </AnimatedContainer>
   );

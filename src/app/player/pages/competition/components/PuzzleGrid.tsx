@@ -23,16 +23,18 @@ export default function PuzzleGrid({
 
   return (
     <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6">
-      {theme.puzzles.map((puzzle, index) => (
-        <PuzzleCard
-          key={index}
-          index={index}
-          puzzle={puzzle}
-          finishedTries={finishedTries}
-          competitionId={competitionId}
-          delay={index * 200}
-        />
-      ))}
+      {theme.puzzles
+        .sort((a, b) => a.index - b.index)
+        .map((puzzle, index) => (
+          <PuzzleCard
+            key={index}
+            index={index}
+            puzzle={puzzle}
+            finishedTries={finishedTries}
+            competitionId={competitionId}
+            delay={index * 200}
+          />
+        ))}
     </div>
   );
 }
