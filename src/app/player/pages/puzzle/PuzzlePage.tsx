@@ -58,6 +58,7 @@ export default function PuzzlePage() {
 
   // Component state
   const [competition, setCompetition] = useState<Competition | null>(null);
+  const [puzzleMaxIndex, setPuzzleMaxIndex] = useState<number>(0);
   const [puzzle, setPuzzle] = useState<Puzzle | null>(null);
   const [tries, setTries] = useState<Try[]>([]);
   const [refreshTrigger, setRefreshTrigger] = useState("");
@@ -104,21 +105,29 @@ export default function PuzzlePage() {
       const competitionData = await ServiceManager.competitions.fetchByID(
         competitionId
       );
+
       if (!competitionData) {
         setError("Competition not found");
         return;
       }
 
-      // Check user permission for this puzzle
-      const response = await ServiceManager.competitions.checkPuzzlePermission(
-        competitionData.id,
-        questNumber
-      );
+      const [permissionResponse, themeDetailsResponse] = await Promise.all([
+        ServiceManager.competitions.checkPuzzlePermission(
+          competitionData.id,
+          questNumber
+        ),
+        ServiceManager.catalogs.fetchCatalogThemeDetails(
+          competitionData.catalog_id,
+          competitionData.catalog_theme
+        ),
+      ]);
 
-      if (!response.has_permission) {
+      if (!permissionResponse.has_permission) {
         window.location.href = `/competitions/${competitionId}`;
         return;
       }
+
+      setPuzzleMaxIndex(themeDetailsResponse.puzzles.length - 1);
 
       // Fetch puzzle details
       const puzzleData = await ServiceManager.catalogs.fetchPuzzleDetails(
@@ -468,23 +477,25 @@ export default function PuzzlePage() {
                 text={t("puzzles:backToCompetition")}
               />
 
-              {hasCompletedFirstStep && hasCompletedSecondStep && (
-                <button
-                  className="p-[3px] relative"
-                  onClick={navigateToNextPuzzle}
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg" />
-                  <div className="px-8 py-2 bg-black rounded-[6px] relative group transition duration-200 text-white hover:bg-transparent">
-                    <div className="flex items-center gap-2">
-                      <span className="relative z-10">
-                        {t("puzzles:nextPuzzle")}
-                      </span>
-                      <i className="pi pi-arrow-right" />
+              {hasCompletedFirstStep &&
+                hasCompletedSecondStep &&
+                questNumber < puzzleMaxIndex && (
+                  <button
+                    className="p-[3px] relative"
+                    onClick={navigateToNextPuzzle}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg" />
+                    <div className="px-8 py-2 bg-black rounded-[6px] relative group transition duration-200 text-white hover:bg-transparent">
+                      <div className="flex items-center gap-2">
+                        <span className="relative z-10">
+                          {t("puzzles:nextPuzzle")}
+                        </span>
+                        <i className="pi pi-arrow-right" />
+                      </div>
+                      <span className="absolute inset-0 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg blur opacity-0 group-hover:opacity-100 transition duration-200" />
                     </div>
-                    <span className="absolute inset-0 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg blur opacity-0 group-hover:opacity-100 transition duration-200" />
-                  </div>
-                </button>
-              )}
+                  </button>
+                )}
             </div>
           </div>
         </AnimatedContainer>
