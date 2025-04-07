@@ -30,6 +30,7 @@
     "completionRate": "Taux d'achèvement",
     "averageScore": "Score moyen",
     "highestScore": "Score le plus élevé",
+    "userEngagementRate": "Taux d'engagement des utilisateurs",
     "participants": "Participants",
     "groups": "Groupes participants",
     "noParticipants": "Aucun participant actif trouvé",

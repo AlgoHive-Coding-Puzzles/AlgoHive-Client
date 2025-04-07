@@ -30,6 +30,7 @@
     "completionRate": "Completion Rate",
     "averageScore": "Average Score",
     "highestScore": "Highest Score",
+    "userEngagementRate": "User Engagement Rate",
     "participants": "Participants",
     "groups": "Participating Groups",
     "noParticipants": "No active participants found",
