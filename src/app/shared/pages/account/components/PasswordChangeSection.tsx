@@ -30,21 +30,21 @@ const PasswordChangeSection = ({
     <>
       <div className="py-10 border-b border-white/12 flex flex-col gap-10">
         <FormField
-          label={t("common:fields.changePassword")}
+          label={t("common:fields.currentPassword")}
           value={oldPassword}
           onChange={(e) => setOldPassword(e.target.value)}
           type="password"
           placeholder="*******"
         />
         <FormField
-          label={t("common:fields.confirmPassword")}
+          label={t("common:fields.changePassword")}
           value={newPassword}
           onChange={(e) => setNewPassword(e.target.value)}
           type="password"
           placeholder="*******"
         />
         <FormField
-          label={t("common:fields.currentPassword")}
+          label={t("common:fields.confirmPassword")}
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           type="password"
