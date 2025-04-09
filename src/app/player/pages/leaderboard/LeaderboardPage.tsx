@@ -207,6 +207,10 @@ export default function LeaderboardPage() {
     setUserScores(sortedScores);
   };
 
+  const prettyPrintScore = (score: number) => {
+    return score % 1 === 0 ? score.toFixed(0) : score.toFixed(1);
+  };
+
   const toggleFullscreen = async () => {
     if (!document.fullscreenElement) {
       if (leaderboardRef.current?.requestFullscreen) {
@@ -462,7 +466,7 @@ export default function LeaderboardPage() {
                           isFullscreenView ? "text-2xl" : ""
                         }`}
                       >
-                        {user.total_score}
+                        {prettyPrintScore(user.total_score)}
                       </span>
                     </td>
                     <td
