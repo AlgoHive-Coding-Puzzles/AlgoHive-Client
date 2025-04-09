@@ -75,7 +75,7 @@ export default function PuzzleCard({
         {/* Part completion status */}
         <div className="flex flex-row gap-2 mt-2">
           <Tag
-            value="Part One"
+            value={t("puzzles:partOne")}
             className="flex-1"
             style={{
               backgroundColor: isPartDone(index, 1, finishedTries.length)
@@ -84,7 +84,7 @@ export default function PuzzleCard({
             }}
           />
           <Tag
-            value="Part Two"
+            value={t("puzzles:partTwo")}
             className="flex-1"
             style={{
               backgroundColor: isPartDone(index, 2, finishedTries.length)

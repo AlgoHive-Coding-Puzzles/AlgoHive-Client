@@ -1,6 +1,8 @@
 {
   "clickToAccess": "Click to access the puzzle",
   "notUnlocked": "This puzzle is not unlocked yet",
+  "partOne": "Part One",
+  "partTwo": "Part Two",
   "selectPuzzle": "Select a puzzle to start solving",
   "backToCompetition": "Back to competition",
   "backToCompetitions": "Back to competition list",

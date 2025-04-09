@@ -1,6 +1,8 @@
 {
   "clickToAccess": "Cliquez pour accéder à l'énigme",
   "notUnlocked": "Cette énigme n'est pas encore déverrouillée",
+  "partOne": "Partie 1",
+  "partTwo": "Partie 2",
   "selectPuzzle": "Sélectionnez une énigme pour commencer",
   "backToCompetition": "Retour à la compétition",
   "backToCompetitions": "Retour aux compétitions",
