@@ -59,7 +59,7 @@ const UsersListCompetitions: React.FC<UsersListCompetitionsProps> = ({
             <div className="flex flex-col items-center justify-center mt-12 md:mt-24 w-full">
               <MeteorsCard>
                 <h1 className="relative z-50 mb-4 text-xl font-bold text-white">
-                  {t("navigation:noCompetitions")}
+                  {t("competitions:noCompetitions")}
                 </h1>
 
                 {!user && (

@@ -42,11 +42,11 @@
     },
     "question3": {
       "title": "Puis-je obtenir une solution aux énigmes si je suis bloqué ?",
-      "desc": "Non, les énigmes sont conçues pour être résolues de manière indépendante. Cependant, n'hésitez pas à demander des indices ou des conseils à la communauté."
+      "desc": "Non, les énigmes sont conçues pour être résolues de manière indépendante. Cependant, n'hésitez pas à demander des indices ou à essayer vos algorithmes sur les exemples présents dans l'énoncé. Si votre code ne fonctionne pas pour l'exemple, il est probable qu'il ne fonctionne pas pour votre input."
     },
     "question4": {
       "title": "Comment participer aux compétitions ?",
-      "desc": "Pour participer aux compétitions, vous devez vous connecter à votre compte et sélectionner la compétition à laquelle vous souhaitez participer. Une fois que vous êtes dans, vous pouvez commencer à résoudre des énigmes et à rivaliser avec les autres."
+      "desc": "Pour participer aux compétitions, vous devez vous connecter à votre compte et sélectionner la compétition à laquelle vous souhaitez participer. Une fois que vous êtes sur la bonne page, vous pouvez commencer à résoudre des énigmes et à rivaliser avec les autres. Pour répondre aux énigmes, cliquez sur l'énigme en cours et lisez attentivement l'énoncé, à partir de là, récupérez les données d'entrée qui vous serviront de support d'input pour votre code. Chaque énigme se décompose en deux parties: Vous devez donc finir les deux parties avant de débloquer la prochaine énigme."
     },
     "question5": {
       "title": "Puis-je utiliser l'IA pour m'aider à résoudre les énigmes ?",

@@ -42,11 +42,11 @@
     },
     "question3": {
       "title": "Can I get a solution to the puzzles if I'm stuck ?",
-      "desc": "No, the puzzles are designed to be solved independently. However, feel free to ask for hints or tips from the community."
+      "desc": "No, the puzzles are designed to be solved independently. However, feel free to ask for hints or tips. Also try your algorithms on the examples provided in the statement. If your code doesn't work for the example, it's likely that it won't work for your input either."
     },
     "question4": {
       "title": "How do I participate in competitions?",
-      "desc": "To participate in competitions, you need to log in to your account and select the competition you want to join. Once you're in, you can start solving puzzles and competing with others."
+      "desc": "To participate in competitions, you need to log in to your account and select the competition you want to join. Once you're in, you can start solving puzzles and competing with others. Once you are on the right page, you can start solving puzzles and competing with others. To answer the puzzles, click on the puzzle in progress and read the statement carefully. From there, retrieve the input data that will serve as input for your code. Each puzzle is divided into two parts: you must complete both parts before unlocking the next puzzle."
     },
     "question5": {
       "title": "Can I use AI to help me solve puzzles?",

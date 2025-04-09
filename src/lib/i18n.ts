@@ -24,6 +24,8 @@ import competitionsEn from "../locales/en/competitions.json";
 import competitionsFr from "../locales/fr/competitions.json";
 import puzzlesEn from "../locales/en/puzzles.json";
 import puzzlesFr from "../locales/fr/puzzles.json";
+import accountEn from "../locales/en/account.json";
+import accountFr from "../locales/fr/account.json";
 import adminDashboardEn from "../locales/en/admin/dashboard.json";
 import adminDashboardFr from "../locales/fr/admin/dashboard.json";
 import adminCatalogsEn from "../locales/en/admin/catalogs.json";
@@ -52,6 +54,7 @@ const RESOURCES = {
     howToPlay: howToPlayEn,
     competitions: competitionsEn,
     puzzles: puzzlesEn,
+    account: accountEn,
     admin: {
       dashboard: adminDashboardEn,
       catalogs: adminCatalogsEn,
@@ -74,6 +77,7 @@ const RESOURCES = {
     howToPlay: howToPlayFr,
     competitions: competitionsFr,
     puzzles: puzzlesFr,
+    account: accountFr,
     admin: {
       dashboard: adminDashboardFr,
       catalogs: adminCatalogsFr,

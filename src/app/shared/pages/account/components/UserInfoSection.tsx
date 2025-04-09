@@ -1,14 +1,21 @@
-import { useAuth } from "@/lib/contexts/AuthContext";
+import { RefObject } from "react";
 import { useTranslation } from "react-i18next";
+
+import { Toast } from "primereact/toast";
+
 import FormField from "./FormField";
+
+import { useAuth } from "@/lib/contexts/AuthContext";
+
 import { Group, User } from "@/models";
 
 interface UserInfoSectionProps {
   user: User;
   groups: Group[];
+  toast: RefObject<Toast | null>;
 }
 
-const UserInfoSection = ({ user, groups }: UserInfoSectionProps) => {
+const UserInfoSection = ({ user, groups, toast }: UserInfoSectionProps) => {
   const { t } = useTranslation();
   const { logout } = useAuth();
 
@@ -17,6 +24,20 @@ const UserInfoSection = ({ user, groups }: UserInfoSectionProps) => {
       await logout();
     } catch (error) {
       console.error("Logout failed:", error);
+    }
+  };
+
+  const handleGetUserId = async () => {
+    try {
+      await navigator.clipboard.writeText(user.id);
+      toast.current?.show({
+        severity: "success",
+        summary: t("common:states.success"),
+        detail: t("account:userIdCopied"),
+        life: 3000,
+      });
+    } catch (error) {
+      console.error("Failed to copy user ID:", error);
     }
   };
 
@@ -34,6 +55,12 @@ const UserInfoSection = ({ user, groups }: UserInfoSectionProps) => {
             onClick={handleLogout}
           >
             {t("common:actions.logout")}
+          </button>
+          <button
+            className="button-regular px-5 py-3 min-w-40 bg-amber-700 hover:bg-amber-600 text-surface-0 font-medium rounded-2xl ml-2"
+            onClick={handleGetUserId}
+          >
+            {t("account:getUserId")}
           </button>
         </div>
       </div>

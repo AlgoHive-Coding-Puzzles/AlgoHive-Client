@@ -109,7 +109,11 @@ const AccountPage = () => {
           <div className="h-full relative">
             <Navbar className="relative" />
             <div className="p-6 mt-10 md:p-12 rounded-2xl lg:rounded-4xl bg-white/5 backdrop-blur-[48px] md:max-w-[calc(100%-3rem)] lg:max-w-none mx-auto shadow-[0px_2px_5px_0px_rgba(255,255,255,0.06)_inset,0px_12px_20px_0px_rgba(0,0,0,0.06)]">
-              <UserInfoSection user={user as User} groups={groups} />
+              <UserInfoSection
+                user={user as User}
+                groups={groups}
+                toast={toast}
+              />
 
               <PasswordChangeSection
                 oldPassword={passwordData.oldPassword}
