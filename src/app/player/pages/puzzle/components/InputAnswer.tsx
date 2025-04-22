@@ -26,6 +26,8 @@ interface InputAnswerProps {
   step: 1 | 2;
   setRefresh: (refreshValue: string) => void;
   disabled?: boolean;
+  is_under_cooldown?: boolean;
+  cooldown_remaining_seconds?: number;
 }
 
 /**
@@ -39,17 +41,20 @@ function InputAnswer({
   step,
   setRefresh,
   disabled,
+  cooldown_remaining_seconds,
 }: InputAnswerProps) {
   const isMobile = useIsMobile();
   const [solution, setSolution] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
-  const [cooldown, setCooldown] = useState<number | undefined>();
+  const [cooldown, setCooldown] = useState<number | undefined>(
+    cooldown_remaining_seconds
+  );
   const toast = useRef<Toast>(null);
   const { t } = useTranslation(["common", "puzzles"]);
 
   // Update cooldown timer with cleanup
   useEffect(() => {
-    if (!cooldown) return;
+    if (!cooldown || cooldown == 0) return;
 
     const timer = setInterval(() => {
       setCooldown((prev) => {
@@ -66,6 +71,10 @@ function InputAnswer({
   const handleChange = useCallback((e: InputNumberChangeEvent) => {
     setSolution(e.value as number);
   }, []);
+
+  const userUnderCooldown = () => {
+    return cooldown !== undefined && cooldown > 0;
+  };
 
   // Handle form submission with proper error handling
   const handleSubmit = useCallback(async () => {
@@ -90,14 +99,20 @@ function InputAnswer({
         step
       );
 
-      // Handle rate limiting
-      if (response.error && response.wait_time_seconds) {
+      console.log("Response from server:", response);
+
+      const didUserJustHitCooldown =
+        response.cooldown_remaining_seconds &&
+        response.cooldown_remaining_seconds > 0;
+      const wasUserUnderCooldown = cooldown && cooldown > 0;
+
+      // Handle rate limiting, if we hit an error or that we already had a cooldown and we are hitting it again
+      if (response.error || (didUserJustHitCooldown && wasUserUnderCooldown)) {
         console.log(
           "Rate limit exceeded. Please wait:",
-          response.wait_time_seconds
+          response.cooldown_remaining_seconds
         );
 
-        setCooldown(response.wait_time_seconds);
         toast.current?.show({
           severity: "warn",
           summary: t("puzzles:input.rateLimited"),
@@ -120,13 +135,30 @@ function InputAnswer({
           setRefresh(Date.now().toString());
         }, 1000);
       } else {
-        toast.current?.show({
-          severity: "warn",
-          summary: t("puzzles:input.incorrect"),
-          detail: t("puzzles:input.tryAgain"),
-          life: 3000,
-        });
+        // If we swapped from notUnderCooldown to underCooldown, we need tweak the toast message
+        if (
+          didUserJustHitCooldown &&
+          !wasUserUnderCooldown &&
+          response.cooldown_remaining_seconds
+        ) {
+          toast.current?.show({
+            severity: "warn",
+            summary: t("puzzles:input.incorrectRateLimit"),
+            detail: t("puzzles:input.incorrectTriggerRateLimit"),
+            life: 3000,
+          });
+        } else {
+          toast.current?.show({
+            severity: "warn",
+            summary: t("puzzles:input.incorrect"),
+            detail: t("puzzles:input.tryAgain"),
+            life: 3000,
+          });
+        }
       }
+
+      if (response.is_under_cooldown)
+        setCooldown(response.cooldown_remaining_seconds);
     } catch (error) {
       // Improved type checking for error handling
       const axiosError = error as {
@@ -222,10 +254,10 @@ function InputAnswer({
           aria-label={t("puzzles:input.submit")}
         />
       </div>
-      {cooldown && (
+      {userUnderCooldown() && (
         <div className="text-yellow-500 mt-2">
           {t("puzzles:input.cooldownMessage", {
-            time: getSecondsToPretty(cooldown),
+            time: getSecondsToPretty(cooldown as number),
           })}
         </div>
       )}

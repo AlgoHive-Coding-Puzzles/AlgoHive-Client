@@ -63,6 +63,7 @@ export default function PuzzlePage() {
   const [tries, setTries] = useState<Try[]>([]);
   const [refreshTrigger, setRefreshTrigger] = useState("");
   const [loading, setLoading] = useState(true);
+  const [cooldown, setCooldown] = useState<number | undefined>(undefined);
   const [inputRequesting, setInputRequesting] = useState(false);
   const [pollingForTry, setPollingForTry] = useState(false);
   const pollingTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -143,11 +144,15 @@ export default function PuzzlePage() {
       // Fetch tries if user is authenticated
       let triesData: Try[] = [];
       if (user) {
-        triesData = await ServiceManager.competitions.fetchPuzzleTries(
-          competitionData.id,
-          puzzleData.id,
-          questNumber
-        );
+        const puzzleTriesData =
+          await ServiceManager.competitions.fetchPuzzleTries(
+            competitionData.id,
+            puzzleData.id,
+            questNumber
+          );
+
+        triesData = puzzleTriesData.tries || [];
+        setCooldown(puzzleTriesData.cooldown_remaining_seconds);
       }
 
       // Sort tries by start time
@@ -230,11 +235,15 @@ export default function PuzzlePage() {
 
       try {
         // Fetch latest tries
-        const triesData = await ServiceManager.competitions.fetchPuzzleTries(
-          competitionId,
-          puzzle.id,
-          questNumber
-        );
+        const puzzleTriesData =
+          await ServiceManager.competitions.fetchPuzzleTries(
+            competitionId,
+            puzzle.id,
+            questNumber
+          );
+
+        const triesData = puzzleTriesData.tries || [];
+        setCooldown(puzzleTriesData.cooldown_remaining_seconds);
 
         // Sort tries by start time
         const sortedTries = triesData.sort(
@@ -437,6 +446,7 @@ export default function PuzzlePage() {
                 competition={competition}
                 puzzle={puzzle}
                 questNumber={questNumber}
+                cooldown={cooldown}
               />
             )}
 
@@ -464,6 +474,7 @@ export default function PuzzlePage() {
                     competition={competition}
                     puzzle={puzzle}
                     questNumber={questNumber}
+                    cooldown={cooldown}
                   />
                 )}
               </>

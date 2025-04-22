@@ -4,7 +4,8 @@ import { Try, Group, Competition, CompetitionStatistics } from "@/models";
 interface RateLimitResponse {
   is_correct?: boolean;
   error?: string;
-  wait_time_seconds?: number;
+  cooldown_remaining_seconds?: number;
+  is_under_cooldown?: boolean;
 }
 
 export class CompetitionsService extends BaseService {
@@ -125,8 +126,16 @@ export class CompetitionsService extends BaseService {
     competitionID: string,
     puzzleID: string,
     puzzleIndex: number
-  ): Promise<Try[]> {
-    return this.get<Try[]>(
+  ): Promise<{
+    tries: Try[];
+    cooldown_remaining_seconds: number;
+    is_under_cooldown: boolean;
+  }> {
+    return this.get<{
+      tries: Try[];
+      cooldown_remaining_seconds: number;
+      is_under_cooldown: boolean;
+    }>(
       `/competitions/${competitionID}/puzzles/${puzzleID}/${puzzleIndex}/tries`
     );
   }

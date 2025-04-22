@@ -19,6 +19,7 @@ interface InputTemplateProps {
   competition: Competition;
   puzzle: Puzzle;
   questNumber: number;
+  cooldown?: number;
 }
 
 /**
@@ -36,6 +37,7 @@ const InputTemplate = ({
   competition,
   puzzle,
   questNumber,
+  cooldown,
 }: InputTemplateProps) => {
   const { t } = useTranslation(["common", "puzzles"]);
 
@@ -80,6 +82,7 @@ const InputTemplate = ({
           step={step}
           setRefresh={setRefresh}
           disabled={!hasRequestedInput}
+          cooldown_remaining_seconds={cooldown}
         />
       </div>
     </div>
